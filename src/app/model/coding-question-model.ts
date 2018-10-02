@@ -1,0 +1,7 @@
+export interface CodingQuestionModel {
+  question: string;
+  inputtc1: string;
+  outputtc1: string;
+  inputtc2: string;
+  outputtc2: string;
+}

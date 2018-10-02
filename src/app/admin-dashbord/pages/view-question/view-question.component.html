@@ -1,0 +1,21 @@
+<h1>View Questions</h1>
+<div class="container">
+  <div class="form-group row centered">
+      <div class="col-lg-1.5"><label>Select Type:</label></div>
+      <div class="col-lg-2">
+        <select id="course" class="form-group form-control" name="dep[course]">
+          <option>Choose One</option>
+          <option value="Regular">Regular</option>
+          <option value="Coding">Coding</option>
+        </select>
+      </div>
+      <div><button class="btn btn-primary" (ng-click)="onGetQuestion($event)">Get Question</button></div>
+  </div>
+  <table class="table-striped" (*ngIf)= show>
+    <thead>
+      <tr>
+        <th>Hi</th>
+      </tr>
+    </thead>
+  </table>
+</div>

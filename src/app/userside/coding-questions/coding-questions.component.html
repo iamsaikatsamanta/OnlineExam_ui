@@ -1,0 +1,19 @@
+<div class="container">
+
+    <label >Select Language:</label>
+    <input type="radio" value="C" name="lang">C
+    <input type="radio" value="C++" name="lang"> C++
+    <input type="radio" value="JAVA" name="lang"> JAVA
+    <input type="radio" value="PYTHON" name="lang"> PYTHON
+
+  <div class="row">
+    <div class="col-lg-5">
+      {{ question.question }}
+    </div>
+    <div class="col-lg-7">
+      <textarea class="form-group form-control" rows="30"></textarea>
+    </div>
+    <button class="btn btn-default float-left">Compile</button>
+    <button class="btn btn-default float-left" id="run">Run</button>
+  </div>
+</div>

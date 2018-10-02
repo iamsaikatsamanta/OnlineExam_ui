@@ -1,0 +1,17 @@
+@import "https://fonts.googleapis.com/css?family=Encode+Sans+Condensed";
+h1{
+  text-align: center;
+  color: gray;
+  font-family: 'Encode Sans Condensed', sans-serif;
+}
+
+form{
+  margin-top: 25px;
+}
+form label{
+  font-family: 'Courgette', cursive;
+}
+#save:hover{
+  background-color: #1f3647;
+  color: #F9F3F4;
+}

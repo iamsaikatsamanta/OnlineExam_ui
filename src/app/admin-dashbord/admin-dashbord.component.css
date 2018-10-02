@@ -1,0 +1,24 @@
+.display-table{
+  display: table;
+  padding: 0px;
+  height: 100%;
+}
+.display-table-row{
+  /*display: table-row;*/
+  height: 100%;
+
+}
+.display-table-cell{
+  display: table-cell;
+  float: none;
+  height: 100%;
+
+}
+#side-menu{
+  background-color: #2475B0;
+  padding: 0;
+}
+.set{
+  margin: 0;
+  padding: 0;
+}

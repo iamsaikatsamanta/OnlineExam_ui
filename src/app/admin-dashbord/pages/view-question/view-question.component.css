@@ -1,0 +1,16 @@
+.container{
+  padding-top: 25px;
+}
+.centered {
+  /*display: flex;*/
+  /*align-items: center;*/
+  justify-content: center;
+}
+h1{
+  text-align: center;
+  color: gray;
+  font-family: 'Encode Sans Condensed', sans-serif;
+}
+ label{
+  font-family: 'Courgette', cursive;
+}

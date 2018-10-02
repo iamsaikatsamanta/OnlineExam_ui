@@ -1,0 +1,55 @@
+#size{
+    text-align: center;
+    font-family: 'Kaushan Script', cursive;
+    vertical-align: top;
+    padding-top: 20px;
+  }
+  #secondLine{
+    font-family: 'Kaushan Script', cursive;
+    text-align: center;
+    padding-top: 0;
+  }
+  
+  .myfrom{
+    width:30%;
+    margin: 25px auto;
+    align-items: center;
+  }
+  .form-header{
+    text-align: center;
+    margin-top: 40px;
+  }
+  #logo{
+    width: 120px;
+    height: 120px;
+    float: left;
+    margin-left: 80px;
+  
+  }
+  td{
+    text-align: center;
+  }
+  #login{
+    text-align: center;
+  }
+  #reqform{
+    width: 80%;
+    align-items: center;
+    margin: 25px auto;
+  }
+  label{
+    font-family: 'Courgette', cursive;
+  }
+  thead tr td{
+    font-size: 20px;
+    text-align: center;
+  }
+  #heading{
+    text-align: center;
+    font-family: "Cambria Math";
+  }
+  #form{
+    width:60%;
+    margin: 25px auto;
+    align-items: center;
+  }

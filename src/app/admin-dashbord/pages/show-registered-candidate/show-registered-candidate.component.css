@@ -1,0 +1,10 @@
+@import "https://fonts.googleapis.com/css?family=Encode+Sans+Condensed";
+table{
+  margin-top: 50px;
+  width: 100%;
+}
+h1{
+  text-align: center;
+  color: gray;
+  font-family: 'Encode Sans Condensed', sans-serif;
+}

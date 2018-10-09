@@ -25,6 +25,8 @@ import { QuestionsComponent } from './userside/questions/questions.component';
 import { InstructionsComponent } from './userside/instructions/instructions.component';
 import { CodingQuestionsComponent } from './userside/coding-questions/coding-questions.component';
 import { SubmitPageComponent } from './userside/submit-page/submit-page.component';
+import {UserComponent} from './userside/user.component';
+import { FeedbackComponent } from './userside/feedback/feedback.component';
 
 const approute: Routes = [
   { path: '', component: LandingComponent},
@@ -39,9 +41,11 @@ const approute: Routes = [
       { path: 'view-question', component: ViewQuestionComponent},
       { path: 'registered-candidate', component: ShowRegisteredCandidateComponent}
     ] },
-  { path: 'user', component: InstructionsComponent, children: [
+  { path: 'user', component: UserComponent, children: [
+      { path: 'instruction', component: InstructionsComponent},
       { path: 'questions', component: QuestionsComponent},
-      { path: 'coding-questions', component: CodingQuestionsComponent}
+      { path: 'coding-questions', component: CodingQuestionsComponent},
+      { path: 'feedback', component: FeedbackComponent}
     ]},
 ];
 
@@ -67,7 +71,9 @@ const approute: Routes = [
     QuestionsComponent,
     InstructionsComponent,
     CodingQuestionsComponent,
-    SubmitPageComponent
+    SubmitPageComponent,
+    UserComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

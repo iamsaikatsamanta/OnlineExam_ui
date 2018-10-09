@@ -1,3 +1,4 @@
+<p id="timer" class="float-right">Time Left: {{ min }}: {{ sec }}</p>
 <div class="container">
   <h4>{{ questions.question }}</h4>
   <p *ngFor="let op of questions.option" ><input type="radio" name="ans" value="{{ op }}"> {{ op }}</p>

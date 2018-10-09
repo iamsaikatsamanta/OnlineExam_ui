@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CodingQuestionModel} from '../../model/coding-question-model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-coding-questions',
@@ -7,7 +8,7 @@ import {CodingQuestionModel} from '../../model/coding-question-model';
   styleUrls: ['./coding-questions.component.css']
 })
 export class CodingQuestionsComponent implements OnInit {
-  question: CodingQuestionModel = {question: 'corisiderthe below series:\n' +
+  question: CodingQuestionModel = {question: 'Consider The following series:\n' +
       '1, 2, 1, 3, 2, 5, 3, 7, 5, 11, 8, 13, 13, 17,\n' +
       '\n' +
       'This series is a mixture of 2 series —all the odd terms in this\n' +
@@ -24,10 +25,27 @@ export class CodingQuestionsComponent implements OnInit {
       '\n' +
       'For example, when N:14, the 14th term in the series is 17.\n' +
       'So only the value 17 should be printed to STDOUT', inputtc1: '14', inputtc2: '0', outputtc1: '17', outputtc2: '0'};
+  min;
+  sec;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    this.startTimer();
   }
+  startTimer() {
+    let time = 20;
+    this.min = Math.floor(time / 60);
+    this.sec = time % 60;
+    setInterval( () => {
+      time--;
+      this.min = Math.floor(time / 60);
+      this.sec = time % 60;
+      if (time === 0) {
+        this.router.navigate(['/user/feedback']);
+      }
+    }, 1000);
+  }
+
 
 }

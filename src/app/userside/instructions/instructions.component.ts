@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./instructions.component.css']
 })
 export class InstructionsComponent implements OnInit {
-
+  min = 90;
   constructor() { }
 
   ngOnInit() {

@@ -7,3 +7,6 @@ input{
 #run{
   margin-left: 20px;
 }
+#timer{
+  font-weight: bold;
+}

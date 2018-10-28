@@ -1,20 +1,72 @@
 <p id="timer" class="float-right">Time Left: {{ min }}: {{ sec }}</p>
 <div class="container">
-
-    <label >Select Language:</label>
-    <input type="radio" value="C" name="lang">C
-    <input type="radio" value="C++" name="lang"> C++
-    <input type="radio" value="JAVA" name="lang"> JAVA
-    <input type="radio" value="PYTHON" name="lang"> PYTHON
-
   <div class="row">
-    <div class="col-lg-5">
-      {{ question.question }}
+    <div class="col-lg-8">
+      <h4>Progress</h4>
+      <div class="btn-toolbar">
+        <button (click)="setActiveQuestion(i)" class="btn" *ngFor="let question of codingQuestions; index as i" [ngClass]="{'btn-info': question.saved === true, 'btn-danger': question.saved === false}">
+          <i class="fa" [ngClass]="{'fa-check-circle': question.saved === true, 'fa-question': question.saved === false}"></i>
+        </button>
+      </div>
     </div>
-    <div class="col-lg-7">
-      <textarea class="form-group form-control" rows="30"></textarea>
+    <div class="col-lg-4">
+      <h4>MarkUp:</h4>
+      <div class="row">
+        <div class="col-sm-4">
+          <button class="btn btn-info"><span class="fa fa-check-circle"></span></button>
+          <p class="centered">Answered</p>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-danger"><i class="fa fa-question"></i></button>
+          <p>Unanswered</p>
+        </div>
+      </div>
     </div>
-    <button class="btn btn-default float-left">Compile</button>
-    <button class="btn btn-default float-left" id="run">Run</button>
   </div>
+<div class="container">
+    <form [formGroup]="codingForm">
+      <label >Select Language:</label>
+      <input type="radio" value="C" formControlName="lang">C
+      <input type="radio" value="C++" formControlName="lang"> C++
+      <input type="radio" value="JAVA" formControlName="lang"> JAVA
+      <input type="radio" value="PYTHON" formControlName="lang"> PYTHON
+
+      <div class="row">
+        <div class="col-lg-5">
+          {{ codingQuestions[activeQuestion].question }}
+          <div class="compile" *ngIf="showCompile">{{ compileMessage }}</div>
+          <div *ngIf="showRun" class="compile">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Case</th>
+                <th scope="col">Input</th>
+                <th scope="col">Success/Fail</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let stat of runStatus; index as i">
+                  <th scope="row">{{ i+1 }}</th>
+                  <td>Test Case {{ i+1 }}</td>
+                  <td>{{ stat.input }}</td>
+                  <td [ngClass]="{'blue': stat.status === 'Success', 'red': stat.status === 'Fail'}">{{ stat.status }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <textarea class="form-group form-control" rows="30" formControlName="code"></textarea>
+        </div>
+
+        <button class="btn btn-default float-left" (click)="onCompile()" [disabled]="codingForm.invalid">Compile</button>
+        <button class="btn btn-default float-left" id="run" (click)="onRun()" [disabled]="codingForm.invalid">Run</button>
+      </div>
+  <hr>
+  <div class="mybutton">
+    <button class="btn btn-warning float-left" (click)="onNext()">NEXT</button>
+    <button class="btn btn-danger float-right" (click)="submit()">Submit</button>
+  </div>
+    </form>
 </div>

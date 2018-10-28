@@ -10,3 +10,20 @@ input{
 #timer{
   font-weight: bold;
 }
+.compile{
+  padding-top: 10px;
+  font-weight: bold;
+}
+.red{
+  color: red;
+}
+.blue{
+  color: blue;
+}
+.mybutton button{
+  margin: 10px;
+}
+.mybutton{
+  padding-top: 15px;
+
+}

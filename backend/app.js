@@ -1,15 +1,20 @@
-const express=require('express'),
+const path =require('path'),
+    express=require('express'),
     mongoose=require('mongoose'),
     bodyParser=require('body-parser');
-var app=express();
+
+const adminAuthRoutes = require('./routs/adminAuth'),
+      userAuthRoutes = require('./routs/userAuth');
+const app=express();
 try{
-  mongoose.connect('mongodb+srv://SS:rbkvasqw@cluster0-9xjs0.mongodb.net/test?retryWrites=true');
+  mongoose.connect('mongodb://localhost/OnlineExam');
 }catch{
   console.log("Can't Connect To DataBase");
 }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/images',express.static(path.join('backend/images')));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -24,5 +29,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.use("/api/adminAuth",adminAuthRoutes);
+app.use("/api/userAuth", userAuthRoutes);
 module.exports = app;

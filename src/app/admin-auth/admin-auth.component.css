@@ -64,3 +64,13 @@ h2{
     line-height: 20px;
     color: darkgray;
 }
+div.container6 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+}
+div.container6 p {
+  width: 100%;
+  text-align: center;
+  margin: 0 }

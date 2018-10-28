@@ -12,3 +12,24 @@ h4 {
 #timer{
   font-weight: bold;
 }
+.showBlcok{
+  display: inline;
+}
+.option{
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: 1px solid #bbb;
+}
+.option:hover{
+  cursor: pointer;
+}
+.mybutton button{
+  margin: 10px;
+}
+.mybutton{
+  padding-top: 15px;
+
+}
+card{
+  border-radius: 1rem;
+}

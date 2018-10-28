@@ -2,13 +2,13 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 
 .intro{
-    height: 57em; 
+    height: 57em;
     width: 100%;
     margin: auto;
-    background: url(https://images.wallpaperscraft.com/image/code_coding_binary_code_abstract_patterns_112140_1920x1080.jpg);
+    background: url(http://localhost:3000/images/code_coding_binary_code_abstract_patterns_112140_1920x1080.jpg);
     display: table;
     top: 0;
-    background-size: cover; 
+    background-size: cover;
 }
 .intro .inner{
     display: table-cell;

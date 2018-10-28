@@ -5,4 +5,6 @@ export interface CandidateModel {
   year: string;
   email: string;
   dob: string;
+  phno: string;
+  image: string;
 }

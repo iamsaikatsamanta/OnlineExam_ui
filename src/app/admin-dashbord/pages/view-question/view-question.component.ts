@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {QuestionModel} from '../../../model/questionModel';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AdminQuestionService} from '../../../service/Admin-Service/admin-question.service';
+import {CodingQuestionModel} from '../../../model/coding-question-model';
 
 @Component({
   selector: 'app-view-question',
@@ -8,18 +11,35 @@ import {QuestionModel} from '../../../model/questionModel';
 })
 export class ViewQuestionComponent implements OnInit {
 
-  private show = false;
-  question: QuestionModel[] = [
-    {question: 'What do You do', option: ['Programming', 'Paying', 'Singing', 'Social Media'], correct: 'Programming'}
-  ];
-  constructor() { }
+  showRegular = false;
+  showCoding = false;
+  type;
+  question: QuestionModel[];
+  codingQuestion: CodingQuestionModel[] = [];
+  constructor(private adminQuestionService: AdminQuestionService) { }
 
   ngOnInit() {
   }
-  onGetQuestion(event: Event) {
-    const s = (<HTMLInputElement>event.target).value;
-    console.log(s);
-    this.show = true;
+  onGetQuestion() {
+    if (this.type) {
+      if (this.type === 'Regular') {
+        this.question = this.adminQuestionService.getQuestions();
+        this.showRegular = true;
+        this.showCoding = false;
+        console.log(this.question);
+      } else {
+        this.showCoding = true;
+        this.showRegular = false;
+        this.codingQuestion = this.adminQuestionService.getCodingQuestions();
+        console.log(this.codingQuestion);
+      }
+    }
   }
-
+  onSelectType(event: Event) {
+    this.type = (<HTMLInputElement>event.target).value;
+    if (this.type === 'Choose One') {
+      this.type = null;
+    }
+    console.log(this.type);
+  }
 }

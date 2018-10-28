@@ -1,0 +1,42 @@
+.logininbox{
+  width: 320px;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+}
+.logininbox button{
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #0ABDE3;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 20px;
+}
+.logininbox button:hover{
+  cursor: pointer;
+  background: #53E0BC;
+  color: #000;
+
+}
+.logininbox a{
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 20px;
+  color: darkgray;
+}
+.logininbox button{
+  width: 100%;
+  margin-bottom: 20px;
+}
+div.container6 {
+  height: 10em;
+  display: flex;
+  align-items: center;
+  justify-content: center }
+div.container6 p {
+  margin: 0 }

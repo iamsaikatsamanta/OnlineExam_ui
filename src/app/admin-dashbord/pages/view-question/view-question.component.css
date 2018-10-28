@@ -1,3 +1,4 @@
+
 .container{
   padding-top: 25px;
 }
@@ -13,4 +14,18 @@ h1{
 }
  label{
   font-family: 'Courgette', cursive;
+}
+ button{
+   margin-left: 10px;
+ }
+.myContainer{
+  width: 90%;
+  padding: auto;
+  margin: auto;
+}
+.col-lg-4{
+  margin-left: 80px;
+}
+.highlighted{
+  font-weight: bold;
 }

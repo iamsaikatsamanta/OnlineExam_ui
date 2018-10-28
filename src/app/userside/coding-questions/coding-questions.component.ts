@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {CodingQuestionModel} from '../../model/coding-question-model';
 import {Router} from '@angular/router';
+import {UserCodingQuestionModel} from '../../model/user-coding-question-model';
+import {UserQuestionService} from '../../service/User/user-question.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-coding-questions',
@@ -8,44 +11,84 @@ import {Router} from '@angular/router';
   styleUrls: ['./coding-questions.component.css']
 })
 export class CodingQuestionsComponent implements OnInit {
-  question: CodingQuestionModel = {question: 'Consider The following series:\n' +
-      '1, 2, 1, 3, 2, 5, 3, 7, 5, 11, 8, 13, 13, 17,\n' +
-      '\n' +
-      'This series is a mixture of 2 series —all the odd terms in this\n' +
-      'series form a Fibonacci series and all the even terms are the\n' +
-      'prime numbers in ascending order.\n' +
-      '\n' +
-      'write a program to find the Nth term in this series.\n' +
-      '\n' +
-      'The value N in a positive integer that should be read from\n' +
-      '57am. The Nth term that is calculated by the program\n' +
-      'should be writterl to STDOUT Other than the value of Nth\n' +
-      'term , no other characters / string or message should be\n' +
-      'written to STDOUT.\n' +
-      '\n' +
-      'For example, when N:14, the 14th term in the series is 17.\n' +
-      'So only the value 17 should be printed to STDOUT', inputtc1: '14', inputtc2: '0', outputtc1: '17', outputtc2: '0'};
+  showCompile = false;
+  showRun = false;
+  compileMessage;
+  runStatus ;
+  activeQuestion = 0;
+  no_q_ans = 0;
+  codingQuestions: UserCodingQuestionModel[];
   min;
   sec;
+  codingForm = new FormGroup({
+    lang: new FormControl(null, Validators.required),
+    code: new FormControl(null, Validators.required)
+  });
 
-  constructor(private router: Router) { }
+  constructor(private userQuestionService: UserQuestionService, private router: Router) { }
 
   ngOnInit() {
+    this.codingQuestions = this.userQuestionService.getCodingQuestion();
     this.startTimer();
   }
   startTimer() {
-    let time = 20;
+    let time = this.userQuestionService.checkCodingTImer();
     this.min = Math.floor(time / 60);
     this.sec = time % 60;
     setInterval( () => {
       time--;
       this.min = Math.floor(time / 60);
       this.sec = time % 60;
-      if (time === 0) {
+      if (time <= 0) {
         this.router.navigate(['/user/feedback']);
       }
     }, 1000);
   }
-
-
+  onCompile() {
+    this.showRun = false;
+    const code = { lang: this.codingForm.get('lang').value,
+      code: this.codingForm.get('code').value
+    };
+    this.compileMessage = this.userQuestionService.onCodeCompile(code);
+    this.showCompile = true;
+  }
+  onRun() {
+    this.showCompile = false;
+    this.codingQuestions[this.activeQuestion].saved = true;
+    const code = { lang: this.codingForm.get('lang').value,
+      code: this.codingForm.get('code').value
+    };
+    this.runStatus = this.userQuestionService.onCodeRun(code);
+    this.showRun = true;
+  }
+  onNext() {
+    this.showRun = false;
+    this.showCompile = false;
+    if (this.codingQuestions[this.activeQuestion].saved === true) {
+      this.no_q_ans ++;
+      if (this.no_q_ans === this.codingQuestions.length) {
+        this.submit();
+        return;
+      }
+    }
+    this.setActiveQuestion(undefined);
+  }
+  setActiveQuestion(index) {
+    if (index === undefined) {
+      let breakOut = false;
+      while (!breakOut) {
+        this.activeQuestion = this.activeQuestion < this.codingQuestions.length - 1 ? ++this.activeQuestion : 0;
+        if (this.codingQuestions[this.activeQuestion].saved === false) {
+          breakOut = true;
+        }
+      }
+    } else if (this.codingQuestions[index].saved === true) {
+      this.setActiveQuestion(++index);
+    } else {
+      this.activeQuestion = index;
+    }
+  }
+  submit() {
+    this.router.navigate(['/user/submit-coding']);
+  }
 }

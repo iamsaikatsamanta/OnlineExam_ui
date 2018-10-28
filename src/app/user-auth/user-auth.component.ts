@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserAuthService} from '../service/User/user-auth.service';
+import {UserModel} from '../model/user-model';
 
 @Component({
   selector: 'app-user-auth',
@@ -6,10 +9,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-auth.component.css']
 })
 export class UserAuthComponent implements OnInit {
-  usertype = 'Candidate';
-  constructor() { }
+  showError = false;
+  errorMessage = '';
+  userForm = new FormGroup({
+    refId: new FormControl(null, Validators.required),
+    password: new FormControl(null, Validators.required)
+  });
+  constructor(private userAuthService: UserAuthService) { }
 
   ngOnInit() {
+  }
+  onSubmit() {
+    if (this.userForm.invalid) {
+      this.showError = true;
+      this.errorMessage = 'Invalid or Missing Details';
+      setInterval(() => {
+        this.showError = false;
+      } , 5000);
+    } else {
+      this.showError = false;
+      const userData: UserModel = {
+        refId: this.userForm.value.refId,
+        password: this.userForm.value.password
+      };
+      this.userAuthService.onUserLogin(userData);
+    }
   }
 
 }

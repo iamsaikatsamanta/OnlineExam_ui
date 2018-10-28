@@ -13,7 +13,7 @@ import { NavigationComponent } from './admin-dashbord/navigation/navigation.comp
 import { PagesComponent } from './admin-dashbord/pages/pages.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import {  MatExpansionModule} from '@angular/material';
+import { MatExpansionModule } from '@angular/material';
 import { DashbordHomeComponent } from './admin-dashbord/pages/dashbord-home/dashbord-home.component';
 import { SettengsComponent } from './admin-dashbord/pages/settengs/settengs.component';
 import { AddQuestionComponent } from './admin-dashbord/pages/add-question/add-question.component';
@@ -25,8 +25,22 @@ import { QuestionsComponent } from './userside/questions/questions.component';
 import { InstructionsComponent } from './userside/instructions/instructions.component';
 import { CodingQuestionsComponent } from './userside/coding-questions/coding-questions.component';
 import { SubmitPageComponent } from './userside/submit-page/submit-page.component';
-import {UserComponent} from './userside/user.component';
+import { UserComponent} from './userside/user.component';
 import { FeedbackComponent } from './userside/feedback/feedback.component';
+import { ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {AdminQuestionService} from './service/Admin-Service/admin-question.service';
+import { ReviewCodingQuestionComponent } from './admin-dashbord/pages/review-coding-question/review-coding-question.component';
+import { AdminResultComponent } from './admin-dashbord/pages/admin-result/admin-result.component';
+import {AdminOtherService} from './service/Admin-Service/admin-other.service';
+import { StartExamComponent } from './admin-dashbord/pages/settengs/start-exam/start-exam.component';
+import { SubmitQuestionComponent } from './userside/questions/submit-question/submit-question.component';
+import { SubmitCodingComponent} from './userside/coding-questions/subit-coding/submit-coding.component';
+import {AdminAuthService} from './service/Admin-Service/admin-auth.service';
+import {UserAuthService} from './service/User/user-auth.service';
+import {UserQuestionService} from './service/User/user-question.service';
+import {UserOtherService} from './service/User/user-other.service';
+import {HttpClientModule} from '@angular/common/http';
 
 const approute: Routes = [
   { path: '', component: LandingComponent},
@@ -39,12 +53,20 @@ const approute: Routes = [
       { path: 'add-question', component: AddQuestionComponent},
       { path: 'add-coding-question', component: CodingQuestionComponent},
       { path: 'view-question', component: ViewQuestionComponent},
-      { path: 'registered-candidate', component: ShowRegisteredCandidateComponent}
+      { path: 'edit-question/:qid' , component: AddQuestionComponent},
+      { path: 'edit-coding-question/:cqid', component: CodingQuestionComponent},
+      { path: 'registered-candidate', component: ShowRegisteredCandidateComponent},
+      { path: 'review-coding-question', component: ReviewCodingQuestionComponent},
+      { path: 'result', component: AdminResultComponent},
+      { path: 'settings', component: SettengsComponent},
+      { path: 'start-exam', component: StartExamComponent}
     ] },
-  { path: 'user', component: UserComponent, children: [
+  { path: 'user', component: UserComponent , children: [
       { path: 'instruction', component: InstructionsComponent},
       { path: 'questions', component: QuestionsComponent},
+      { path: 'submit-question', component: SubmitQuestionComponent},
       { path: 'coding-questions', component: CodingQuestionsComponent},
+      { path: 'submit-coding', component: SubmitCodingComponent},
       { path: 'feedback', component: FeedbackComponent}
     ]},
 ];
@@ -73,16 +95,31 @@ const approute: Routes = [
     CodingQuestionsComponent,
     SubmitPageComponent,
     UserComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ReviewCodingQuestionComponent,
+    AdminResultComponent,
+    StartExamComponent,
+    SubmitQuestionComponent,
+    SubmitCodingComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(approute),
     LayoutModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AdminAuthService,
+    AdminQuestionService,
+    AdminOtherService,
+    UserAuthService,
+    UserQuestionService,
+    UserOtherService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

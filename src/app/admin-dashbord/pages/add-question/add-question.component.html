@@ -1,31 +1,29 @@
 <h1>Add Question</h1>
 <div class="container">
-  <form>
-    <label for="ques">Enter The Question:</label>
-    <input id="ques" type="text" required class="form-group form-control">
+  <form [formGroup]="addQusestion">
+      <label for="ques">Enter The Question:</label>
+      <input  matInput id="ques" type="text"  formControlName="question" class="form-group form-control">
     <div class="form-group row">
       <label for="op1" class="col-form-label col-lg-1">Option1:</label>
-      <input type="text" id="op1" class="form-control col-lg-5" required>
-      <button class="btn btn-primary col-lg-1">Correct</button>
+      <input type="text" id="op1" class="form-control col-lg-5" formControlName="option1">
+      <button class="btn btn-primary col-lg-1" (click)="onOption1()" *ngIf="op1" [disabled]="!addQusestion.get('option1').valid">Correct</button>
     </div>
     <div class="form-group row">
       <label for="op2" class="col-form-label col-lg-1">Option2:</label>
-      <input type="text" id="op2" class="form-control col-lg-5" required>
-      <button class="btn btn-primary col-lg-1">Correct</button>
+      <input type="text" id="op2" class="form-control col-lg-5" formControlName="option2">
+      <button class="btn btn-primary col-lg-1" (click)="onOption2()" *ngIf="op2" [disabled]="!addQusestion.get('option2').valid">Correct</button>
     </div>
     <div class="form-group row">
       <label for="op3" class="col-form-label col-lg-1">Option3:</label>
-      <input type="text" id="op3" class="form-control col-lg-5" required>
-      <button class="btn btn-primary col-lg-1">Correct</button>
+      <input type="text" id="op3" class="form-control col-lg-5" formControlName="option3">
+      <button class="btn btn-primary col-lg-1" (click)="onOption3()" *ngIf="op3" [disabled]="!addQusestion.get('option3').valid">Correct</button>
     </div>
     <div class="form-group row">
       <label for="op4" class="col-form-label col-lg-1">Option4:</label>
-      <input type="text" id="op4" class="form-control col-lg-5" required>
-      <button class="btn btn-primary col-lg-1" >Correct</button>
+      <input type="text" id="op4" class="form-control col-lg-5" formControlName="option4">
+      <button class="btn btn-primary col-lg-1" (click)="onOption4()" *ngIf="op4" [disabled]="!addQusestion.get('option4').valid">Correct</button>
     </div>
-    <button class="btn badge-danger float-left">Reset</button>
-    <button class="btn btn-default float-left " id="save">Save Question</button>
+    <button class="btn badge-danger float-left" (click)="onReset()">Reset</button>
+    <button class="btn btn-default float-left " id="save" type="submit" [disabled]="!addQusestion.valid" (click)="onSubmit()">Save Question</button>
   </form>
-
-
 </div>

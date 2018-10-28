@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -6,8 +7,11 @@ import {Component} from '@angular/core';
   styleUrls: ['./user.component.css']
 })
 
-export class UserComponent {
+export class UserComponent implements OnInit{
   id = 'AKCSIT02';
   name = 'Saikat Samanta';
-  constructor() {}
+  constructor(private route: Router) {}
+  ngOnInit() {
+    this.route.navigate(['/user/instruction']);
+  }
 }

@@ -1,0 +1,34 @@
+<div class="container6" *ngIf="showError">
+  <p class="alert alert-danger">{{ ErrorMessage }}</p>
+</div>
+
+<div class="container">
+  <div class="logininbox">
+    <h2>Start New Exam</h2>
+    <form [formGroup]="examForm" (submit)="onSubmit()">
+      <div>
+        <p>Select Number of Rounds*</p>
+        <select class="form-group form-control" formControlName="no_of_rounds" (click)="getRound()">
+          <option *ngFor="let i of no_of_round" value="{{ i }}">{{ i }}</option>
+        </select>
+      </div>
+      <div>
+        <p>Select Round 1*</p>
+        <select class="form-group form-control" formControlName="round1" (click)="onRound1()">
+          <option *ngFor="let op of rounds" value="{{ op }}">{{ op }}</option>
+        </select>
+        <p>Number of Question In Round 1*</p>
+        <input type="number" class="form-group form-control" formControlName="questionr1">
+      </div>
+      <div>
+        <p>Select Round 2*</p>
+        <select class="form-group form-control" formControlName="round2" (click)="onRound2()">
+          <option *ngFor="let op of rounds" value="{{ op }}">{{ op }}</option>
+        </select>
+        <p>Number of Question In Round 2*</p>
+        <input type="number" class="form-group form-control" formControlName="questionr2">
+      </div>
+      <button type="submit">START EXAM</button>
+    </form>
+  </div>
+</div>

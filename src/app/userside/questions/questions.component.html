@@ -1,5 +1,46 @@
 <p id="timer" class="float-right">Time Left: {{ min }}: {{ sec }}</p>
 <div class="container">
-  <h4>{{ questions.question }}</h4>
-  <p *ngFor="let op of questions.option" ><input type="radio" name="ans" value="{{ op }}"> {{ op }}</p>
-</div>
+  <div class="row">
+    <div class="col-lg-8">
+      <h4>Progress</h4>
+      <div class="btn-toolbar">
+        <button (click)="setActiveQuestion(i)" class="btn" *ngFor="let question of questions; index as i" [ngClass]="{'btn-info': question.saved === true, 'btn-danger': question.saved === false}">
+          <i class="fa" [ngClass]="{'fa-check-circle': question.saved === true, 'fa-question': question.saved === false}"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <h4>MarkUp:</h4>
+      <div class="row">
+        <div class="col-sm-4">
+          <button class="btn btn-info"><span class="fa fa-check-circle"></span></button>
+          <p class="centered">Answered</p>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-danger"><i class="fa fa-question"></i></button>
+          <p>Unanswered</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h3>Question {{ activeQuestion+1 }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h4>{{ questions[activeQuestion].question }}</h4>
+        <div class="row">
+          <div class="col-lg-6 col-sm-12 option" *ngFor="let op of questions[activeQuestion].option; index as i"
+               [ngClass]="{'bg-info': i === questions[activeQuestion].selected}"
+               (click)="selectAns(i)">
+            <h4  >{{ op }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mybutton">
+      <button class="btn btn-warning float-left" (click)="onNext()">NEXT</button>
+      <button class="btn btn-primary float-left" (click)="onSaveNext()" [disabled]="questions[activeQuestion].selected === null">SAVE & NEXT</button>
+      <button class="btn btn-danger float-right" (click)="submit()">Submit</button>
+    </div>
+    </div>
+  </div>

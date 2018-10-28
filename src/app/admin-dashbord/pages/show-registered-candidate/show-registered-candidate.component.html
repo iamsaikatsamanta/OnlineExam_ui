@@ -11,13 +11,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of dataSource">
-      <td>{{ data.refId }}</td>
-      <td>{{ data.name }}</td>
-      <td>{{ data.course}}</td>
-      <td>{{ data.year }}</td>
-      <td>{{ data.email }}</td>
-      <td>{{ data.dob }}</td>
+    <tr *ngFor="let candidate of candidates">
+      <td>{{ candidate.refId }}</td>
+      <td>{{ candidate.name }}</td>
+      <td>{{ candidate.course}}</td>
+      <td>{{ candidate.year }}</td>
+      <td>{{ candidate.email }}</td>
+      <td>{{ candidate.dob }}</td>
     </tr>
   </tbody>
 </table>

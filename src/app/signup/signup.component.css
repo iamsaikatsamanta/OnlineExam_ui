@@ -11,7 +11,7 @@
   }
   
   .myfrom{
-    width:30%;
+    width:60%;
     margin: 25px auto;
     align-items: center;
   }
@@ -53,3 +53,20 @@
     margin: 25px auto;
     align-items: center;
   }
+.image-preview{
+  height: 5rem;
+  margin: 1rem 0;
+}
+.image-preview img {
+  height: 100%;
+}
+div.container6 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+}
+div.container6 p {
+  width: 100%;
+  text-align: center;
+  margin: 0 }

@@ -1,3 +1,15 @@
-<p>
-  settengs works!
-</p>
+<div class="container6" *ngIf="showError">
+  <p class="alert alert-danger">{{ errorMessage }}</p>
+</div>
+<div class="container">
+  <div class="logininbox">
+    <button mat-raised-button (click)="startExam()">START EXAM</button>
+    <button *ngIf="open_reg" (click)="openReg()">OPEN REGISTRATION</button>
+    <button *ngIf="close_reg" (click)="closeReg()">CLOSE REGISTRATION</button>
+    <button *ngIf="conduct_exam" (click)="conductExam()">CONDUCT EXAM</button>
+    <button *ngIf="end_exam" (click)="endExam()">END EXAM</button>
+    <button *ngIf="pub_result" (click)="pubResult()">PUBLISH RESULT</button>
+    <button *ngIf="edit_exam">EDIT EXAM OPTION</button>
+    <button>EDIT PROFILE</button>
+  </div>
+</div>

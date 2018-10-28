@@ -1,28 +1,41 @@
+<div class="container6" *ngIf="showError">
+  <p class="alert alert-danger">{{ errorMessage }}</p>
+</div>
 <div class="container">
     <h2 id="login">Candidate Registration</h2>
-    <form class="myfrom">
-        <label for="course">Course</label>
-        <select id="course" class="form-group form-control" name="dep[course]">
-            <option>Choose One</option>
-            <option value="BTECH">BTECH</option>
-            <option value="MTECH">MTECH</option>
-            <option value="MCA">MCA</option>
-            <option value="MTECH EVENING">MTECH EVENING</option>
-        </select>
-        <label for="course">Course</label>
-        <input class="form-control form-group" type="text" placeholder="Year of Studies">
-        <label for="email">Email</label>
-        <input id="email" class="form-control form-group" type="email" name="dep[email]" placeholder="Email">
-        <label for="phoneno">Phone Number</label>
-        <input id="phoneno" class="form-group form-control" type="text" placeholder="Phone Number" name="dep[phno]">
-        <label for="name">Name</label>
-        <input id="name" class="form-control form-group" type="text" placeholder="Name">
-        <label>Date of Birth</label>
-        <input type="date" class="form-group form-control">
-        <label for="Password">Password</label>
-        <input id="Password" type="password" class="form-control form-group" placeholder="Password">
-        <label for="file">Image</label>
-        <input id="file" type="file" class="form-control form-group">
-        <button class="btn btn-primary btn-lg form-group btn-block">Register</button>
+    <form class="myfrom" [formGroup]="signupForm" (submit)="onSubmit()">
+      <div class="row">
+          <div class="col-lg-6 col-sm-12">
+            <label for="course">Course</label>
+            <select id="course" class="form-group form-control" formControlName="course">
+              <option value="BTECH">BTECH</option>
+              <option value="MTECH">MTECH</option>
+              <option value="MCA">MCA</option>
+              <option value="MTECH EVENING">MTECH EVENING</option>
+            </select>
+            <label for="course">Year of Studies</label>
+            <input class="form-control form-group" placeholder="Year of Studies" formControlName="year">
+            <label for="email">Email</label>
+            <input id="email" class="form-control form-group" formControlName="email" placeholder="Email">
+            <label for="phoneno">Phone Number</label>
+            <input id="phoneno" class="form-group form-control" placeholder="Phone Number" formControlName="phno">
+            <label for="name">Name</label>
+            <input id="name" class="form-control form-group" placeholder="Name" formControlName="name">
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <label>Date of Birth</label>
+            <input type="date" class="form-group form-control" formControlName="dob">
+            <label for="Password">Password</label>
+            <input id="Password" class="form-control form-group" placeholder="Password" formControlName="password">
+            <label for="file">Image</label>
+            <input id="file" type="file" class="form-control form-group" (change)="onImagePicked($event)">
+            <p>JPG, JEPG And PNG Only And Size < 500KB</p>
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && signupForm.get('image').valid">
+              <img [src]="imagePreview" [alt]="signupForm.value.name">
+            </div>
+
+          </div>
+      </div>
+      <button class="btn btn-primary btn-lg form-group btn-block" type="submit">Register</button>
     </form>
 </div>

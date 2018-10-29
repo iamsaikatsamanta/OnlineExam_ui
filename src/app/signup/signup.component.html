@@ -6,15 +6,17 @@
     <form class="myfrom" [formGroup]="signupForm" (submit)="onSubmit()">
       <div class="row">
           <div class="col-lg-6 col-sm-12">
-            <label for="course">Course</label>
-            <select id="course" class="form-group form-control" formControlName="course">
+            <label>Course</label>
+            <select class="form-group form-control" formControlName="course" (click)="onYear()">
               <option value="BTECH">BTECH</option>
               <option value="MTECH">MTECH</option>
               <option value="MCA">MCA</option>
               <option value="MTECH EVENING">MTECH EVENING</option>
             </select>
-            <label for="course">Year of Studies</label>
-            <input class="form-control form-group" placeholder="Year of Studies" formControlName="year">
+            <label>Year of Studies</label>
+            <select formControlName="year" class="form-group form-control">
+              <option *ngFor="let op of years" value="{{ op }}">{{ op }}</option>
+            </select>
             <label for="email">Email</label>
             <input id="email" class="form-control form-group" formControlName="email" placeholder="Email">
             <label for="phoneno">Phone Number</label>
@@ -25,11 +27,11 @@
           <div class="col-lg-6 col-sm-12">
             <label>Date of Birth</label>
             <input type="date" class="form-group form-control" formControlName="dob">
-            <label for="Password">Password</label>
-            <input id="Password" class="form-control form-group" placeholder="Password" formControlName="password">
-            <label for="file">Image</label>
-            <input id="file" type="file" class="form-control form-group" (change)="onImagePicked($event)">
-            <p>JPG, JEPG And PNG Only And Size < 500KB</p>
+            <label>Password</label>
+            <input type="password" class="form-control form-group" placeholder="Password" formControlName="password">
+            <label>Image</label>
+            <input type="file" class="form-control form-group" (change)="onImagePicked($event)">
+            <p *ngIf="!signupForm.get('image').valid">JPG, JEPG And PNG Only And Size < 500KB</p>
             <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && signupForm.get('image').valid">
               <img [src]="imagePreview" [alt]="signupForm.value.name">
             </div>

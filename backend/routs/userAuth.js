@@ -30,7 +30,7 @@ router.post("/register",multer({storage: storage}).single('image') ,(req,res, ne
   bcrypt.hash(req.body.password ,10).then(hash =>{
     const user =new User({
       refId: 'OE'+ getRefId(),
-      course: 'MCA',
+      course: req.body.course,
       year: req.body.year,
       email: req.body.email,
       phoneno: req.body.phoneno,

@@ -1,68 +1,70 @@
 import { Injectable } from '@angular/core';
 import {QuestionModel} from '../../model/questionModel';
 import {CodingQuestionModel} from '../../model/coding-question-model';
+import { HttpClient } from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminQuestionService {
-  question: QuestionModel[] = [
-    {id: '1345', question: 'what Is in My Hand?', option: ['Toy', 'Mobile', 'Torch', 'Lantan'], correct: 'Toy'},
-    {id: '1346', question: 'what Is in My Head?', option: ['Cap', 'Mobile', 'Gloves', 'Lantan'], correct: 'Cap'},
-    {id: '1347', question: 'what Is in My Leg?', option: ['Moja', 'Pant', 'Torch', 'Lantan'], correct: 'Moja'},
-  ];
-  codingQuestion: CodingQuestionModel[] = [
-    {
-      id: '123',
-      question: 'question: \'Consider The following series:\n\' +\n' +
-        '      \'1, 2, 1, 3, 2, 5, 3, 7, 5, 11, 8, 13, 13, 17,\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'This series is a mixture of 2 series —all the odd terms in this\\n\' +\n' +
-        '      \'series form a Fibonacci series and all the even terms are the\\n\' +\n' +
-        '      \'prime numbers in ascending order.\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'write a program to find the Nth term in this series.\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'The value N in a positive integer that should be read from\\n\' +\n' +
-        '      \'57am. The Nth term that is calculated by the program\\n\' +\n' +
-        '      \'should be writterl to STDOUT Other than the value of Nth\\n\' +\n' +
-        '      \'term , no other characters / string or message should be\\n\' +\n' +
-        '      \'written to STDOUT.\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'For example, when N:14, the 14th term in the series is 17.\\n\' +\n' +
-        '      \'So only the value 17 should be printed to STDOUT\'', inputtc1: '11', outputtc1: '25', inputtc2: '11', outputtc2: '25'},
-    {
-      id: '123',
-      question: 'question: \'Consider The following series:\\n\' +\n' +
-        '      \'1, 2, 1, 3, 2, 5, 3, 7, 5, 11, 8, 13, 13, 17,\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'This series is a mixture of 2 series —all the odd terms in this\\n\' +\n' +
-        '      \'series form a Fibonacci series and all the even terms are the\\n\' +\n' +
-        '      \'prime numbers in ascending order.\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'write a program to find the Nth term in this series.\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'The value N in a positive integer that should be read from\\n\' +\n' +
-        '      \'57am. The Nth term that is calculated by the program\\n\' +\n' +
-        '      \'should be writterl to STDOUT Other than the value of Nth\\n\' +\n' +
-        '      \'term , no other characters / string or message should be\\n\' +\n' +
-        '      \'written to STDOUT.\\n\' +\n' +
-        '      \'\\n\' +\n' +
-        '      \'For example, when N:14, the 14th term in the series is 17.\\n\' +\n' +
-        '      \'So only the value 17 should be printed to STDOUT\'', inputtc1: '12', outputtc1: '2', inputtc2: '11', outputtc2: '12'},
-  ];
-  constructor() { }
+  question: QuestionModel[];
+  codingQuestion: CodingQuestionModel[];
+  constructor(private http: HttpClient) {}
+  private questionUpdated = new Subject<QuestionModel[]>();
+  private coidingQuestionUpdated = new Subject<CodingQuestionModel[]>();
   saveQuestion(question: QuestionModel) {
-    console.log(question);
+    this.http.post<{message: string, questionId: string}>('http://localhost:3000/api/admin/savequestion', question)
+    .subscribe(res => {
+      question.id = res.questionId;
+      this.question.push(question);
+      this.questionUpdated.next([...this.question]);
+      return res.message;
+    });
   }
   saveCodingQuestion(codeQuestion: CodingQuestionModel) {
-    console.log(codeQuestion);
+    this.http.post<{message: string, questionId: string}>('http://localhost:3000/api/admin/savecodingquestion', codeQuestion)
+    .subscribe(res => {
+      codeQuestion.id = res.questionId;
+      this.codingQuestion.push(codeQuestion);
+      this.coidingQuestionUpdated.next([...this.codingQuestion]);
+    });
   }
   getQuestions() {
-    return this.question;
+    this.http.get<{ message: string; questions: any }>('http://localhost:3000/api/admin/getquestion').pipe(map(questionData => {
+      return questionData.questions.map(question => {
+        return {
+          id: question._id,
+          question: question.question,
+          option: question.option,
+          correct: question.correct
+        };
+      });
+    }))
+      .subscribe(response => {
+        this.question = response;
+        this.questionUpdated.next([...this.question]);
+    });
   }
   getCodingQuestions() {
-    return this.codingQuestion;
+    this.http.get<{message: string, codingQuestion: any}> ('http://localhost:3000/api/admin/getcodingquestion')
+    .pipe(map(codingQuestionData => {
+      return codingQuestionData.codingQuestion.map(codingQuestion => {
+        return {
+          id: codingQuestion._id,
+          question: codingQuestion.question,
+          inputtc1: codingQuestion.inputtc1,
+          outputtc1: codingQuestion.outputtc1,
+          inputtc2: codingQuestion.inputtc2,
+          outputtc2: codingQuestion.outputtc2,
+        };
+      });
+    }))
+    .subscribe(res => {
+      this.codingQuestion = res;
+      this.coidingQuestionUpdated.next([...this.codingQuestion]);
+    });
   }
   getQuestion(questionId: string) {
     return {...this.question.find(p => p.id === questionId)};
@@ -75,5 +77,11 @@ export class AdminQuestionService {
   }
   updateCodingQuestion(codeQuestion: CodingQuestionModel) {
     console.log(codeQuestion);
+  }
+  getQuestionUpdateListen() {
+    return this.questionUpdated.asObservable();
+  }
+  getCodingQuestionUpdateListner() {
+    return this.coidingQuestionUpdated.asObservable();
   }
 }

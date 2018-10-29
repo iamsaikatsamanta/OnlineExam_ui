@@ -12,6 +12,7 @@ export class SignupComponent implements OnInit {
   showError = false;
   errorMessage = '';
   imagePreview: string;
+  years = [];
   signupForm = new FormGroup({
     course: new FormControl(null, Validators.required),
     year: new FormControl(null, Validators.required),
@@ -59,5 +60,14 @@ export class SignupComponent implements OnInit {
       this.imagePreview = reader.result;
     };
     reader.readAsDataURL(file);
+  }
+  onYear() {
+    if (this.signupForm.value.course === 'MCA' || this.signupForm.value.course === 'MTECH EVENING') {
+      this.years = ['1st', '2nd', '3rd'];
+    } else if (this.signupForm.value.course === 'MTECH') {
+      this.years = ['1st', '2nd'];
+    } else if (this.signupForm.value.course === 'BTECH') {
+      this.years = ['1st', '2nd', '3rd', '4th'];
+    }
   }
 }

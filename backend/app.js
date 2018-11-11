@@ -5,7 +5,8 @@ const path =require('path'),
 
 const adminAuthRoutes = require('./routs/adminAuth'),
       userAuthRoutes = require('./routs/userAuth'),
-      adminQuestionRoutes = require('./routs/adminquestion');
+      adminQuestionRoutes = require('./routs/adminquestion'),
+      adminOtherRouter = require('./routs/adminother');
 const app=express();
 try{
   mongoose.connect('mongodb://localhost/OnlineExam');
@@ -33,4 +34,5 @@ app.use((req, res, next) => {
 app.use("/api/adminAuth",adminAuthRoutes);
 app.use("/api/userAuth", userAuthRoutes);
 app.use("/api/admin",adminQuestionRoutes);
+app.use("/api/admin",adminOtherRouter);
 module.exports = app;

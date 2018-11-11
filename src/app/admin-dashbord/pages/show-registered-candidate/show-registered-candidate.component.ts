@@ -8,11 +8,11 @@ import {AdminOtherService} from '../../../service/Admin-Service/admin-other.serv
   styleUrls: ['./show-registered-candidate.component.css']
 })
 export class ShowRegisteredCandidateComponent implements OnInit {
-  candidates: CandidateModel[];
+  candidates: any[];
   constructor(private adminOtherService: AdminOtherService) { }
 
   ngOnInit() {
-    this.candidates = this.adminOtherService.getRegisteredCandidate();
+    console.log(this.adminOtherService.getRegisteredCandidate());
   }
 
 }

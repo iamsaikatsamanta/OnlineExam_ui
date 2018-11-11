@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
     name: new FormControl(null, Validators.required),
     dob: new FormControl(null, Validators.required),
     password: new FormControl(null, Validators.required),
-    image: new FormControl(null,  {validators: [Validators.required],  asyncValidators: mimeType})
+    image: new FormControl(null,  {validators: [Validators.required],  asyncValidators: [mimeType]})
   });
 
   constructor(private userAuthService: UserAuthService) { }

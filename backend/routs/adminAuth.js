@@ -5,12 +5,12 @@ const express = require('express'),
       jwt = require('jsonwebtoken');
 
 router.get("/admin/signup",(req,res,next) => {
-  bcrypt.hash('rbkvasqw', 10 ).then(hash => {
+  bcrypt.hash('ranjan2811', 10 ).then(hash => {
     const admin = new Admin({
-      userid: 'saikat@admin.com',
-      name: 'Saikat Samanta',
+      userid: 'ranjan@admin.com',
+      name: 'Ranjan Das',
       password: hash,
-      img_url: 'http://localhost:3000/images/admin/saikat.jpg'
+      img_url: 'http://localhost:3000/images/admin/ranjan.jpg'
     });
     admin.save().then(result => {
       res.status(201).json({

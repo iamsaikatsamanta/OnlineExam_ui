@@ -8,9 +8,10 @@ import {Router} from '@angular/router';
 })
 export class AdminDashbordComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    this.router.navigate(['/admin-dashboard/home']);
   }
 
 }

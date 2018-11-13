@@ -4,6 +4,7 @@ import {CodingQuestionModel} from '../../model/coding-question-model';
 import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import { AdminAuthService } from './admin-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import {Subject} from 'rxjs';
 export class AdminQuestionService {
   question: QuestionModel[];
   codingQuestion: CodingQuestionModel[];
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private adminAuthService: AdminAuthService) {}
   private questionUpdated = new Subject<QuestionModel[]>();
   private coidingQuestionUpdated = new Subject<CodingQuestionModel[]>();
   saveQuestion(question: QuestionModel) {

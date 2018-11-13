@@ -1,8 +1,9 @@
 const express = require('express'),
       router= express.Router(),
-      User = require('../Models/user');
+      User = require('../Models/user'),
+      checkAuth = require('../middleware/check-auth');
 
-router.get("/registeredCandidate", (req,res,next) =>{
+router.get("/registeredCandidate",checkAuth,(req,res,next) =>{
       User.find()
       .then(users => {
             user = users.map(user => {

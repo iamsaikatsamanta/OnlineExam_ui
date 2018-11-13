@@ -1,9 +1,10 @@
 const express = require('express'),
       router = express.Router(),
       RegQuestion = require('../Models/regQuestion'),
-      CodeingQuestion = require('../Models/codingQuestion');
+      CodeingQuestion = require('../Models/codingQuestion'),
+      checkAuth = require('../middleware/check-auth');
 
-router.post("/savequestion",(req,res,next)=>{
+router.post("/savequestion",checkAuth,(req,res,next)=>{
     const question = new RegQuestion({
         question: req.body.question,
         option: req.body.option,
@@ -23,7 +24,7 @@ router.post("/savequestion",(req,res,next)=>{
     }); 
 });
 
-router.post("/savecodingquestion", (req,res,next) => {
+router.post("/savecodingquestion",checkAuth, (req,res,next) => {
     const codingQuestion = new CodeingQuestion({
         question: req.body.question,
         inputtc1: req.body.inputtc1,
@@ -44,7 +45,7 @@ router.post("/savecodingquestion", (req,res,next) => {
     });
 });
 
-router.get("/getquestion",(req,res,next)=>{
+router.get("/getquestion",checkAuth,(req,res,next)=>{
     RegQuestion.find().then(question=>{
         res.status(200).json({
             message: 'Question Fetchted Successfully',
@@ -58,7 +59,7 @@ router.get("/getquestion",(req,res,next)=>{
     });
 });
 
-router.get("/getcodingquestion",(req,res,next)=>{
+router.get("/getcodingquestion",checkAuth,(req,res,next)=>{
     CodeingQuestion.find().then(CodeingQuestions=>{
         res.status(200).json({
             message: 'Coding Question Fetchted Successfully',

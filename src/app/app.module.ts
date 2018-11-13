@@ -13,7 +13,7 @@ import { NavigationComponent } from './admin-dashbord/navigation/navigation.comp
 import { PagesComponent } from './admin-dashbord/pages/pages.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule} from '@angular/material';
 import { DashbordHomeComponent } from './admin-dashbord/pages/dashbord-home/dashbord-home.component';
 import { SettengsComponent } from './admin-dashbord/pages/settengs/settengs.component';
 import { AddQuestionComponent } from './admin-dashbord/pages/add-question/add-question.component';
@@ -29,19 +29,13 @@ import { UserComponent} from './userside/user.component';
 import { FeedbackComponent } from './userside/feedback/feedback.component';
 import { ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {AdminQuestionService} from './service/Admin-Service/admin-question.service';
 import { ReviewCodingQuestionComponent } from './admin-dashbord/pages/review-coding-question/review-coding-question.component';
 import { AdminResultComponent } from './admin-dashbord/pages/admin-result/admin-result.component';
-import {AdminOtherService} from './service/Admin-Service/admin-other.service';
 import { StartExamComponent } from './admin-dashbord/pages/settengs/start-exam/start-exam.component';
 import { SubmitQuestionComponent } from './userside/questions/submit-question/submit-question.component';
 import { SubmitCodingComponent} from './userside/coding-questions/subit-coding/submit-coding.component';
-import {AdminAuthService} from './service/Admin-Service/admin-auth.service';
-import {UserAuthService} from './service/User/user-auth.service';
-import {UserQuestionService} from './service/User/user-question.service';
-import {UserOtherService} from './service/User/user-other.service';
-import {HttpClientModule} from '@angular/common/http';
-
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { AdminAuthInterceptor } from './service/Admin-Service/admin-auth-interceptor'
 const approute: Routes = [
   { path: '', component: LandingComponent},
   { path: 'candidate-login', component: UserAuthComponent },
@@ -113,12 +107,7 @@ const approute: Routes = [
     HttpClientModule
   ],
   providers: [
-    AdminAuthService,
-    AdminQuestionService,
-    AdminOtherService,
-    UserAuthService,
-    UserQuestionService,
-    UserOtherService
+     {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

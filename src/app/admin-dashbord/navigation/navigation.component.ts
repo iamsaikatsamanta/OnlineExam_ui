@@ -13,6 +13,5 @@ export class NavigationComponent implements OnInit{
   ngOnInit() {
     const adminData = this.adminAuthService.getAdminData();
     this.adminImgurl = adminData.img_url;
-    console.log(this.adminImgurl);
   }
 }

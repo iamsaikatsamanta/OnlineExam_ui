@@ -35,25 +35,27 @@ import { StartExamComponent } from './admin-dashbord/pages/settengs/start-exam/s
 import { SubmitQuestionComponent } from './userside/questions/submit-question/submit-question.component';
 import { SubmitCodingComponent} from './userside/coding-questions/subit-coding/submit-coding.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import { AdminAuthInterceptor } from './service/Admin-Service/admin-auth-interceptor'
+import { AdminAuthInterceptor } from './service/Admin-Service/admin-auth-interceptor';
+import {AdminGuard} from './auth-guard/admin.guard';
+
 const approute: Routes = [
   { path: '', component: LandingComponent},
   { path: 'candidate-login', component: UserAuthComponent },
   { path: 'admin-login', component: AdminAuthComponent},
   { path: 'syllabus', component: SyllybusComponent},
   { path: 'candidate-registration', component: SignupComponent},
-  { path: 'admin-dashboard', component: AdminDashbordComponent, children: [
-      { path: 'home', component: DashbordHomeComponent },
-      { path: 'add-question', component: AddQuestionComponent},
-      { path: 'add-coding-question', component: CodingQuestionComponent},
-      { path: 'view-question', component: ViewQuestionComponent},
-      { path: 'edit-question/:qid' , component: AddQuestionComponent},
-      { path: 'edit-coding-question/:cqid', component: CodingQuestionComponent},
-      { path: 'registered-candidate', component: ShowRegisteredCandidateComponent},
-      { path: 'review-coding-question', component: ReviewCodingQuestionComponent},
-      { path: 'result', component: AdminResultComponent},
-      { path: 'settings', component: SettengsComponent},
-      { path: 'start-exam', component: StartExamComponent}
+  { path: 'admin-dashboard', component: AdminDashbordComponent, canActivate: [AdminGuard], children: [
+      { path: 'home', component: DashbordHomeComponent, canActivate: [AdminGuard] },
+      { path: 'add-question', component: AddQuestionComponent, canActivate: [AdminGuard]},
+      { path: 'add-coding-question', component: CodingQuestionComponent, canActivate: [AdminGuard]},
+      { path: 'view-question', component: ViewQuestionComponent, canActivate: [AdminGuard]},
+      { path: 'edit-question/:qid' , component: AddQuestionComponent, canActivate: [AdminGuard]},
+      { path: 'edit-coding-question/:cqid', component: CodingQuestionComponent, canActivate: [AdminGuard]},
+      { path: 'registered-candidate', component: ShowRegisteredCandidateComponent, canActivate: [AdminGuard]},
+      { path: 'review-coding-question', component: ReviewCodingQuestionComponent, canActivate: [AdminGuard]},
+      { path: 'result', component: AdminResultComponent, canActivate: [AdminGuard]},
+      { path: 'settings', component: SettengsComponent, canActivate: [AdminGuard]},
+      { path: 'start-exam', component: StartExamComponent, canActivate: [AdminGuard]}
     ] },
   { path: 'user', component: UserComponent , children: [
       { path: 'instruction', component: InstructionsComponent},
@@ -107,7 +109,8 @@ const approute: Routes = [
     HttpClientModule
   ],
   providers: [
-     {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true}
+     {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true},
+      AdminGuard
   ],
   bootstrap: [AppComponent]
 })

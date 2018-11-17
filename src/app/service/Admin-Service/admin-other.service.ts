@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,14 +17,14 @@ export class AdminOtherService {
     num_of_coding_ques: null
   };
   private candidate: any[];
+  private candidateUpdated = new Subject<any>();
   constructor(private http: HttpClient) { }
   getRegisteredCandidate() {
     this.http.get<{message: string, candidate: any[]}>('http://localhost:3000/api/admin/registeredCandidate')
     .subscribe(candidateData => {
-      console.log(candidateData);
       this.candidate = candidateData.candidate;
+      this.candidateUpdated.next([...this.candidate]);
       console.log(this.candidate);
-      return this.candidate;
     });
   }
   getExamDetails() {
@@ -40,5 +41,8 @@ export class AdminOtherService {
     this.exam.num_of_ques = exam.questionr1;
     this.exam.num_of_coding_ques = exam.questionr2;
     console.log(this.exam);
+  }
+  getCandidateUpdateListner() {
+    return this.candidateUpdated.asObservable();
   }
 }

@@ -1,25 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 
 import {Router} from '@angular/router';
 import {UserQuestionService} from '../../service/User/user-question.service';
 import {UserQuestionModel} from '../../model/user-question-model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css']
 })
-export class QuestionsComponent implements OnInit {
+export class QuestionsComponent implements OnInit, OnDestroy {
   questions: UserQuestionModel [];
   private no_q_ans = 0;
   min;
   sec;
   activeQuestion = 0;
+  private questionSub: Subscription;
   constructor(private userQuestionService: UserQuestionService, private router: Router) { }
 
-  ngOnInit() {
-    this.questions = this.userQuestionService.getQuestion();
+  async ngOnInit() {
+    this.userQuestionService.getQuestion();
+    this.questionSub = this.userQuestionService.getQuestionUpdateListner().subscribe(question => {
+      this.questions = question;
+    });
     this.startTimer();
 
   }
@@ -76,5 +81,8 @@ export class QuestionsComponent implements OnInit {
   }
   selectAns(i) {
     this.questions[this.activeQuestion].selected = i;
+  }
+  ngOnDestroy() {
+    this.questionSub.unsubscribe();
   }
 }

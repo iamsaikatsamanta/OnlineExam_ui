@@ -62,7 +62,7 @@ router.post("/login", (req,res,next) => {
         });
       }
       fetcheduser = user;
-      return bcrypt.compare(req.body.password, user.password);   
+      return bcrypt.compare(req.body.password, user.password);
     })
     .then(result=>{
       if(!result){
@@ -70,15 +70,15 @@ router.post("/login", (req,res,next) => {
           message: 'Auth Failed'
       });
       }
-      const token = jwt.sign({refId: fetcheduser.refId, userId: fetcheduser._id}, 
+      const token = jwt.sign({refId: fetcheduser.refId, name: fetcheduser.name, img_url: fetcheduser.img_url},
         "The Hydrogen One Smartphone will come with an A3D Multi-dimensional surround sound and Red also says that it is a module, cinema-capable media which will be letting you add a power pack for increasing battery life and also expand phone’s memory or even attach a camera module with changeable mounts and these will be available in 2019. It also has a Holographic 4-View (H4V) recoding front and back with 3D experience and it also creates a depth map and adds two additional views (4V) in real time. There are a durable carbon fiber and functionally designed side controls on the device.",
         {expiresIn: '5m'}
       );
       res.status(200).json({
         token: token
       });
-    })    
-    .catch(err =>{ 
+    })
+    .catch(err =>{
       return res.status(401).json({
         message: 'Auth Failed'
       });
@@ -96,7 +96,7 @@ function getRefId(){
     if(d.getDate()<10){
       date += '0'+d.getDate();
     }else {
-      date += d.getDate(); 
+      date += d.getDate();
     }
     var refId = Math.floor(1000 + Math.random() * 9000);
     return date+refId

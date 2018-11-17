@@ -8,3 +8,9 @@ h1{
   color: gray;
   font-family: 'Encode Sans Condensed', sans-serif;
 }
+table thead tr th{
+  text-align: center;
+}
+table tbody tr td {
+  text-align: center;
+}

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {UserAuthService} from '../service/User/user-auth.service';
 
 @Component({
   selector: 'app-user',
@@ -8,10 +9,15 @@ import {Router} from '@angular/router';
 })
 
 export class UserComponent implements OnInit{
-  id = 'AKCSIT02';
-  name = 'Saikat Samanta';
-  constructor(private route: Router) {}
+  userData: any = {
+    refId: String,
+    name: String,
+    img_url: String
+  };
+  constructor(private route: Router, private userAuthService: UserAuthService) {}
   ngOnInit() {
+    const data = this.userAuthService.getUserData();
+    this.userData = data;
     this.route.navigate(['/user/instruction']);
   }
 }

@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CodingQuestionModel} from '../../model/coding-question-model';
 import {Router} from '@angular/router';
 import {UserCodingQuestionModel} from '../../model/user-coding-question-model';
 import {UserQuestionService} from '../../service/User/user-question.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {subscriptionLogsToBeFn} from 'rxjs/internal/testing/TestScheduler';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-coding-questions',
   templateUrl: './coding-questions.component.html',
   styleUrls: ['./coding-questions.component.css']
 })
-export class CodingQuestionsComponent implements OnInit {
+export class CodingQuestionsComponent implements OnInit, OnDestroy {
   showCompile = false;
   showRun = false;
   compileMessage;
@@ -18,6 +20,7 @@ export class CodingQuestionsComponent implements OnInit {
   activeQuestion = 0;
   no_q_ans = 0;
   codingQuestions: UserCodingQuestionModel[];
+  private codingQuestionSub: Subscription;
   min;
   sec;
   codingForm = new FormGroup({
@@ -28,7 +31,12 @@ export class CodingQuestionsComponent implements OnInit {
   constructor(private userQuestionService: UserQuestionService, private router: Router) { }
 
   ngOnInit() {
-    this.codingQuestions = this.userQuestionService.getCodingQuestion();
+    this.userQuestionService.getCodingQuestion();
+    this.codingQuestionSub = this.userQuestionService.getCodingQuestionUpdateListner()
+      .subscribe(response => {
+        console.log(response);
+        this.codingQuestions = response;
+      });
     this.startTimer();
   }
   startTimer() {
@@ -90,5 +98,8 @@ export class CodingQuestionsComponent implements OnInit {
   }
   submit() {
     this.router.navigate(['/user/submit-coding']);
+  }
+  ngOnDestroy() {
+    this.codingQuestionSub.unsubscribe();
   }
 }

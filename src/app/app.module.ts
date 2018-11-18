@@ -37,6 +37,7 @@ import { SubmitCodingComponent} from './userside/coding-questions/subit-coding/s
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AdminAuthInterceptor } from './service/Admin-Service/admin-auth-interceptor';
 import {AdminGuard} from './auth-guard/admin.guard';
+import {UserGuard} from './auth-guard/user.guard';
 
 const approute: Routes = [
   { path: '', component: LandingComponent},
@@ -57,13 +58,13 @@ const approute: Routes = [
       { path: 'settings', component: SettengsComponent, canActivate: [AdminGuard]},
       { path: 'start-exam', component: StartExamComponent, canActivate: [AdminGuard]}
     ] },
-  { path: 'user', component: UserComponent , children: [
-      { path: 'instruction', component: InstructionsComponent},
-      { path: 'questions', component: QuestionsComponent},
-      { path: 'submit-question', component: SubmitQuestionComponent},
-      { path: 'coding-questions', component: CodingQuestionsComponent},
-      { path: 'submit-coding', component: SubmitCodingComponent},
-      { path: 'feedback', component: FeedbackComponent}
+  { path: 'user', component: UserComponent , canActivate: [UserGuard] , children: [
+      { path: 'instruction', canActivate: [UserGuard], component: InstructionsComponent},
+      { path: 'questions', canActivate: [UserGuard], component: QuestionsComponent},
+      { path: 'submit-question', canActivate: [UserGuard] , component: SubmitQuestionComponent},
+      { path: 'coding-questions', canActivate: [UserGuard], component: CodingQuestionsComponent},
+      { path: 'submit-coding', canActivate: [UserGuard], component: SubmitCodingComponent},
+      { path: 'feedback', canActivate: [UserGuard], component: FeedbackComponent}
     ]},
 ];
 

@@ -27,7 +27,6 @@ export class AdminAuthService {
         this.token = token;
         if (this.token) {
           const expirIn = new JwtHelperService().getTokenExpirationDate(this.token);
-          console.log(expirIn);
           const now = new Date();
           const time = (expirIn.getTime() - now.getTime()) / 1000;
           this.setAuthTimer(time);

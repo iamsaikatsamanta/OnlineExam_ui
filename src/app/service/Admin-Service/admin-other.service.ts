@@ -24,7 +24,6 @@ export class AdminOtherService {
     .subscribe(candidateData => {
       this.candidate = candidateData.candidate;
       this.candidateUpdated.next([...this.candidate]);
-      console.log(this.candidate);
     });
   }
   getExamDetails() {

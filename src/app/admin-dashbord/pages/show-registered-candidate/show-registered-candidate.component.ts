@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CandidateModel} from '../../../model/candidateModel';
 import {AdminOtherService} from '../../../service/Admin-Service/admin-other.service';
 import {Subscription} from 'rxjs';
 
@@ -17,7 +16,6 @@ export class ShowRegisteredCandidateComponent implements OnInit, OnDestroy {
     this.adminOtherService.getRegisteredCandidate();
     this.candidateSubs = this.adminOtherService.getCandidateUpdateListner().subscribe((candidate: any[]) => {
       this.candidates = candidate;
-      console.log(this.candidates);
     });
   }
   ngOnDestroy() {

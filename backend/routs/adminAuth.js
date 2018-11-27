@@ -5,7 +5,7 @@ const express = require('express'),
       jwt = require('jsonwebtoken');
 
 // router.get("/admin/signup",(req,res,next) => {
-//   bcrypt.hash('ranjan2811', 10 ).then(hash => {
+//   bcrypt.hash('ranjan8211', 10 ).then(hash => {
 //     const admin = new Admin({
 //       userid: 'ranjan@admin.com',
 //       name: 'Ranjan Das',

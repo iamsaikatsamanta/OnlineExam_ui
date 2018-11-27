@@ -72,4 +72,31 @@ router.get("/getcodingquestion",checkAuth,(req,res,next)=>{
     });
 });
 
+router.put('/updatequestion/:id',checkAuth,(req,res,next) =>{
+  const question = new RegQuestion({
+    _id: req.body.id,
+    question: req.body.question,
+    option: req.body.option,
+    correct: req.body.correct
+  });
+  RegQuestion.findOneAndUpdate({_id: req.params.id}, question)
+    .then(result =>{
+      console.log(result);
+      if (result){
+        res.status(200).json({
+          message: 'Question Update Successfully'
+        });
+      }else {
+        res.status(400).json({
+          message: 'Update Failed'
+        });
+      }
+    })
+    .cache(err =>{
+      res.status(400).json({
+        message: 'Update Failed',
+        err: err
+      });
+    });
+});
 module.exports = router;

@@ -24,6 +24,7 @@
     "@angular/router": "^6.0.3",
     "@auth0/angular-jwt": "^2.0.0",
     "angular-material": "^1.1.10",
+    "angular-particle": "^1.0.4",
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",

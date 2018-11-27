@@ -75,6 +75,10 @@ export class AdminQuestionService {
   }
   updateQuestion(question: QuestionModel) {
     console.log(question);
+    this.http.put('http://localhost:3000/api/admin/updatequestion/' + question.id, question)
+      .subscribe(result => {
+        console.log(result);
+      });
   }
   updateCodingQuestion(codeQuestion: CodingQuestionModel) {
     console.log(codeQuestion);

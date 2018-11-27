@@ -38,6 +38,7 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AdminAuthInterceptor } from './service/Admin-Service/admin-auth-interceptor';
 import {AdminGuard} from './auth-guard/admin.guard';
 import {UserGuard} from './auth-guard/user.guard';
+import { ParticlesModule } from 'angular-particle';
 
 const approute: Routes = [
   { path: '', component: LandingComponent},
@@ -107,7 +108,8 @@ const approute: Routes = [
     MatExpansionModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    ParticlesModule
   ],
   providers: [
      {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true},

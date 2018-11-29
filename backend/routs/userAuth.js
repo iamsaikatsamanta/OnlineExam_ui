@@ -1,7 +1,7 @@
 const express = require('express'),
       router= express.Router(),
       User = require('../Models/user'),
-      bcrypt = require('bcrypt'),
+      bcrypt = require('bcryptjs'),
       multer = require('multer'),
       jwt = require('jsonwebtoken') ;
 const MIME_TYPE_MAP = {

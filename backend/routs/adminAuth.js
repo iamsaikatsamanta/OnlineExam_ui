@@ -1,7 +1,7 @@
 const express = require('express'),
       router= express.Router(),
       Admin = require('../Models/admin'),
-      bcrypt= require('bcrypt'),
+      bcrypt= require('bcryptjs'),
       jwt = require('jsonwebtoken');
 
 // router.get("/admin/signup",(req,res,next) => {

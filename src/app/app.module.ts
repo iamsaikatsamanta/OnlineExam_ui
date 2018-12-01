@@ -27,7 +27,7 @@ import { CodingQuestionsComponent } from './userside/coding-questions/coding-que
 import { SubmitPageComponent } from './userside/submit-page/submit-page.component';
 import { UserComponent} from './userside/user.component';
 import { FeedbackComponent } from './userside/feedback/feedback.component';
-import { ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ReviewCodingQuestionComponent } from './admin-dashbord/pages/review-coding-question/review-coding-question.component';
 import { AdminResultComponent } from './admin-dashbord/pages/admin-result/admin-result.component';
@@ -39,11 +39,16 @@ import { AdminAuthInterceptor } from './service/Admin-Service/admin-auth-interce
 import {AdminGuard} from './auth-guard/admin.guard';
 import {UserGuard} from './auth-guard/user.guard';
 import { ParticlesModule } from 'angular-particle';
+import { ToasterModule } from 'angular2-toaster';
+import { ForgotPasswordComponent } from './admin-auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './admin-auth/reset-password/reset-password.component';
 
 const approute: Routes = [
   { path: '', component: LandingComponent},
   { path: 'candidate-login', component: UserAuthComponent },
   { path: 'admin-login', component: AdminAuthComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'change-password', component: ResetPasswordComponent},
   { path: 'syllabus', component: SyllybusComponent},
   { path: 'candidate-registration', component: SignupComponent},
   { path: 'admin-dashboard', component: AdminDashbordComponent, canActivate: [AdminGuard], children: [
@@ -98,7 +103,9 @@ const approute: Routes = [
     AdminResultComponent,
     StartExamComponent,
     SubmitQuestionComponent,
-    SubmitCodingComponent
+    SubmitCodingComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -107,9 +114,11 @@ const approute: Routes = [
     LayoutModule,
     MatExpansionModule,
     ReactiveFormsModule,
+    FormsModule,
     MatFormFieldModule,
     HttpClientModule,
-    ParticlesModule
+    ParticlesModule,
+    ToasterModule.forRoot()
   ],
   providers: [
      {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true},

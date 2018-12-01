@@ -1,6 +1,3 @@
-<div class="container6" *ngIf="showError">
-  <p class="alert alert-danger">{{ errorMessage }}</p>
-</div>
 <div class="container">
     <h2 id="login">Candidate Registration</h2>
     <form class="myfrom" [formGroup]="signupForm" (submit)="onSubmit()">
@@ -19,8 +16,10 @@
             </select>
             <label for="email">Email</label>
             <input id="email" class="form-control form-group" formControlName="email" placeholder="Email">
+            <p class="error" *ngIf="signupForm.get('email').invalid && iserror">*Invalid Email</p>
             <label for="phoneno">Phone Number</label>
             <input id="phoneno" class="form-group form-control" placeholder="Phone Number" formControlName="phno">
+            <p class="error" *ngIf="signupForm.get('phno').invalid && iserror">*Invalid Phone Number</p>
             <label for="name">Name</label>
             <input id="name" class="form-control form-group" placeholder="Name" formControlName="name">
           </div>

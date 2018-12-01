@@ -9,15 +9,16 @@ import {UserAuthService} from '../service/User/user-auth.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  showError = false;
-  errorMessage = '';
+  iserror = false;
   imagePreview: string;
   years = [];
+  regex = /^([a-zA-Z0-9\.\-_]+)@([a-zA-Z0-9-]+)\.([a-z]{2,4})(.[a-z]{2,4})?$/;
+  regxph = /^[0-9]{8,13}$/;
   signupForm = new FormGroup({
     course: new FormControl(null, Validators.required),
     year: new FormControl(null, Validators.required),
-    email: new FormControl(null, Validators.required),
-    phno: new FormControl(null, Validators.required),
+    email: new FormControl(null, [Validators.required, Validators.pattern(this.regex)]),
+    phno: new FormControl(null, [Validators.required, Validators.pattern(this.regxph)]),
     name: new FormControl(null, Validators.required),
     dob: new FormControl(null, Validators.required),
     password: new FormControl(null, Validators.required),
@@ -30,7 +31,7 @@ export class SignupComponent implements OnInit {
   }
   onSubmit() {
     if (this.signupForm.valid) {
-      this.showError = false;
+      this.iserror = false;
       const userData = new FormData();
       userData.append('course', this.signupForm.value.course);
       userData.append('year', this.signupForm.value.year);
@@ -42,11 +43,7 @@ export class SignupComponent implements OnInit {
       userData.append('image', this.signupForm.value.image, this.signupForm.value.name);
       this.userAuthService.onUserRegister(userData);
     } else {
-      this.showError = true;
-      this.errorMessage = 'Invalid or Missing Details';
-      setInterval(() => {
-        this.showError = false;
-      } , 5000);
+      this.iserror = true;
     }
   }
   onImagePicked(event: Event) {

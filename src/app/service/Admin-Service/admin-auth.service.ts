@@ -3,8 +3,9 @@ import {AdminModel} from '../../model/admin-model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { async } from 'rxjs/internal/scheduler/async';
 import { Subject } from 'rxjs';
+import {ToasterService} from 'angular2-toaster';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AdminAuthService {
   private authStatusListner = new Subject<boolean>();
   private tokenTimer: any;
   private isAuthenticated = false;
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private toasterService: ToasterService) { }
   onLogin(adminData: AdminModel) {
     this.http.post<{adminToken: string}>('http://localhost:3000/api/adminAuth/login', adminData)
       .subscribe(res => {
@@ -35,6 +36,7 @@ export class AdminAuthService {
           this.isAuthenticated = true;
           this.authStatusListner.next(true);
           this.router.navigate(['/admin-dashboard/home']);
+          this.toasterService.pop('success', 'You Have Login Successful');
         }
       });
   }
@@ -89,6 +91,12 @@ export class AdminAuthService {
   private async saveAuthData(token: string, expirationDate: Date) {
     localStorage.setItem('adminToken', token);
     localStorage.setItem('adminExpiration', expirationDate.toISOString());
+  }
+  onResetPassword(username: string) {
+    this.http.post<{message: string}>('http://localhost:3000/api/adminAuth//resetpasswordinit', {username: username})
+      .subscribe(response => {
+        this.toasterService.pop('success', response.message);
+      });
   }
   private clearAuthData() {
     localStorage.removeItem('adminToken');

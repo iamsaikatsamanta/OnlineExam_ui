@@ -9,10 +9,10 @@ import {AdminModel} from '../model/admin-model';
   styleUrls: ['./admin-auth.component.css']
 })
 export class AdminAuthComponent implements OnInit {
-  showError = false;
-  errorMessage = '';
+  inusshow = false;
+  regex = /^([a-zA-Z0-9\.\-_]+)@([a-z0-9-]+)\.([a-z]{2,4})(.[a-z]{2,4})?$/;
   adminForm = new FormGroup({
-    username: new FormControl(null, [Validators.required, Validators.email]),
+    username: new FormControl(null, [Validators.required, Validators.pattern(this.regex)]),
     password: new FormControl(null, Validators.required)
   });
   constructor(private adminAuthService: AdminAuthService) { }
@@ -21,13 +21,9 @@ export class AdminAuthComponent implements OnInit {
   }
   submit() {
     if (this.adminForm.invalid) {
-      this.showError = true;
-      this.errorMessage = 'Invalid or Missing Details';
-      setInterval(() => {
-        this.showError = false;
-      } , 5000);
+      this.inusshow = true;
     } else {
-      this.showError = false;
+      this.inusshow = false;
       const adminData: AdminModel = {
         username: this.adminForm.value.username,
         password: this.adminForm.value.password

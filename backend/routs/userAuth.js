@@ -3,7 +3,14 @@ const express = require('express'),
       User = require('../Models/user'),
       bcrypt = require('bcryptjs'),
       multer = require('multer'),
+      nodemailer= require('nodemailer'),
+      sendgridtransport= require('nodemailer-sendgrid-transport'),
       jwt = require('jsonwebtoken') ;
+const transpoter= nodemailer.createTransport(sendgridtransport({
+  auth:{
+     api_key: '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'
+  }
+}));
 const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -39,9 +46,16 @@ router.post("/register",multer({storage: storage}).single('image') ,(req,res, ne
       password: hash,
       img_url: url + '/images/user/' + req.file.filename
     });
-    user.save().then(result =>{
+    user.save().then(result=> {
       res.status(200).json({
         message: 'Registration Successful'
+      });
+    }).then(result =>{
+      transpoter.sendMail({
+        to: result.email,
+        from: 'onlinexm@akcsit.in',
+        subject: 'Registration Successful',
+        html:'<h1>You have Successfully Registered</h1>'
       });
     }).catch(error =>{
       console.log(error);

@@ -8,7 +8,7 @@ const express = require('express'),
       jwt = require('jsonwebtoken') ;
 const transpoter= nodemailer.createTransport(sendgridtransport({
   auth:{
-     api_key: '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'
+     
   }
 }));
 const MIME_TYPE_MAP = {

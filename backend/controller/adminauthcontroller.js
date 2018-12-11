@@ -88,14 +88,20 @@ exports.resetPassword = (req,res,next)=>{
         return admin.save();
       })
       .then(admin=>{
+        console.log(process.env.HOST);
       transpoter.sendMail({
         to: admin.email,
         from: 'onlinexm@akcsit.in',
         subject: 'Password Reset',
         html:`
           <p>You Request For Password Reset</p>
-          <p>Click This <a href="http://localhost:4200/set-new-password/${token}">http://localhost:4200/set-new-password/${token}</a>To Set a New Password</p>
+          <p>Click This <a href="${process.env.HOST}/${token}">${process.env.HOST}/${token}</a>To Set a New Password</p>
         `
+      }).catch(err => {
+        res.status(500).json({
+          message: 'Reset Link Sending Failed',
+          err: err
+        });
       });
       }).then(result=>{
         res.status(201).json({

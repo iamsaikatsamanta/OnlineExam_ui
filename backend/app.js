@@ -1,3 +1,4 @@
+require('dotenv/config')
 const path =require('path'),
     express=require('express'),
     mongoose=require('mongoose'),
@@ -10,7 +11,7 @@ const adminAuthRoutes = require('./routs/adminAuth'),
       userQuestionRouter = require('./routs/userQuestion');
 const app=express();
 try{
-  mongoose.connect('mongodb://ss033:rbkvasqw12@ds115094.mlab.com:15094/onlineexam');
+  mongoose.connect(process.env.MONGO_CON);
 }catch{
   console.log("Can't Connect To DataBase");
 }

@@ -8,7 +8,8 @@ const adminAuthRoutes = require('./routs/adminAuth'),
       userAuthRoutes = require('./routs/userAuth'),
       adminQuestionRoutes = require('./routs/adminquestion'),
       adminOtherRouter = require('./routs/adminother'),
-      userQuestionRouter = require('./routs/userQuestion');
+      userQuestionRouter = require('./routs/userQuestion'),
+      marksCalculationRoutes = require('./routs/marksCalculation');
 const app=express();
 try{
   mongoose.connect(process.env.MONGO_CON);
@@ -38,4 +39,5 @@ app.use("/api/userAuth", userAuthRoutes);
 app.use("/api/admin",adminQuestionRoutes);
 app.use("/api/admin",adminOtherRouter);
 app.use("/api/user/getquestion", userQuestionRouter);
+app.use("/api/user/calculatemarks", marksCalculationRoutes);
 module.exports = app;

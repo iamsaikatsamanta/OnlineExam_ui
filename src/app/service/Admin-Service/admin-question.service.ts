@@ -83,6 +83,19 @@ export class AdminQuestionService {
   updateCodingQuestion(codeQuestion: CodingQuestionModel) {
     console.log(codeQuestion);
   }
+  deleteQuestion(id: Object, type: string) {
+    if (type === 'Coding') {
+      this.http.delete('http://localhost:3000/api/admin/deletecodingquestion', id)
+      .subscribe(response => {
+        console.log(response);
+      });
+    } else if (type === 'Regular') {
+      this.http.delete('http://localhost:3000/api/admin/deletequestion', id)
+      .subscribe(response => {
+        console.log(response);
+      });
+    }
+  }
   getQuestionUpdateListen() {
     return this.questionUpdated.asObservable();
   }

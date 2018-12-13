@@ -50,6 +50,11 @@ export class ViewQuestionComponent implements OnInit, OnDestroy {
       this.type = null;
     }
   }
+  onDelete(id: string) {
+    if (this.type === 'Regular') {
+      this.adminQuestionService.deleteQuestion({id: id}, this.type);
+    }
+  }
   ngOnDestroy() {
     if (this.questionSub) {
       this.questionSub.unsubscribe();

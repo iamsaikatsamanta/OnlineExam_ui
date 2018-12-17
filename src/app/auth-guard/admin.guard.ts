@@ -21,7 +21,7 @@ export class AdminGuard implements CanActivate, OnDestroy {
     }
     return this.isUserAuth;
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.authSubs.unsubscribe();
   }
 }

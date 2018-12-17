@@ -28,4 +28,7 @@ export class ResetPasswordComponent implements OnInit {
       }
     }
   }
+  onChangePassword() {
+
+  }
 }

@@ -1,6 +1,7 @@
 const express = require('express'),
       router= express.Router(),
       User = require('../Models/user'),
+      Marks= require('../Models/marks');
       bcrypt = require('bcryptjs'),
       multer = require('multer'),
       nodemailer= require('nodemailer'),
@@ -8,7 +9,7 @@ const express = require('express'),
       jwt = require('jsonwebtoken') ;
 const transpoter= nodemailer.createTransport(sendgridtransport({
   auth:{
-     
+     api_key: process.env.API_KEY
   }
 }));
 const MIME_TYPE_MAP = {
@@ -19,7 +20,7 @@ const MIME_TYPE_MAP = {
 
 const storage = multer.diskStorage({
   destination: (req,file,cb)=> {
-    const isValid = MIME_TYPE_MAP[file.mimetype]
+    const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error("Invalid Mime Type");
     if (isValid) {
       error = null;
@@ -47,12 +48,16 @@ router.post("/register",multer({storage: storage}).single('image') ,(req,res, ne
       img_url: url + '/images/user/' + req.file.filename
     });
     user.save().then(result=> {
+      const marks = new Marks({
+        user: result.refId
+      });
+      marks.save();
       res.status(200).json({
         message: 'Registration Successful'
       });
     }).then(result =>{
       transpoter.sendMail({
-        to: result.email,
+        to: user.email,
         from: 'onlinexm@akcsit.in',
         subject: 'Registration Successful',
         html:'<h1>You have Successfully Registered</h1>'

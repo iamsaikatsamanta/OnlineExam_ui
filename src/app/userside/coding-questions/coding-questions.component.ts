@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CodingQuestionModel} from '../../model/coding-question-model';
 import {Router} from '@angular/router';
 import {UserCodingQuestionModel} from '../../model/user-coding-question-model';
 import {UserQuestionService} from '../../service/User/user-question.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {subscriptionLogsToBeFn} from 'rxjs/internal/testing/TestScheduler';
 import {Subscription} from 'rxjs';
+import {AnswerService} from '../../service/User/answer.service';
 
 @Component({
   selector: 'app-coding-questions',
@@ -28,11 +27,11 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
     code: new FormControl(null, Validators.required)
   });
 
-  constructor(private userQuestionService: UserQuestionService, private router: Router) { }
+  constructor(private userQuestionService: UserQuestionService, private router: Router, private answerService: AnswerService) { }
 
-  ngOnInit() {
-    this.userQuestionService.getCodingQuestion();
-    this.codingQuestionSub = this.userQuestionService.getCodingQuestionUpdateListner()
+  async ngOnInit() {
+    await this.userQuestionService.getCodingQuestion();
+    this.codingQuestionSub = await this.userQuestionService.getCodingQuestionUpdateListner()
       .subscribe(response => {
         console.log(response);
         this.codingQuestions = response;
@@ -57,7 +56,7 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
     const code = { lang: this.codingForm.get('lang').value,
       code: this.codingForm.get('code').value
     };
-    this.compileMessage = this.userQuestionService.onCodeCompile(code);
+    this.answerService.onCodingCompile(code, this.codingQuestions[this.activeQuestion].id);
     this.showCompile = true;
   }
   onRun() {

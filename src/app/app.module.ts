@@ -48,7 +48,7 @@ const approute: Routes = [
   { path: 'candidate-login', component: UserAuthComponent },
   { path: 'admin-login', component: AdminAuthComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
-  { path: 'reset-password/:id', component: ResetPasswordComponent},
+  { path: 'reset-password/:token/:id', component: ResetPasswordComponent},
   { path: 'syllabus', component: SyllybusComponent},
   { path: 'candidate-registration', component: SignupComponent},
   { path: 'admin-dashboard', component: AdminDashbordComponent, canActivate: [AdminGuard], children: [

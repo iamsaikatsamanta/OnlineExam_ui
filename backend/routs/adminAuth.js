@@ -7,4 +7,5 @@ const express = require('express'),
 
 router.post("/login",adminauthcontroller.adminLogin);
 router.post('/resetpasswordinit',adminauthcontroller.resetPassword);
+router.post('/setnewpassword',adminauthcontroller.setNewPassword);
 module.exports = router;

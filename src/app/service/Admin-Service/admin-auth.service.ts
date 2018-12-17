@@ -3,7 +3,7 @@ import {AdminModel} from '../../model/admin-model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {ToasterService} from 'angular2-toaster';
 
 
@@ -20,6 +20,7 @@ export class AdminAuthService {
   private authStatusListner = new Subject<boolean>();
   private tokenTimer: any;
   private isAuthenticated = false;
+  private resetPasswordState = false;
   constructor(private http: HttpClient, private router: Router, private toasterService: ToasterService) { }
   onLogin(adminData: AdminModel) {
     this.http.post<{adminToken: string}>('http://localhost:3000/api/adminAuth/login', adminData)
@@ -93,9 +94,15 @@ export class AdminAuthService {
     localStorage.setItem('adminExpiration', expirationDate.toISOString());
   }
   onResetPassword(username: string) {
-    this.http.post<{message: string}>('http://localhost:3000/api/adminAuth//resetpasswordinit', {username: username})
+    this.http.post<{message: string}>('http://localhost:3000/api/adminAuth/resetpasswordinit', {username: username})
       .subscribe(response => {
         this.toasterService.pop('success', response.message);
+      });
+  }
+  setNewPassword(password) {
+    this.http.post('http://localhost:3000/api/adminAuth/setnewpassword', password)
+      .subscribe(response => {
+        console.log(response);
       });
   }
   private clearAuthData() {

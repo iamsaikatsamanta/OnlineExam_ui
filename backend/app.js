@@ -10,6 +10,7 @@ const adminAuthRoutes = require('./routs/adminAuth'),
       adminOtherRouter = require('./routs/adminother'),
       userQuestionRouter = require('./routs/userQuestion'),
       marksCalculationRoutes = require('./routs/marksCalculation');
+      saveAnswerRoute = require('./routs/saveanswer');
 const app=express();
 try{
   mongoose.connect(process.env.MONGO_CON);
@@ -20,7 +21,7 @@ try{
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/images',express.static(path.join('backend/images')));
-
+app.use('/coding',express.static(path.join('backend/codingFile')));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -40,4 +41,5 @@ app.use("/api/admin",adminQuestionRoutes);
 app.use("/api/admin",adminOtherRouter);
 app.use("/api/user/getquestion", userQuestionRouter);
 app.use("/api/user/calculatemarks", marksCalculationRoutes);
+app.use('/api/user/answer', saveAnswerRoute);
 module.exports = app;

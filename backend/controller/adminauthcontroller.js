@@ -6,7 +6,7 @@ const cripto=require('crypto'),
   sendgridtransport= require('nodemailer-sendgrid-transport');
 const transpoter= nodemailer.createTransport(sendgridtransport({
   auth:{
-    
+    api_key : process.env.API_KEY
   }
 }));
 
@@ -69,15 +69,14 @@ exports.resetPassword = (req,res,next)=>{
   console.log('Hi From Reset Password');
   cripto.randomBytes(32, (err,buffer)=> {
     if (err) {
+      console.log(err);
       res.status(501).josn({
         message: 'Reset Password Failed'
       });
     }
     const token = buffer.toString('hex');
-    console.log(req.body);
     Admin.findOne({userid: req.body.username})
       .then(admin=>{
-        console.log(!admin);
         if (!admin){
           res.status(204).json({
             message: 'You Are Not a Registered Admin'
@@ -88,14 +87,13 @@ exports.resetPassword = (req,res,next)=>{
         return admin.save();
       })
       .then(admin=>{
-        console.log(process.env.HOST);
       transpoter.sendMail({
         to: admin.email,
         from: 'onlinexm@akcsit.in',
         subject: 'Password Reset',
         html:`
           <p>You Request For Password Reset</p>
-          <p>Click This <a href="${process.env.HOST}/${token}">${process.env.HOST}/${token}</a>To Set a New Password</p>
+          <p>Click This <a href="http://localhost:4200/reset-password/${token}/${admin._id}">http://lcoalhost:4200/reset-password/${token}</a>To Set a New Password</p>
         `
       }).catch(err => {
         res.status(500).json({
@@ -112,4 +110,33 @@ exports.resetPassword = (req,res,next)=>{
       })
     ;
   });
+};
+
+exports.setNewPassword = async (req,res,next)=> {
+  console.log(req.body);
+  const adminId= req.body.id;
+  const token = req.body.token;
+  let admin;
+  Admin.findOne({resetToken: token, tokenExpr: {$gt: Date.now()}, _id: adminId})
+    .then(adminData=>{
+      admin = adminData;
+      return bcrypt.hash(req.body.newPassword, 12);
+    })
+    .then(hashPassword =>{
+       admin.password = hashPassword;
+       admin.resetToken = undefined;
+       admin.tokenExpr= undefined;
+       admin.save();
+    })
+    .then(adminData=>{
+      res.status(201).json({
+        message: 'Password Reset Successful'
+      });
+    })
+    .cache(err=>{
+      res.status(500).json({
+        message: 'Some Error Occurred'
+      });
+    });
+
 };

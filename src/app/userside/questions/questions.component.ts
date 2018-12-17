@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {UserQuestionService} from '../../service/User/user-question.service';
 import {UserQuestionModel} from '../../model/user-question-model';
 import {Subscription} from 'rxjs';
+import {AnswerService} from '../../service/User/answer.service';
 
 @Component({
   selector: 'app-questions',
@@ -18,10 +19,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   sec;
   activeQuestion = 0;
   private questionSub: Subscription;
-  constructor(private userQuestionService: UserQuestionService, private router: Router) { }
+  constructor(private userQuestionService: UserQuestionService, private router: Router, private answerService: AnswerService) { }
 
   async ngOnInit() {
-    this.userQuestionService.getQuestion();
+    await this.userQuestionService.getQuestion();
     this.questionSub = this.userQuestionService.getQuestionUpdateListner().subscribe(question => {
       this.questions = question;
     });
@@ -57,6 +58,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
   onSaveNext() {
     console.log('onSave');
+    this.answerService.saveAnswer(this.questions[this.activeQuestion].option[this.questions[this.activeQuestion].selected], this.questions[this.activeQuestion].id);
     this.questions[this.activeQuestion].saved = true;
     this.onNext();
   }

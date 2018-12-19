@@ -36,8 +36,11 @@ export class UserAuthService {
           console.log(time);
           this.getDecodedData(this.token);
           this.authStatusListner.next(true);
-          this.router.navigate(['/user/instruction']);
         }
+      }, err => {
+        console.log(err);
+      }, () => {
+        this.router.navigate(['/user/instruction']);
       });
   }
   async getDecodedData(token: string) {

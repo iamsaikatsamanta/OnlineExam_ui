@@ -1,5 +1,5 @@
 <p id="timer" class="float-right">Time Left: {{ min }}: {{ sec }}</p>
-<div class="container">
+<div class="container" *ngIf="!isLoading">
   <div class="row">
     <div class="col-lg-8">
       <h4>Progress</h4>

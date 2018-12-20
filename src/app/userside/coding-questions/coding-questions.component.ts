@@ -5,6 +5,7 @@ import {UserQuestionService} from '../../service/User/user-question.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AnswerService} from '../../service/User/answer.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-coding-questions',
@@ -19,7 +20,7 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
   activeQuestion = 0;
   no_q_ans = 0;
   codingQuestions: UserCodingQuestionModel[];
-  private codingQuestionSub: Subscription;
+  isLoading = true;
   min;
   sec;
   codingForm = new FormGroup({
@@ -30,13 +31,25 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
   constructor(private userQuestionService: UserQuestionService, private router: Router, private answerService: AnswerService) { }
 
   async ngOnInit() {
-    await this.userQuestionService.getCodingQuestion();
-    this.codingQuestionSub = await this.userQuestionService.getCodingQuestionUpdateListner()
+    await this.userQuestionService.getCodingQuestion()
+      .pipe(map(codingData => {
+        return codingData.codingQuestions.map(codingQuestion => {
+          return {
+            id: codingQuestion.id,
+            question: codingQuestion.question,
+            saved: false
+          };
+        });
+      }))
       .subscribe(response => {
         console.log(response);
         this.codingQuestions = response;
+      }, err => {
+        console.log(err);
+      }, () => {
+        this.isLoading = false;
+        this.startTimer();
       });
-    this.startTimer();
   }
   startTimer() {
     let time = this.userQuestionService.checkCodingTImer();
@@ -65,7 +78,6 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
     const code = { lang: this.codingForm.get('lang').value,
       code: this.codingForm.get('code').value
     };
-    this.runStatus = this.userQuestionService.onCodeRun(code);
     this.showRun = true;
   }
   onNext() {
@@ -99,6 +111,5 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/user/submit-coding']);
   }
   ngOnDestroy() {
-    this.codingQuestionSub.unsubscribe();
   }
 }

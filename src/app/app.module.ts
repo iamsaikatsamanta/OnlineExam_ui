@@ -13,7 +13,8 @@ import { NavigationComponent } from './admin-dashbord/navigation/navigation.comp
 import { PagesComponent } from './admin-dashbord/pages/pages.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatExpansionModule} from '@angular/material';
+import {MatExpansionModule} from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { DashbordHomeComponent } from './admin-dashbord/pages/dashbord-home/dashbord-home.component';
 import { SettengsComponent } from './admin-dashbord/pages/settengs/settengs.component';
 import { AddQuestionComponent } from './admin-dashbord/pages/add-question/add-question.component';
@@ -118,6 +119,7 @@ const approute: Routes = [
     MatFormFieldModule,
     HttpClientModule,
     ParticlesModule,
+    MatProgressSpinnerModule,
     ToasterModule.forRoot()
   ],
   providers: [

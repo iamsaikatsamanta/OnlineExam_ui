@@ -24,8 +24,8 @@ export class UserAuthService {
         console.log(res);
       });
   }
-  onUserLogin(data: UserModel) {
-    this.http.post<{ token: string }>('http://localhost:3000/api/userAuth/login', data)
+  async onUserLogin(data: UserModel) {
+    await this.http.post<{ token: string }>('http://localhost:3000/api/userAuth/login', data)
       .subscribe(result => {
         this.token = result.token;
         if (this.token) {

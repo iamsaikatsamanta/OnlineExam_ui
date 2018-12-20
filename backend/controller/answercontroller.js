@@ -109,7 +109,7 @@ exports.onSaveAnswer = (req, res, next)=>{
         });
       });
   } else if (ext === 'PYTHON' ){
-    await fs.writeFile('./backend/codingFile/'+filename+'.py', req.body.code, (err)=>{
+    fs.writeFile('./backend/codingFile/'+filename+'.py', req.body.code, (err)=>{
       if (err)
         console.log(err);
     });

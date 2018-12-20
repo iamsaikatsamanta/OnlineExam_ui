@@ -10,50 +10,16 @@ import {Subject} from 'rxjs';
 })
 export class UserQuestionService {
   timeQuestion = 60;
-  timeCodingQuestion = 60;
-  questions:  UserQuestionModel[];
-  private updateQuestionListner = new Subject<UserQuestionModel[]>();
+  timeCodingQuestion = 300;
   codingQuestion:  UserCodingQuestionModel[];
   private updateCodingQuestionListner = new Subject<UserCodingQuestionModel[]>();
   constructor(private http: HttpClient) { }
 
   getQuestion() {
-    this.http.get<{ message: string, questions: any }>('http://localhost:3000/api/user/getquestion/regular')
-      .pipe(map(questionData => {
-        return questionData.questions.map(question => {
-          return {
-            id: question.id,
-            question: question.question,
-            option: question.option,
-            selected: null,
-            saved: false
-          };
-        });
-      }))
-      .subscribe(response => {
-        this.questions = response;
-        this.updateQuestionListner.next([...this.questions]);
-      });
-  }
-  getQuestionUpdateListner() {
-    return this.updateQuestionListner.asObservable();
+     return this.http.get<{ message: string, questions: any }>('http://localhost:3000/api/user/getquestion/regular');
   }
   getCodingQuestion() {
-    this.http.get<{message: string, codingQuestions: any}>('http://localhost:3000/api/user/getquestion/coding')
-      .pipe(map(codingData => {
-        return codingData.codingQuestions.map(codingQuestion => {
-          return {
-            id: codingQuestion.id,
-            question: codingQuestion.question,
-            saved: false
-          };
-        });
-      }))
-      .subscribe(response => {
-      console.log(response);
-      this.codingQuestion = response;
-      this.updateCodingQuestionListner.next([...this.codingQuestion]);
-    });
+    return this.http.get<{message: string, codingQuestions: any}>('http://localhost:3000/api/user/getquestion/coding');
   }
   getCodingQuestionUpdateListner() {
     return this.updateCodingQuestionListner.asObservable();
@@ -76,7 +42,7 @@ export class UserQuestionService {
     }, 1000);
   }
   checkCodingTImer() {
-    if (this.timeCodingQuestion === 60) {
+    if (this.timeCodingQuestion === 300) {
       this.startCodingTimer();
       return this.timeCodingQuestion;
     } else {
@@ -91,17 +57,6 @@ export class UserQuestionService {
       min = Math.floor(this.timeCodingQuestion / 60);
       sec = this.timeCodingQuestion % 60;
     }, 1000);
-  }
-  onCodeCompile(code: {lang: string, code: string}) {
-    console.log(code);
-    return 'Compile Successfully';
-  }
-  onCodeRun(code: {lang: string, code: string}) {
-    console.log(code);
-    return [
-      { input: '25', status: 'Fail'},
-      { input: 'saikat', status: 'Success'}
-      ];
   }
 }
 

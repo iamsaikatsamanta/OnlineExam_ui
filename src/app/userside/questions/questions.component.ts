@@ -6,6 +6,7 @@ import {UserQuestionService} from '../../service/User/user-question.service';
 import {UserQuestionModel} from '../../model/user-question-model';
 import {Subscription} from 'rxjs';
 import {AnswerService} from '../../service/User/answer.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-questions',
@@ -18,16 +19,31 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   min;
   sec;
   activeQuestion = 0;
+  isLoading = true;
   private questionSub: Subscription;
   constructor(private userQuestionService: UserQuestionService, private router: Router, private answerService: AnswerService) { }
 
   async ngOnInit() {
-    await this.userQuestionService.getQuestion();
-    this.questionSub = this.userQuestionService.getQuestionUpdateListner().subscribe(question => {
-      this.questions = question;
-    });
-    this.startTimer();
-
+    this.questionSub = await this.userQuestionService.getQuestion()
+      .pipe(map(questionData => {
+          return questionData.questions.map(question => {
+            return {
+              id: question.id,
+              question: question.question,
+              option: question.option,
+              selected: null,
+              saved: false
+            };
+          });
+        }))
+        .subscribe(response => {
+          this.questions = response;
+        }, err => {
+          console.log(err);
+        }, () => {
+          this.isLoading = false;
+          this.startTimer();
+        });
   }
   startTimer() {
     let time = this.userQuestionService.checkTImer();

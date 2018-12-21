@@ -55,10 +55,10 @@ export class AdminQuestionService {
         return {
           id: codingQuestion._id,
           question: codingQuestion.question,
-          inputtc1: codingQuestion.inputtc1,
-          outputtc1: codingQuestion.outputtc1,
-          inputtc2: codingQuestion.inputtc2,
-          outputtc2: codingQuestion.outputtc2,
+          inputtc1: codingQuestion.input[0],
+          outputtc1: codingQuestion.output[0],
+          inputtc2: codingQuestion.input[1],
+          outputtc2: codingQuestion.output[1],
         };
       });
     }))

@@ -1,6 +1,7 @@
 const User = require('../Models/user'),
       Masrks= require('../Models/marks'),
       RegQuestion= require('../Models/regQuestion'),
+      codingQuestion = require('../Models/codingQuestion'),
       {c, cpp, java, python} = require('compile-run'),
       fs= require('fs');
 
@@ -150,5 +151,58 @@ exports.onSaveAnswer = (req, res, next)=>{
   }
 };
 exports.onCodeRun = (req, res, next)=>{
+  const lang = req.body.lang;
+  const userId = req.body.userId;
+  const marks = 0;
+  codingQuestion.findById(req.body.questionId)
+  .then(result =>{
+    result.input.forEach(element => {
+      let i=0;
+      if(lang === 'C'){
+        const answer = runCCode(userId, element);
+        if(answer == result.output[i]){
+          marks+=5;
+        }
+      } else if (lang === 'C++') {
+        const answer = runCppCode(userId, element);
+        if(answer == result.output[i]){
+          marks+=5;
+        }
+       } else if (lang === 'JAVA') {
+        const answer = runJavaCode(userId, element);
+        if(answer == result.output[i]){
+          marks+=5;
+        }
+      } else if (lang === 'PYTHON'){
+        const answer = runPythonCode(userId, element);
+        if(answer == result.output[i]){
+          marks+=5;
+        }
+      }
+      i++;
+    })
+    Masrks.findOne({})
+    }
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+};
+
+//C code Running Logic
+runCCode = (userId, input)=> {
 
 };
+//C++ Code Running Logic
+runCppCode = (userId, input)=> {
+
+};
+//Java Code Running Logic
+runJavaCode = (userId, input)=> {
+
+};
+//Python Code Running Logic
+runPythonCode = (questionId, userId, input)=> {
+
+};
+

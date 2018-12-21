@@ -21,16 +21,14 @@ router.post("/savequestion",checkAuth,(req,res,next)=>{
         res.status(500).json({
             error: err
         });
-    }); 
+    });
 });
 
 router.post("/savecodingquestion",checkAuth, (req,res,next) => {
     const codingQuestion = new CodeingQuestion({
         question: req.body.question,
-        inputtc1: req.body.inputtc1,
-        outputtc1: req.body.outputtc1,
-        inputtc2: req.body.inputtc2,
-        outputtc2: req.body.outputtc2,
+        input: req.body.input,
+        output: req.body.output
     });
     codingQuestion.save().then(savedCodingQuestion=>{
         res.status(201).json({

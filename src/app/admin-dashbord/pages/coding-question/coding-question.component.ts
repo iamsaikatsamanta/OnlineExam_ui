@@ -48,10 +48,8 @@ constructor(private adminQuestionService: AdminQuestionService, private route: A
       const codeQuestion: CodingQuestionModel = {
         id: null,
         question: this.codingQuestion.get('codeQuestion').value,
-        inputtc1: this.codingQuestion.get('inputtc1').value,
-        outputtc1: this.codingQuestion.get('outputtc1').value,
-        inputtc2: this.codingQuestion.get('inputtc2').value,
-        outputtc2: this.codingQuestion.get('outputtc2').value
+        input: [this.codingQuestion.get('inputtc1').value, this.codingQuestion.get('inputtc2').value],
+        output: [this.codingQuestion.get('outputtc1').value, this.codingQuestion.get('outputtc2').value]
       };
       if (this.mode === 'create') {
         this.adminQuestionService.saveCodingQuestion(codeQuestion);

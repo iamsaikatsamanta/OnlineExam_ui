@@ -33,7 +33,14 @@ export class AnswerService {
         console.log(result);
       });
   }
-  onCodeRun() {
-    this.http.get('http://localhost:3000/api/user/coderun');
+  onCodeRun(language, codingQuestionId) {
+    const codeData: any = {
+      lang: language,
+      codingQuestionId: codingQuestionId,
+      userId: this.userAuthService.getUserData().refId
+    };
+    this.http.post('http://localhost:3000/api/user/answer/coderun', codeData).subscribe(result => {
+      console.log(result);
+    });
   }
 }

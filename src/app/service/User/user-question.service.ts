@@ -10,7 +10,7 @@ import {Subject} from 'rxjs';
 })
 export class UserQuestionService {
   timeQuestion = 60;
-  timeCodingQuestion = 300;
+  timeCodingQuestion = 600;
   codingQuestion:  UserCodingQuestionModel[];
   private updateCodingQuestionListner = new Subject<UserCodingQuestionModel[]>();
   constructor(private http: HttpClient) { }

@@ -78,6 +78,7 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
     const code = { lang: this.codingForm.get('lang').value,
       code: this.codingForm.get('code').value
     };
+    this.answerService.onCodeRun(code.lang, this.codingQuestions[this.activeQuestion].id);
     this.showRun = true;
   }
   onNext() {

@@ -151,38 +151,67 @@ exports.onSaveAnswer = (req, res, next)=>{
   }
 };
 exports.onCodeRun = (req, res, next)=>{
+  console.log(req.body);
   const lang = req.body.lang;
   const userId = req.body.userId;
-  const marks = 0;
-  codingQuestion.findById(req.body.questionId)
+  const codingMarks = 0;
+  const codeSuccessStatus =[];
+  codingQuestion.findById(req.body.codingQuestionId)
   .then(result =>{
+    console.log(result);
     result.input.forEach(element => {
       let i=0;
       if(lang === 'C'){
         const answer = runCCode(userId, element);
         if(answer == result.output[i]){
-          marks+=5;
+          codingMarks+=5;
+          codeSuccessStatus.push(1);
+        }else {
+          codeSuccessStatus.push(0);
         }
       } else if (lang === 'C++') {
         const answer = runCppCode(userId, element);
         if(answer == result.output[i]){
-          marks+=5;
+          codingMarks+=5;
+          codeSuccessStatus.push(1);
+        }else {
+          codeSuccessStatus.push(0);
         }
        } else if (lang === 'JAVA') {
         const answer = runJavaCode(userId, element);
         if(answer == result.output[i]){
-          marks+=5;
+          codingMarks+=5;
+          codeSuccessStatus.push(1);
+        }else {
+          codeSuccessStatus.push(0);
         }
       } else if (lang === 'PYTHON'){
-        const answer = runPythonCode(userId, element);
+        const answer =runPythonCode(userId, element);
         if(answer == result.output[i]){
-          marks+=5;
+          codingMarks+=5;
+          codeSuccessStatus.push(1);
+        }else {
+          codeSuccessStatus.push(0);
         }
       }
       i++;
     })
-    Masrks.findOne({})
-    }
+    Masrks.findOne({user: req.body.userId})
+    .then(marks => {
+      console.log()
+      marks.codingmarks = codingMarks;
+      marks.total= marks.questionmarks + marks.codingmarks;
+      marks.save();
+      res.status(200).json({
+        message: 'Code Run Successfully',
+        status: codeSuccessStatus
+      });
+    })
+    .catch(err=>{
+      res.status(500).json({
+        message: 'Can\'t Run The Code'
+      });
+    })
   })
   .catch(err=>{
     console.log(err);
@@ -191,18 +220,30 @@ exports.onCodeRun = (req, res, next)=>{
 
 //C code Running Logic
 runCCode = (userId, input)=> {
-
+  let resultPromiseC = c.runFile('./backend/codingFile/'+userId+'.py', {stdin: input});
+  resultPromiseC.then(result => {
+    return result.stdout;
+  });
 };
 //C++ Code Running Logic
 runCppCode = (userId, input)=> {
+  let resultPromiseCpp = cpp.runFile('./backend/codingFile/'+userId+'.cpp', {stdin: input});
+  resultPromiseCpp.then(result => {
 
+  });
 };
 //Java Code Running Logic
 runJavaCode = (userId, input)=> {
-
+  let resultPromiseJava =java.runFile('./backend/codingFile/'+userId+'/Main.java', {stdin: input});
+  resultPromiseJava.then(result=>{
+    return result.stdout;
+  });
 };
 //Python Code Running Logic
-runPythonCode = (questionId, userId, input)=> {
-
+runPythonCode = (userId, input)=> {
+  let resultPromisePython =python.runFile('./backend/codingFile/'+userId+'.py', {stdin: input});
+  resultPromisePython.then(result=>{
+    return result.stdout.substr(0,result.stdout.length-1)
+  });
 };
 

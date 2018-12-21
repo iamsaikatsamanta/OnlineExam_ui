@@ -158,7 +158,6 @@ exports.onCodeRun = (req, res, next)=>{
   const codeSuccessStatus =[];
   codingQuestion.findById(req.body.codingQuestionId)
   .then(result =>{
-    console.log(result);
     result.input.forEach(element => {
       let i=0;
       if(lang === 'C'){
@@ -186,14 +185,15 @@ exports.onCodeRun = (req, res, next)=>{
           codeSuccessStatus.push(0);
         }
       } else if (lang === 'PYTHON'){
-        const answer =runPythonCode(userId, element);
-        if(answer == result.output[i]){
-          codingMarks+=5;
-          codeSuccessStatus.push(1);
-        }else {
-          codeSuccessStatus.push(0);
+          const answer =runPythonCode(userId, element);
+          if(answer1 == result.output[i]){
+            codingMarks+=5;
+            codeSuccessStatus.push(1);
+          }else {
+            codeSuccessStatus.push(0);
+          }
         }
-      }
+      });
       i++;
     })
     Masrks.findOne({user: req.body.userId})

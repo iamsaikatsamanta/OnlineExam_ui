@@ -31,6 +31,7 @@ exports.onSaveAnswer = (req, res, next)=>{
     });
 };
   exports.onCodeCompile = async (req, res, next)=>{
+    console.log(req.body);
   const ext = req.body.lang;
   const filename = req.body.userId;
   if (ext === 'C' ){
@@ -43,10 +44,12 @@ exports.onSaveAnswer = (req, res, next)=>{
       .then(result =>{
         if (result.stderr === '') {
           res.status(200).json({
+            status: 0,
             message: 'Compilation Successful'
           })
         } else {
           res.status(200).json({
+            status: 1,
             message: 'Error Occurred',
             error: result.stderr
           })
@@ -54,6 +57,7 @@ exports.onSaveAnswer = (req, res, next)=>{
       })
       .catch(err=>{
         res.status(500).json({
+          status: 1,
           message: 'Error Occurred',
           error: err
         });
@@ -63,15 +67,17 @@ exports.onSaveAnswer = (req, res, next)=>{
       if (err)
         console.log(err);
     });
-    let resultPromiseCpp = await cpp.runFile('./backend/codingFile/'+filename+'.cpp');
-    await resultPromiseCpp
+    let resultPromiseCpp = cpp.runFile('./backend/codingFile/'+filename+'.cpp');
+    resultPromiseCpp
       .then(result =>{
         if (result.stderr === '') {
           res.status(200).json({
+            status: 0,
             message: 'Compilation Successful'
           })
         } else {
           res.status(200).json({
+            status: 1,
             message: 'Error Occurred',
             error: result.stderr
           })
@@ -79,6 +85,7 @@ exports.onSaveAnswer = (req, res, next)=>{
       })
       .catch(err=>{
         res.status(500).json({
+          status: 1,
           message: 'Error Occurred',
           error: err
         });
@@ -88,15 +95,17 @@ exports.onSaveAnswer = (req, res, next)=>{
     if (err)
         console.log(err);
     });
-    let resultPromiseJava = await java.runFile('./backend/codingFile/'+filename+'/Main.java');
-    await resultPromiseJava
+    let resultPromiseJava = java.runFile('./backend/codingFile/'+filename+'/Main.java');
+    resultPromiseJava
       .then(result =>{
         if (result.stderr === '') {
           res.status(200).json({
+            status: 0,
             message: 'Compilation Successful'
           })
         } else {
           res.status(200).json({
+            status: 1,
             message: 'Error Occurred',
             error: result.stderr
           })
@@ -104,6 +113,7 @@ exports.onSaveAnswer = (req, res, next)=>{
       })
       .catch(err=>{
         res.status(500).json({
+          status: 1,
           message: 'Error Occurred',
           error: err
         });
@@ -113,15 +123,18 @@ exports.onSaveAnswer = (req, res, next)=>{
       if (err)
         console.log(err);
     });
-    let resultPromisePython = await python.runFile('./backend/codingFile/'+filename+'.py');
-    await resultPromisePython
+    let resultPromisePython =python.runFile('./backend/codingFile/'+filename+'.py');
+    resultPromisePython
       .then(result => {
+        console.log(result);
         if (result.stderr === '') {
           res.status(200).json({
+            status: 0,
             message: 'Compilation Successful'
           })
         } else {
           res.status(200).json({
+            status: 1,
             message: 'Error Occurred',
             error: result.stderr
           })
@@ -129,6 +142,7 @@ exports.onSaveAnswer = (req, res, next)=>{
       })
       .catch(err => {
         res.status(500).json({
+          status: 1,
           message: 'Error Occurred',
           error: err
         })

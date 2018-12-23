@@ -154,82 +154,82 @@ exports.onCodeRun = (req, res, next)=>{
   console.log(req.body);
   const lang = req.body.lang;
   const userId = req.body.userId;
-  const codingMarks = 0;
-  const codeSuccessStatus =[];
   codingQuestion.findById(req.body.codingQuestionId)
   .then(result =>{
-    result.input.forEach(element => {
-      let i=0;
-      if(lang === 'C'){
-        const answer = runCCode(userId, element);
-        if(answer == result.output[i]){
-          codingMarks+=5;
-          codeSuccessStatus.push(1);
-        }else {
-          codeSuccessStatus.push(0);
-        }
+      if (lang === 'C') {
+        runCCode(userId, result.input, result.output, res);
       } else if (lang === 'C++') {
-        const answer = runCppCode(userId, element);
-        if(answer == result.output[i]){
-          codingMarks+=5;
-          codeSuccessStatus.push(1);
-        }else {
-          codeSuccessStatus.push(0);
-        }
-       } else if (lang === 'JAVA') {
-        const answer = runJavaCode(userId, element);
-        if(answer == result.output[i]){
-          codingMarks+=5;
-          codeSuccessStatus.push(1);
-        }else {
-          codeSuccessStatus.push(0);
-        }
-      } else if (lang === 'PYTHON'){
-          const answer =runPythonCode(userId, element);
-          if(answer1 == result.output[i]){
-            codingMarks+=5;
-            codeSuccessStatus.push(1);
-          }else {
-            codeSuccessStatus.push(0);
-          }
-        }
-      });
-      i++;
-    })
-    Masrks.findOne({user: req.body.userId})
-    .then(marks => {
-      console.log()
-      marks.codingmarks = codingMarks;
-      marks.total= marks.questionmarks + marks.codingmarks;
-      marks.save();
-      res.status(200).json({
-        message: 'Code Run Successfully',
-        status: codeSuccessStatus
-      });
-    })
-    .catch(err=>{
-      res.status(500).json({
-        message: 'Can\'t Run The Code'
-      });
-    })
-  })
-  .catch(err=>{
-    console.log(err);
-  })
+        runCppCode(userId, result.input, result.output, res);
+      } else if (lang === 'JAVA') {
+        runJavaCode(userId, result.input, result.output, res);
+      } else if (lang === 'PYTHON') {
+        runPythonCode(userId,result.input, result.output, res);
+      }
+    });
+
 };
 
 //C code Running Logic
-runCCode = (userId, input)=> {
-  let resultPromiseC = c.runFile('./backend/codingFile/'+userId+'.py', {stdin: input});
+runCCode = (userId, input, output , res)=> {
+  let marks=0;
+  let codingStatus=[];
+  let resultPromiseC = c.runFile('./backend/codingFile/'+userId+'.c', {stdin: input[0]});
   resultPromiseC.then(result => {
-    return result.stdout;
+    const answer0 = result.stdout;
+    if (answer0 === output[0]) {
+      marks+=5;
+      codingStatus.push(0);
+    } else {
+      codingStatus.push(1);
+    }
+    c.runFile('./backend/codingFile/'+userId+'.c', {stdin: input[1]})
+      .then(result=>{
+        const answer1 = result.stdout;
+        if (answer1 === output[1]) {
+          marks+=5;
+          codingStatus.push(0);
+        } else {
+          codingStatus.push(1);
+        }
+        calculateMarks(userId,marks);
+        res.status(200).json({
+          message: 'Code Run Successfully',
+          status: codingStatus
+        });
+      });
   });
 };
 //C++ Code Running Logic
-runCppCode = (userId, input)=> {
+runCppCode = (userId, input, output, res)=> {
+  let marks=0;
+  let codingStatus=[];
   let resultPromiseCpp = cpp.runFile('./backend/codingFile/'+userId+'.cpp', {stdin: input});
   resultPromiseCpp.then(result => {
-
+    const answer0 = result.stdout;
+    console.log(answer0===output[0]);
+    console.log(answer0);
+    console.log(output[0]);
+    if (answer0 === output[0]) {
+      marks+=5;
+      codingStatus.push(0);
+    } else {
+      codingStatus.push(1);
+    }
+    cpp.runFile('./backend/codingFile/'+userId+'.cpp', {stdin: input[1]})
+      .then(result=>{
+        const answer1 = result.stdout;
+        if (answer1 === output[1]) {
+          marks+=5;
+          codingStatus.push(0);
+        } else {
+          codingStatus.push(1);
+        }
+        calculateMarks(userId,marks);
+        res.status(200).json({
+          message: 'Code Run Successfully',
+          status: codingStatus
+        });
+      });
   });
 };
 //Java Code Running Logic
@@ -240,10 +240,46 @@ runJavaCode = (userId, input)=> {
   });
 };
 //Python Code Running Logic
-runPythonCode = (userId, input)=> {
-  let resultPromisePython =python.runFile('./backend/codingFile/'+userId+'.py', {stdin: input});
-  resultPromisePython.then(result=>{
-    return result.stdout.substr(0,result.stdout.length-1)
-  });
+runPythonCode = (userId, input, output, res)=> {
+  let marks=0;
+  let codingStatus=[];
+  python.runFile('./backend/codingFile/'+userId+'.py', {stdin: input[0]})
+    .then(result=>{
+      const answer0 = result.stdout.substr(0,result.stdout.length-2);
+      if (answer0 === output[0]) {
+        marks+=5;
+        codingStatus.push(0);
+      } else {
+        codingStatus.push(1);
+      }
+      python.runFile('./backend/codingFile/'+userId+'.py', {stdin: input[1]})
+        .then(result=>{
+          const answer1 = result.stdout.substr(0,result.stdout.length-2);
+          if (answer1 === output[1]) {
+            marks+=5;
+            codingStatus.push(0);
+          } else {
+            codingStatus.push(1);
+          }
+          calculateMarks(userId,marks);
+          res.status(200).json({
+                message: 'Code Run Successfully',
+                status: codingStatus
+              });
+        });
+    });
 };
-
+calculateMarks = (userId, mark)=>{
+  Masrks.findOne({user: userId})
+  .then(marks => {
+    console.log(marks);
+    marks.codingmarks = mark;
+    marks.total= marks.questionmarks + marks.codingmarks;
+    marks.save();
+  })
+  .catch(err=>{
+    res.status(500).json({
+      message: 'Can\'t Run The Code'
+    });
+  })
+};

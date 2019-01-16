@@ -3,67 +3,75 @@ import {QuestionModel} from '../../model/questionModel';
 import {CodingQuestionModel} from '../../model/coding-question-model';
 import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {Subject, from} from 'rxjs';
 import { AdminAuthService } from './admin-auth.service';
+import { environment } from 'src/environments/environment';
+import { RestApi } from '../../model/RestApi';
+import { ToasterService } from 'angular2-toaster';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminQuestionService {
+  apiUrl = environment.apiUrl;
   question: QuestionModel[];
   codingQuestion: CodingQuestionModel[];
-  constructor(private http: HttpClient, private adminAuthService: AdminAuthService) {}
+  constructor(private http: HttpClient, private adminAuthService: AdminAuthService, private toasterService: ToasterService) {}
   private questionUpdated = new Subject<QuestionModel[]>();
   private coidingQuestionUpdated = new Subject<CodingQuestionModel[]>();
   saveQuestion(question: QuestionModel) {
-    this.http.post<{message: string, questionId: string}>('http://localhost:3000/api/admin/savequestion', question)
+    this.http.post<RestApi>(this.apiUrl + 'admin/savequestion', question)
     .subscribe(res => {
-      question.id = res.questionId;
-      this.question.push(question);
-      this.questionUpdated.next([...this.question]);
-      return res.message;
+      if (res.code === 0) {
+        question.id = res.result._id;
+        this.question.push(question);
+        this.questionUpdated.next([...this.question]);
+        this.toasterService.pop('success', 'Question Added Successfully');
+      }
     });
   }
   saveCodingQuestion(codeQuestion: CodingQuestionModel) {
-    this.http.post<{message: string, questionId: string}>('http://localhost:3000/api/admin/savecodingquestion', codeQuestion)
+    this.http.post<RestApi>(this.apiUrl + 'admin/savecodingquestion', codeQuestion)
     .subscribe(res => {
-      codeQuestion.id = res.questionId;
-      this.codingQuestion.push(codeQuestion);
-      this.coidingQuestionUpdated.next([...this.codingQuestion]);
+      if (res.code === 0) {
+        codeQuestion.id = res.result._id;
+        this.codingQuestion.push(codeQuestion);
+        this.coidingQuestionUpdated.next([...this.codingQuestion]);
+        this.toasterService.pop('success', 'Coding Question Added Successfully');
+      }
     });
   }
   getQuestions() {
-    this.http.get<{ message: string; questions: any }>('http://localhost:3000/api/admin/getquestion').pipe(map(questionData => {
-      return questionData.questions.map(question => {
-        return {
-          id: question._id,
-          question: question.question,
-          option: question.option,
-          correct: question.correct
-        };
-      });
-    }))
+    this.http.get<RestApi>(this.apiUrl + 'admin/getquestions')
       .subscribe(response => {
-        this.question = response;
+        if (response.code === 0) {
+          this.question = response.result.map(ele => {
+            return {
+              id: ele._id,
+              question: ele.question,
+              option: ele.option,
+              correct: ele.correct
+            };
+          });
+        }
         this.questionUpdated.next([...this.question]);
     });
   }
   getCodingQuestions() {
-    this.http.get<{message: string, codingQuestion: any}> ('http://localhost:3000/api/admin/getcodingquestion')
-    .pipe(map(codingQuestionData => {
-      return codingQuestionData.codingQuestion.map(codingQuestion => {
-        return {
-          id: codingQuestion._id,
-          question: codingQuestion.question,
-          inputtc1: codingQuestion.input[0],
-          outputtc1: codingQuestion.output[0],
-          inputtc2: codingQuestion.input[1],
-          outputtc2: codingQuestion.output[1],
-        };
-      });
-    }))
+    this.http.get<RestApi> (this.apiUrl + 'admin/getcodingquestions')
     .subscribe(res => {
-      this.codingQuestion = res;
+      if (res.code === 0) {
+        this.codingQuestion = res.result.map(ele => {
+          return {
+            id: ele._id,
+            question: ele.question,
+            inputtc1: ele.input[0],
+            outputtc1: ele.output[0],
+            inputtc2: ele.input[1],
+            outputtc2: ele.output[1],
+          };
+        });
+      }
       this.coidingQuestionUpdated.next([...this.codingQuestion]);
     });
   }
@@ -75,7 +83,7 @@ export class AdminQuestionService {
   }
   updateQuestion(question: QuestionModel) {
     console.log(question);
-    this.http.put('http://localhost:3000/api/admin/updatequestion/' + question.id, question)
+    this.http.post(this.apiUrl + 'admin/updatequestion/' + question.id, question)
       .subscribe(result => {
         console.log(result);
       });
@@ -85,12 +93,12 @@ export class AdminQuestionService {
   }
   deleteQuestion(id: Object, type: string) {
     if (type === 'Coding') {
-      this.http.delete('http://localhost:3000/api/admin/deletecodingquestion', id)
+      this.http.post(this.apiUrl + 'admin/deletecodingquestion', id)
       .subscribe(response => {
         console.log(response);
       });
     } else if (type === 'Regular') {
-      this.http.delete('http://localhost:3000/api/admin/deletequestion', id)
+      this.http.delete(this.apiUrl + 'admin/deletequestion', id)
       .subscribe(response => {
         console.log(response);
       });

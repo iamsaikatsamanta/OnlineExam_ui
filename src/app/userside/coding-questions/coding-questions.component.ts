@@ -6,6 +6,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {AnswerService} from '../../service/User/answer.service';
 import {map} from 'rxjs/operators';
+import {element} from 'protractor';
 
 @Component({
   selector: 'app-coding-questions',
@@ -17,6 +18,8 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
   showRun = false;
   compileMessage;
   runStatus ;
+  errorMessage = [];
+  showError = false;
   activeQuestion = 0;
   no_q_ans = 0;
   codingQuestions: UserCodingQuestionModel[];
@@ -66,11 +69,24 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
   }
   onCompile() {
     this.showRun = false;
+    this.showCompile = true;
+    this.compileMessage = 'Compiling Code ...';
     const code = { lang: this.codingForm.get('lang').value,
       code: this.codingForm.get('code').value
     };
-    this.answerService.onCodingCompile(code, this.codingQuestions[this.activeQuestion].id);
-    this.showCompile = true;
+    this.answerService.onCodingCompile(code, this.codingQuestions[this.activeQuestion].id)
+      .subscribe(resp => {
+        console.log(resp);
+        if (resp.status === 0) {
+          this.compileMessage = resp.message;
+        } else {
+           this.compileMessage = resp.message;
+           this.showError = true;
+           resp.error.forEach( element => {
+             this.errorMessage.push(element.split('\n')[0]);
+           });
+        }
+      });
   }
   onRun() {
     this.showCompile = false;

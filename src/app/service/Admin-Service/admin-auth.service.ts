@@ -5,12 +5,14 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Observable, Subject} from 'rxjs';
 import {ToasterService} from 'angular2-toaster';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminAuthService {
+  apiUrl = environment.apiUrl;
   private adminData: any = {
     userId: String,
     name: String,
@@ -23,7 +25,7 @@ export class AdminAuthService {
   private resetPasswordState = false;
   constructor(private http: HttpClient, private router: Router, private toasterService: ToasterService) { }
   onLogin(adminData: AdminModel) {
-    this.http.post<{adminToken: string}>('http://localhost:3000/api/adminAuth/login', adminData)
+    this.http.post<{adminToken: string}>(this.apiUrl + 'admin/login', adminData)
       .subscribe(res => {
         const token = res.adminToken;
         this.token = token;

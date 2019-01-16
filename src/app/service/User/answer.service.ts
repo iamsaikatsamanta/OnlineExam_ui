@@ -6,7 +6,7 @@ import {UserAuthService} from './user-auth.service';
   providedIn: 'root'
 })
 export class AnswerService {
-
+  apiUrl = 'http://localhost:3000/api/';
   constructor(private http: HttpClient, private userAuthService: UserAuthService) { }
   saveAnswer(option, questionId) {
     const options = {
@@ -28,10 +28,7 @@ export class AnswerService {
       userId: this.userAuthService.getUserData().refId
     };
     console.log(codeData);
-    this.http.post('http://localhost:3000/api/user/answer/codecompile', codeData)
-      .subscribe(result => {
-        console.log(result);
-      });
+     return this.http.post<{status: number, message: string, error: any}>('http://localhost:3000/api/user/answer/codecompile', codeData);
   }
   onCodeRun(language, codingQuestionId) {
     const codeData: any = {
@@ -42,5 +39,21 @@ export class AnswerService {
     this.http.post('http://localhost:3000/api/user/answer/coderun', codeData).subscribe(result => {
       console.log(result);
     });
+  }
+  onSubmitCoding () {
+    this.http.get<{code: number, message: string}>(this.apiUrl + 'user/answer/submitcoding')
+      .subscribe(resp => {
+        console.log(resp);
+      }, err => {
+        console.log(err);
+      });
+   }
+  onSubmitRegular () {
+    this.http.get<{code: number, message: string}>(this.apiUrl + 'user/answer/submitreg')
+      .subscribe(resp => {
+        console.log(resp);
+      }, err => {
+        console.log(err);
+      });
   }
 }

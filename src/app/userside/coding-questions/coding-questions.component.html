@@ -35,6 +35,9 @@
         <div class="col-lg-5">
           {{ codingQuestions[activeQuestion].question }}
           <div class="compile" *ngIf="showCompile">{{ compileMessage }}</div>
+          <div class="compile" *ngIf="showError">
+            <p *ngFor="let message of errorMessage">{{ message }}</p>
+          </div>
           <div *ngIf="showRun" class="compile">
             <table class="table table-striped">
               <thead>

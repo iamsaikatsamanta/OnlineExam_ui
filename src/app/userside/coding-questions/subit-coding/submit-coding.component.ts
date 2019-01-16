@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {AnswerService} from '../../../service/User/answer.service';
 
 @Component({
   selector: 'app-submit-coding',
@@ -8,11 +9,12 @@ import {Router} from '@angular/router';
 })
 export class SubmitCodingComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private answerService: AnswerService) { }
 
   ngOnInit() {
   }
   onYes() {
+    this.answerService.onSubmitCoding();
     this.router.navigate(['/user/feedback']);
   }
   onNo() {

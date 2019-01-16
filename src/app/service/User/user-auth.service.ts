@@ -66,4 +66,7 @@ export class UserAuthService {
   getAuthStatusListner() {
     return this.authStatusListner.asObservable();
   }
+  getToken() {
+    return this.token;
+  }
 }

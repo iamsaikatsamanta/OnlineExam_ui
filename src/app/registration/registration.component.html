@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+        <label for="email">*Email</label>
+        <input id="email" class="form-control form-group" formControlName="email" placeholder="Email">
+        <p class="error" *ngIf="signupForm.get('email').invalid && iserror">*Invalid Email</p>
+        <label for="name">*Name</label>
+        <input id="name" class="form-control form-group" placeholder="Name" formControlName="name">
+        <label>*Password</label>
+        <input type="password" class="form-control form-group" placeholder="Password" formControlName="password">
+        <label>*Confirm Password</label>
+        <input type="password" class="form-control form-group" placeholder="Password" formControlName="password">
+    </div>
+    <div class="col-lg-6">
+        <section class="intro">
+            <div class="inner">
+              <div class="content">
+                <h1>Register With Social Media</h1>
+                <img src="../../assets/new-google-favicon-512.png" alt="">
+                <img src="../../assets/if_Asset_2_2001646.png" alt="">  
+              </div>
+            </div>
+          </section>
+          
+    </div>
+  </div>
+</div>

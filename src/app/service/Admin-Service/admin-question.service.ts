@@ -82,14 +82,20 @@ export class AdminQuestionService {
     return {...this.codingQuestion.find(qc => qc.id === codeingQuestionId)};
   }
   updateQuestion(question: QuestionModel) {
-    console.log(question);
-    this.http.post(this.apiUrl + 'admin/updatequestion/' + question.id, question)
+    this.http.post<RestApi>(this.apiUrl + 'admin/updatequestion/' + question.id, question)
       .subscribe(result => {
-        console.log(result);
+        if (result.code === 0) {
+          this.toasterService.pop('success', 'Question Updated Successfully');
+        }
       });
   }
   updateCodingQuestion(codeQuestion: CodingQuestionModel) {
-    console.log(codeQuestion);
+    this.http.post<RestApi>(this.apiUrl + 'admin/updatecodequestion/' + codeQuestion.id, codeQuestion)
+      .subscribe(result => {
+        if (result.code === 0) {
+          this.toasterService.pop('success', 'Coding Question Updated Successfully');
+        }
+      });
   }
   deleteQuestion(id: Object, type: string) {
     if (type === 'Coding') {

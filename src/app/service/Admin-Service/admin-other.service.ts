@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Subject} from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { RestApi } from 'src/app/model/RestApi';
 @Injectable({
   providedIn: 'root'
 })
 export class AdminOtherService {
+  apiUrl = environment.apiUrl;
    exam = {
     exam_start: false,
     reg_started: null,
@@ -20,10 +23,12 @@ export class AdminOtherService {
   private candidateUpdated = new Subject<any>();
   constructor(private http: HttpClient) { }
   getRegisteredCandidate() {
-    this.http.get<{message: string, candidate: any[]}>('http://localhost:3000/api/admin/registeredCandidate')
+    this.http.get<RestApi>( this.apiUrl + 'admin/registeredCandidate')
     .subscribe(candidateData => {
-      this.candidate = candidateData.candidate;
+      if (candidateData.code === 0) {
+        this.candidate = candidateData.result;
       this.candidateUpdated.next([...this.candidate]);
+      }
     });
   }
   getExamDetails() {

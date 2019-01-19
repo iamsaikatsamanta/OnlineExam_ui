@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Charm");
+img {
+    height: 80px;
+    width: 80px;
+}
+.position {
+    align-items: center;
+}
+
+.col-lg-6 h3 {
+    text-align: center;
+}
+.center{
+  margin-left: 25%;
+}
+.margin-top{
+    height: 57em;
+    margin: auto;
+    display: table;
+    top: 50%;
+}
+.intro{
+    height: 25em;
+    width: 100%;
+    margin: auto;
+    display: table;
+    top: 0;
+    background-size: cover;
+}
+.intro .inner{
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    max-width: none;
+}
+.content{
+    /* max-width: 500px; */
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Charm', cursive;
+}

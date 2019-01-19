@@ -43,6 +43,7 @@ import { ParticlesModule } from 'angular-particle';
 import { ToasterModule } from 'angular2-toaster';
 import { ForgotPasswordComponent } from './admin-auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './admin-auth/reset-password/reset-password.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const approute: Routes = [
   { path: '', component: LandingComponent},
@@ -52,6 +53,7 @@ const approute: Routes = [
   { path: 'reset-password/:token/:id', component: ResetPasswordComponent},
   { path: 'syllabus', component: SyllybusComponent},
   { path: 'candidate-registration', component: SignupComponent},
+  { path: 'registration', component: RegistrationComponent},
   { path: 'admin-dashboard', component: AdminDashbordComponent, canActivate: [AdminGuard], children: [
       { path: 'home', component: DashbordHomeComponent, canActivate: [AdminGuard] },
       { path: 'add-question', component: AddQuestionComponent, canActivate: [AdminGuard]},
@@ -106,7 +108,8 @@ const approute: Routes = [
     SubmitQuestionComponent,
     SubmitCodingComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

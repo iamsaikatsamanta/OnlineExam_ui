@@ -4,11 +4,13 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Subject} from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
+  apiUrl = environment.apiUrl;
   private token: string;
   private userData: any = {
     refId: String,
@@ -19,13 +21,13 @@ export class UserAuthService {
   private tokenTimer: any;
   constructor(private http: HttpClient, private router: Router) { }
   onUserRegister(userData) {
-    this.http.post('http://localhost:3000/api/userAuth/register', userData)
+    this.http.post( this.apiUrl + 'userAuth/register', userData)
       .subscribe(res => {
         console.log(res);
       });
   }
   async onUserLogin(data: UserModel) {
-    await this.http.post<{ token: string }>('http://localhost:3000/api/userAuth/login', data)
+    await this.http.post<{ token: string }>( this.apiUrl + 'userAuth/login', data)
       .subscribe(result => {
         this.token = result.token;
         if (this.token) {

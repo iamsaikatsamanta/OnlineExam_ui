@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import {UserQuestionModel} from '../../model/user-question-model';
 import {UserCodingQuestionModel} from '../../model/user-coding-question-model';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+
 import {Subject} from 'rxjs';
+import {environment} from '../../../environments/environment';
+import {RestApi} from '../../model/RestApi';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserQuestionService {
+  apiUrl = environment.apiUrl;
   timeQuestion = 60;
   timeCodingQuestion = 1200;
   codingQuestion:  UserCodingQuestionModel[];
@@ -16,13 +19,10 @@ export class UserQuestionService {
   constructor(private http: HttpClient) { }
 
   getQuestion() {
-     return this.http.get<{ message: string, questions: any }>('http://localhost:3000/api/user/getquestion/regular');
+     return this.http.get<RestApi>(this.apiUrl + 'user/get-question/regular');
   }
   getCodingQuestion() {
-    return this.http.get<{message: string, codingQuestions: any}>('http://localhost:3000/api/user/getquestion/coding');
-  }
-  getCodingQuestionUpdateListner() {
-    return this.updateCodingQuestionListner.asObservable();
+    return this.http.get<RestApi>(this.apiUrl + 'user/get-question/coding');
   }
   checkTImer() {
     if (this.timeQuestion === 60) {

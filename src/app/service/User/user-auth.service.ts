@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Subject} from 'rxjs';
 import { environment } from 'src/environments/environment';
+import {RestApi} from '../../model/RestApi';
+import {ToasterService} from 'angular2-toaster';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,9 @@ export class UserAuthService {
     name: String,
     img_url: String
   };
-  private authStatusListner = new Subject<boolean>();
+  userisLogin = false;
   private tokenTimer: any;
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private toster: ToasterService) { }
   onUserRegister(userData) {
     this.http.post( this.apiUrl + 'userAuth/register', userData)
       .subscribe(res => {
@@ -37,12 +39,54 @@ export class UserAuthService {
           this.setAuthTimer(time);
           console.log(time);
           this.getDecodedData(this.token);
-          this.authStatusListner.next(true);
+          this.userisLogin = true;
         }
       }, err => {
         console.log(err);
       }, () => {
         this.router.navigate(['/user/instruction']);
+      });
+  }
+  googleLogin (token) {
+    this.http.post<RestApi>(this.apiUrl + 'user/googlelogin', token)
+      .subscribe(resp => {
+        if (resp.code === 0) {
+          this.token = resp.result;
+          if (this.token) {
+            const expirIn = new JwtHelperService().getTokenExpirationDate(this.token);
+            const now = new Date();
+            const time = (expirIn.getTime() - now.getTime()) / 1000;
+            this.setAuthTimer(time);
+            console.log(time);
+            this.getDecodedData(this.token);
+            this.userisLogin = true;
+            this.router.navigate(['/user/instruction']);
+            this.toster.pop('success', 'You Have Login Successfully');
+          }
+        } else if (resp.code === 20) {
+          this.toster.pop('error', resp.message);
+        }
+      });
+  }
+  facebookLogin(token) {
+    this.http.post<RestApi>(this.apiUrl + 'user/fblogin', token)
+      .subscribe(resp => {
+        if (resp.code === 0) {
+          this.token = resp.result;
+          if (this.token) {
+            const expirIn = new JwtHelperService().getTokenExpirationDate(this.token);
+            const now = new Date();
+            const time = (expirIn.getTime() - now.getTime()) / 1000;
+            this.setAuthTimer(time);
+            console.log(time);
+            this.getDecodedData(this.token);
+            this.userisLogin = true;
+            this.router.navigate(['/user/instruction']);
+            this.toster.pop('success', 'You Have Login Successfully');
+          }
+        } else if (resp.code === 20) {
+          this.toster.pop('error', resp.message);
+        }
       });
   }
   async getDecodedData(token: string) {
@@ -58,7 +102,7 @@ export class UserAuthService {
   }
   logout() {
     this.token = null;
-    this.authStatusListner.next(false);
+    this.userisLogin = false;
     clearTimeout(this.tokenTimer);
     this.router.navigate(['/']);
   }
@@ -66,7 +110,7 @@ export class UserAuthService {
     return this.userData;
   }
   getAuthStatusListner() {
-    return this.authStatusListner.asObservable();
+    return this.userisLogin;
   }
   getToken() {
     return this.token;

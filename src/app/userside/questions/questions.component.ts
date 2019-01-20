@@ -26,7 +26,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.questionSub = await this.userQuestionService.getQuestion()
       .pipe(map(questionData => {
-          return questionData.questions.map(question => {
+          return questionData.result.map(question => {
             return {
               id: question.id,
               question: question.question,

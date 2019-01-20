@@ -44,7 +44,26 @@ import { ToasterModule } from 'angular2-toaster';
 import { ForgotPasswordComponent } from './admin-auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './admin-auth/reset-password/reset-password.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { ConfirmEqualValidatorDirective } from './registration/confirm-equal-validator.directive';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'angular-6-social-login';
+import {environment} from '../environments/environment';
+import { DashbordComponent } from './userside/dashbord/dashbord.component';
 
+function getAuthServiceConfigs() {
+  const config = new AuthServiceConfig(
+    [
+      {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider(environment.FBAPPID)
+      },
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider(environment.GOOGLEAPPID)
+      }
+    ]
+  );
+  return config;
+}
 const approute: Routes = [
   { path: '', component: LandingComponent},
   { path: 'candidate-login', component: UserAuthComponent },
@@ -109,7 +128,9 @@ const approute: Routes = [
     SubmitCodingComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ConfirmEqualValidatorDirective,
+    DashbordComponent
   ],
   imports: [
     BrowserModule,
@@ -123,11 +144,13 @@ const approute: Routes = [
     HttpClientModule,
     ParticlesModule,
     MatProgressSpinnerModule,
-    ToasterModule.forRoot()
+    ToasterModule.forRoot(),
+    SocialLoginModule
   ],
   providers: [
      {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true},
-      AdminGuard
+      AdminGuard,
+     { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }
   ],
   bootstrap: [AppComponent]
 })

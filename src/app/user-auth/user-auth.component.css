@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Charm");
 .logininbox{
   width: 320px;
   height: 420px;
@@ -6,7 +7,7 @@
   top: 50%;
   left: 50%;
   position: absolute;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-25%);
   box-sizing: border-box;
   padding: 70px 30px;
 }
@@ -72,3 +73,44 @@ div.container6 p {
   width: 100%;
   text-align: center;
   margin: 0 }
+img {
+  height: 80px;
+  width: 80px;
+}
+.position {
+  align-items: center;
+}
+
+.col-lg-6 h3 {
+  text-align: center;
+  font-family: 'Charm', cursive;
+}
+.center{
+  margin-left: 25%;
+}
+.margin-top{
+  height: 57em;
+  margin: auto;
+  display: table;
+  top: 50%;
+}
+.intro{
+  height: 40em;
+  width: 100%;
+  margin: auto;
+  display: table;
+  top: 0;
+  background-size: cover;
+}
+.intro .inner{
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  max-width: none;
+}
+.content{
+  /* max-width: 500px; */
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Charm', cursive;
+}

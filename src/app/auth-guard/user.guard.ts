@@ -7,15 +7,12 @@ import {UserAuthService} from '../service/User/user-auth.service';
   providedIn: 'root'
 })
 export class UserGuard implements CanActivate {
-  private authSubs: Subscription;
   private isUserAuth = false;
   constructor(private userAuthService: UserAuthService, private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    this.authSubs = this.userAuthService.getAuthStatusListner().subscribe(isAuth => {
-      this.isUserAuth = isAuth;
-    });
+    this.isUserAuth = this.userAuthService.getAuthStatusListner();
     if (!this.isUserAuth) {
       this.router.navigate(['/candidate-login']);
     }

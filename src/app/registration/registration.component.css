@@ -7,8 +7,9 @@ img {
     align-items: center;
 }
 
-.col-lg-6 h3 {
+.col-lg-6 h2 {
     text-align: center;
+    font-family: 'Charm', cursive;
 }
 .center{
   margin-left: 25%;
@@ -20,7 +21,7 @@ img {
     top: 50%;
 }
 .intro{
-    height: 25em;
+    height: 35em;
     width: 100%;
     margin: auto;
     display: table;
@@ -38,4 +39,41 @@ img {
     margin: 0 auto;
     text-align: center;
     font-family: 'Charm', cursive;
+}
+
+.error{
+  padding-top: 0;
+  margin-top: 0;
+  color: #E71C23;
+  font-size: 13px;
+}
+.margin-top-none {
+  line-height: 0;
+}
+.myfrom{
+  width:80%;
+  margin: auto;
+  align-items: center;
+}
+#login{
+  text-align: center;
+}
+.intro-first{
+  height: 25em;
+  width: 100%;
+  margin-top: 18%;
+  display: table;
+  top: 0;
+  background-size: cover;
+}
+.content-first{
+  /* max-width: 500px; */
+  margin: 0 auto;
+}
+
+.intro-first .inner{
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  max-width: none;
 }

@@ -36,7 +36,7 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.userQuestionService.getCodingQuestion()
       .pipe(map(codingData => {
-        return codingData.codingQuestions.map(codingQuestion => {
+        return codingData.result.map(codingQuestion => {
           return {
             id: codingQuestion.id,
             question: codingQuestion.question,

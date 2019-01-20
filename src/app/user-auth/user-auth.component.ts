@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserAuthService} from '../service/User/user-auth.service';
 import {UserModel} from '../model/user-model';
+import {AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angular-6-social-login';
 
 @Component({
   selector: 'app-user-auth',
@@ -15,7 +16,7 @@ export class UserAuthComponent implements OnInit {
     refId: new FormControl(null, Validators.required),
     password: new FormControl(null, Validators.required)
   });
-  constructor(private userAuthService: UserAuthService) { }
+  constructor(private userAuthService: UserAuthService, private socialAuthService: AuthService) { }
 
   ngOnInit() {
   }
@@ -35,5 +36,23 @@ export class UserAuthComponent implements OnInit {
       this.userAuthService.onUserLogin(userData);
     }
   }
-
+  onGoogleLogin () {
+    const socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        if (userData) {
+          this.userAuthService.googleLogin({access_token: userData.token});
+          console.log(userData);
+        }
+      });
+  }
+  onFacebookLogin() {
+    const socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        if (userData) {
+          this.userAuthService.facebookLogin({access_token: userData.token});
+        }
+      });
+  }
 }

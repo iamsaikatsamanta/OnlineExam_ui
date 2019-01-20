@@ -5,4 +5,5 @@ export interface RestApi {
     time: any;
     code: any;
     result: any;
+    message: any;
   }

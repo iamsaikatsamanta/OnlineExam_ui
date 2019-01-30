@@ -5,14 +5,22 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-      <li class="nav-item" *ngIf="!userIsAuth">
-        <a class="nav-link" routerLink="/candidate-login">ULogin</a>
-      </li>
-      <li class="nav-item" *ngIf="!userIsAuth">
-        <a class="nav-link" routerLink="/admin-login">ALogin</a>
-      </li>
-      <li class="nav-item" *ngIf="userIsAuth">
-        <a class="nav-link" (click) = "onLogout()">Logout</a>
+      <li class="nav-item dropdown">
+        <i class="fa fa-user st-coust" (click)="showDropdown()"></i>
+        <div class="dropdown">
+          <!-- <button class="userbtn  dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><img src="assets/img/user.jpg" class="userimg"><i class="fas fa-chevron-down"></i></button> -->
+          <ul class="dropdown-menu" aria-labelledby="menu1" id="top-img-dropdown">
+            <li class="nav-item" *ngIf="!userIsAuth">
+              <a class="nav-link" routerLink="/candidate-login" (click)="close()">Candidate Login</a>
+            </li>
+            <li class="nav-item" *ngIf="!userIsAuth">
+              <a class="nav-link" routerLink="/admin-login" (click)="close()">Admin Login</a>
+            </li>
+            <li class="nav-item" *ngIf="userIsAuth">
+              <a class="nav-link" (click)="close(); onLogout()">Logout</a>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>

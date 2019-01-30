@@ -1,0 +1,29 @@
+.top-nav-bar {
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+}
+.searchbox {
+  width: 30%;
+}
+.userimg{
+  float: right;
+}
+
+.dropdown-menu{
+  top: 0px;
+  left: -75px;
+  transition: 300ms all ease-out;
+}
+
+.show-dropdown{
+  top: 2%;
+  display: block;
+  cursor: pointer;
+  transition: 300ms all ease-in;
+}
+.st-coust{
+  margin-right: 50px;
+  width: 10px;
+  height: 10px;
+}

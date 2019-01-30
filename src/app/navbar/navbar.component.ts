@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit, OnDestroy {
   private authStatusSubs: Subscription;
   userIsAuth = false;
+  dropdown = false;
   constructor(private adminAuthService: AdminAuthService) { }
 
   ngOnInit() {
@@ -19,11 +20,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userIsAuth = isAuth;
     });
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.authStatusSubs.unsubscribe();
   }
-  onLogout(){
+  onLogout() {
     this.adminAuthService.logout();
   }
-
+  showDropdown() {
+    document.getElementById('top-img-dropdown').classList.toggle('show-dropdown');
+  }
+  close () {
+    document.getElementById('top-img-dropdown').classList.toggle('show-dropdown');
+  }
 }

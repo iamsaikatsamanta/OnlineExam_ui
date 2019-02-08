@@ -53,6 +53,9 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { FillFormComponent } from './user-dashboard/fill-form/fill-form.component';
 import { ViewResultComponent } from './user-dashboard/view-result/view-result.component';
 import { ViewInstructionComponent } from './user-dashboard/view-instruction/view-instruction.component';
+import { UserResetPasswordComponent } from './user-dashboard/user-reset-password/user-reset-password.component';
+import { UserDashboardHomeComponent } from './user-dashboard/user-dashboard-home/user-dashboard-home.component';
+import { ViewApplicationFormComponent } from './user-dashboard/view-application-form/view-application-form.component';
 
 function getAuthServiceConfigs() {
   const config = new AuthServiceConfig(
@@ -76,7 +79,6 @@ const approute: Routes = [
   { path: 'admin-login', component: AdminAuthComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'reset-password/:token/:id', component: ResetPasswordComponent},
-  { path: 'syllabus', component: SyllybusComponent},
   { path: 'candidate-registration', component: SignupComponent},
   { path: 'registration', component: RegistrationComponent},
   { path: 'admin-dashboard', component: AdminDashbordComponent, canActivate: [AdminGuard], children: [
@@ -100,6 +102,16 @@ const approute: Routes = [
       { path: 'submit-coding', canActivate: [UserGuard], component: SubmitCodingComponent},
       { path: 'feedback', canActivate: [UserGuard], component: FeedbackComponent}
     ]},
+    {path: 'user-dashboard', component: UserDashboardComponent, children: [
+      {path: 'home', component: UserDashboardHomeComponent },
+      {path: 'syllabus', component: SyllybusComponent},
+      {path: 'fill-form', component: FillFormComponent},
+      {path: 'fill-form/edit', component: FillFormComponent},
+      {path: 'view-instruction', component: ViewInstructionComponent},
+      {path: 'reset-password', component: UserResetPasswordComponent},
+      {path: 'view-result', component: ViewResultComponent},
+      {path: 'view-form', component: ViewApplicationFormComponent}
+    ]}
 ];
 
 
@@ -141,7 +153,10 @@ const approute: Routes = [
     UserDashboardComponent,
     FillFormComponent,
     ViewResultComponent,
-    ViewInstructionComponent
+    ViewInstructionComponent,
+    UserResetPasswordComponent,
+    UserDashboardHomeComponent,
+    ViewApplicationFormComponent
   ],
   imports: [
     BrowserModule,

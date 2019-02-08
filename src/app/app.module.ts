@@ -58,21 +58,6 @@ import { UserDashboardHomeComponent } from './user-dashboard/user-dashboard-home
 import { ViewApplicationFormComponent } from './user-dashboard/view-application-form/view-application-form.component';
 import { UserDbGuard } from './auth-guard/user-db.guard';
 
-function getAuthServiceConfigs() {
-  const config = new AuthServiceConfig(
-    [
-      {
-        id: FacebookLoginProvider.PROVIDER_ID,
-        provider: new FacebookLoginProvider(environment.FBAPPID)
-      },
-      {
-        id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider(environment.GOOGLEAPPID)
-      }
-    ]
-  );
-  return config;
-}
 const approute: Routes = [
   { path: '', component: LandingComponent},
   { path: 'candidate-login', component: UserAuthComponent },
@@ -178,8 +163,7 @@ const approute: Routes = [
      {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true},
       AdminGuard,
       UserGuard,
-      UserDbGuard,
-     { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }
+      UserDbGuard
   ],
   bootstrap: [AppComponent]
 })

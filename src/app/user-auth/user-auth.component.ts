@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserAuthService} from '../service/User/user-auth.service';
 import {UserModel} from '../model/user-model';
-import {AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angular-6-social-login';
 
 @Component({
   selector: 'app-user-auth',
@@ -16,7 +15,7 @@ export class UserAuthComponent implements OnInit {
     refId: new FormControl(null, Validators.required),
     password: new FormControl(null, Validators.required)
   });
-  constructor(private userAuthService: UserAuthService, private socialAuthService: AuthService) { }
+  constructor(private userAuthService: UserAuthService) { }
 
   ngOnInit() {
   }

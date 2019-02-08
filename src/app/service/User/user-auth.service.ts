@@ -49,7 +49,7 @@ export class UserAuthService {
   }
   
   userExamLogin(data) {
-    return this.http.post<RestApi>(this.apiUrl + 'exam-login', data)
+    return this.http.post<RestApi>(this.apiUrl + 'user/exam-login', data)
       .subscribe(resp => {
         if (resp.code === 0) {
           this.token = resp.result;

@@ -3,7 +3,7 @@ import {AdminModel} from '../../model/admin-model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {Observable, Subject} from 'rxjs';
+import { Subject} from 'rxjs';
 import {ToasterService} from 'angular2-toaster';
 import { environment } from 'src/environments/environment';
 

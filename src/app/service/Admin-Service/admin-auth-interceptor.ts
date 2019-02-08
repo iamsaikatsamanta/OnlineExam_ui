@@ -8,14 +8,17 @@ export class AdminAuthInterceptor implements HttpInterceptor {
     constructor(private adminAuthService: AdminAuthService , private userAuthService: UserAuthService) {}
     intercept(req: HttpRequest<any>, next) {
         const authToken = this.adminAuthService.getToken();
-        const userAuthToken = this.userAuthService.getToken();
-        const authReq = req.clone({
-          // setHeaders: {
-          //   'Authorization', 'Bearer ' + authToken,
-          //   'user_Authorization', 'Bearer ' + userAuthToken
-          // }
-          headers: req.headers.set('Authorization', 'Bearer ' + authToken)
-        });
+        const userToken = this.userAuthService.getToken();
+        let authReq;
+        if (req.url.includes('/user')) {
+           authReq = req.clone({
+            headers: req.headers.set('Authorization', 'Bearer ' + userToken)
+          });
+        } else {
+           authReq = req.clone({
+            headers: req.headers.set('Authorization', 'Bearer ' + authToken)
+          });
+        }
         return next.handle(authReq);
     }
 }

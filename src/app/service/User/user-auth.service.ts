@@ -23,13 +23,13 @@ export class UserAuthService {
   private tokenTimer: any;
   constructor(private http: HttpClient, private router: Router, private toster: ToasterService) { }
   onUserRegister(userData) {
-    this.http.post( this.apiUrl + 'userAuth/register', userData)
+    this.http.post( this.apiUrl + 'user/register', userData)
       .subscribe(res => {
         console.log(res);
       });
   }
   async onUserLogin(data: UserModel) {
-    await this.http.post<{ token: string }>( this.apiUrl + 'userAuth/login', data)
+    await this.http.post<{ token: string }>( this.apiUrl + 'user/login', data)
       .subscribe(result => {
         this.token = result.token;
         if (this.token) {

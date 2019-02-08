@@ -12,7 +12,7 @@ export class RgistrationService {
   apiUrl = environment.apiUrl;
   constructor(private http: HttpClient, private toster: ToasterService, private router: Router) { }
   localRegistration(registrationData) {
-    this.http.post<RestApi>(this.apiUrl + 'user/local-registration', registrationData)
+    this.http.post<RestApi>(this.apiUrl + 'user/register', registrationData)
       .subscribe(resp => {
         if (resp.code === 0) {
           this.toster.pop('success', 'You Have Successfully Registered', 'Login To Continue');

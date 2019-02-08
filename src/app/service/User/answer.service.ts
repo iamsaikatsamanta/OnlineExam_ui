@@ -15,7 +15,7 @@ export class AnswerService {
       userId: this.userAuthService.getUserData().refId
     };
     console.log(options);
-    this.http.post('http://localhost:3000/api/user/answer/saveanswer', options)
+    this.http.post(this.apiUrl + 'user/saveanswer', options)
       .subscribe(result => {
         console.log(result);
       });
@@ -28,7 +28,7 @@ export class AnswerService {
       userId: this.userAuthService.getUserData().refId
     };
     console.log(codeData);
-     return this.http.post<{status: number, message: string, error: any}>('http://localhost:3000/api/user/answer/codecompile', codeData);
+     return this.http.post<{status: number, message: string, error: any}>(this.apiUrl + 'user/codecompile', codeData);
   }
   onCodeRun(language, codingQuestionId) {
     const codeData: any = {
@@ -36,12 +36,12 @@ export class AnswerService {
       codingQuestionId: codingQuestionId,
       userId: this.userAuthService.getUserData().refId
     };
-    this.http.post('http://localhost:3000/api/user/answer/coderun', codeData).subscribe(result => {
+    this.http.post(this.apiUrl + 'user/coderun', codeData).subscribe(result => {
       console.log(result);
     });
   }
   onSubmitCoding () {
-    this.http.get<{code: number, message: string}>(this.apiUrl + 'user/answer/submitcoding')
+    this.http.get<{code: number, message: string}>(this.apiUrl + 'user/submit-coding')
       .subscribe(resp => {
         console.log(resp);
       }, err => {
@@ -49,7 +49,7 @@ export class AnswerService {
       });
    }
   onSubmitRegular () {
-    this.http.get<{code: number, message: string}>(this.apiUrl + 'user/answer/submitreg')
+    this.http.get<{code: number, message: string}>(this.apiUrl + 'user/submit-regular')
       .subscribe(resp => {
         console.log(resp);
       }, err => {

@@ -56,6 +56,7 @@ import { ViewInstructionComponent } from './user-dashboard/view-instruction/view
 import { UserResetPasswordComponent } from './user-dashboard/user-reset-password/user-reset-password.component';
 import { UserDashboardHomeComponent } from './user-dashboard/user-dashboard-home/user-dashboard-home.component';
 import { ViewApplicationFormComponent } from './user-dashboard/view-application-form/view-application-form.component';
+import { UserDbGuard } from './auth-guard/user-db.guard';
 
 function getAuthServiceConfigs() {
   const config = new AuthServiceConfig(
@@ -94,7 +95,7 @@ const approute: Routes = [
       { path: 'settings', component: SettengsComponent, canActivate: [AdminGuard]},
       { path: 'start-exam', component: StartExamComponent, canActivate: [AdminGuard]}
     ] },
-  { path: 'user', component: UserComponent , canActivate: [UserGuard] , children: [
+  { path: 'exam', component: UserComponent , canActivate: [UserGuard] , children: [
       { path: 'instruction', canActivate: [UserGuard], component: InstructionsComponent},
       { path: 'questions', canActivate: [UserGuard], component: QuestionsComponent},
       { path: 'submit-question', canActivate: [UserGuard] , component: SubmitQuestionComponent},
@@ -102,15 +103,15 @@ const approute: Routes = [
       { path: 'submit-coding', canActivate: [UserGuard], component: SubmitCodingComponent},
       { path: 'feedback', canActivate: [UserGuard], component: FeedbackComponent}
     ]},
-    {path: 'user-dashboard', component: UserDashboardComponent, children: [
-      {path: 'home', component: UserDashboardHomeComponent },
-      {path: 'syllabus', component: SyllybusComponent},
-      {path: 'fill-form', component: FillFormComponent},
-      {path: 'fill-form/edit', component: FillFormComponent},
-      {path: 'view-instruction', component: ViewInstructionComponent},
-      {path: 'reset-password', component: UserResetPasswordComponent},
-      {path: 'view-result', component: ViewResultComponent},
-      {path: 'view-form', component: ViewApplicationFormComponent}
+    {path: 'user-dashboard', canActivate: [UserDbGuard],component: UserDashboardComponent, children: [
+      {path: 'home', canActivate: [UserDbGuard],component: UserDashboardHomeComponent },
+      {path: 'syllabus', canActivate: [UserDbGuard],component: SyllybusComponent},
+      {path: 'fill-form', canActivate: [UserDbGuard],component: FillFormComponent},
+      {path: 'fill-form/edit', canActivate: [UserDbGuard],component: FillFormComponent},
+      {path: 'view-instruction', canActivate: [UserDbGuard],component: ViewInstructionComponent},
+      {path: 'reset-password', canActivate: [UserDbGuard],component: UserResetPasswordComponent},
+      {path: 'view-result', canActivate: [UserDbGuard],component: ViewResultComponent},
+      {path: 'view-form', canActivate: [UserDbGuard],component: ViewApplicationFormComponent}
     ]}
 ];
 
@@ -176,6 +177,8 @@ const approute: Routes = [
   providers: [
      {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true},
       AdminGuard,
+      UserGuard,
+      UserDbGuard,
      { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }
   ],
   bootstrap: [AppComponent]

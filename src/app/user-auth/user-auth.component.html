@@ -1,33 +1,12 @@
-<div class="container6" *ngIf="showError">
-  <p class="alert alert-danger">{{ errorMessage }}</p>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-6">
       <div class="logininbox">
         <img src="assets/coding_binary_programming_notebook_code_development_editor-512.png" alt="" class="img">
         <h2>Login</h2>
         <form [formGroup]="userForm" (submit)="onSubmit()">
-          <p>Reference ID</p>
+          <p>Reference ID or Email</p>
           <input type="email" placeholder="Enter Email" formControlName="refId">
           <p>Password</p>
           <input type="password" placeholder="Enter Password" formControlName="password">
           <input type="submit" value="Login">
           <a href="#">Forgot Password</a><br>
         </form>
-      </div>
-    </div>
-    <div class="col-lg-6">
-      <section class="intro">
-        <div class="inner">
-          <div class="content">
-            <h1>Login With Social Media</h1>
-            <img src="../../assets/new-google-favicon-512.png" alt="" (click)="onGoogleLogin()">
-            <img src="../../assets/if_Asset_2_2001646.png" alt="" (click)="onFacebookLogin()">
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
 
-</div>

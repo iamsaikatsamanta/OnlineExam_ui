@@ -12,9 +12,9 @@ export class UserGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    this.isUserAuth = this.userAuthService.getAuthStatusListner();
+    this.isUserAuth = this.userAuthService.getExamAuthStatusListner();
     if (!this.isUserAuth) {
-      this.router.navigate(['/candidate-login']);
+      this.router.navigate(['/exam-login']);
     }
     return this.isUserAuth;
   }

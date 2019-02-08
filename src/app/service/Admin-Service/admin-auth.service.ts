@@ -41,9 +41,11 @@ export class AdminAuthService {
           this.router.navigate(['/admin-dashboard/home']);
           this.toasterService.pop('success', 'You Have Login Successful');
         }
+      }, err => {
+        this.toasterService.pop('error', 'Invalid Username or Password');
       });
   }
-  async autoAuthUser() {
+  async autoAuthAdmin() {
     const authInfo = this.getAuthData();
     if (!authInfo) {
       return;

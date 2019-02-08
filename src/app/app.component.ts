@@ -9,7 +9,7 @@ import {AdminAuthService} from './service/Admin-Service/admin-auth.service';
 export class AppComponent implements OnInit {
   constructor(private adminAuthService: AdminAuthService) {}
   ngOnInit() {
-    this.adminAuthService.autoAuthUser();
+    this.adminAuthService.autoAuthAdmin();
   }
 }
 

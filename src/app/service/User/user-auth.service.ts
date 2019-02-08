@@ -42,53 +42,12 @@ export class UserAuthService {
           this.userisLogin = true;
         }
       }, err => {
-        console.log(err);
+        this.toster.pop('error', 'Invalid Reference ID or Password');
       }, () => {
-        this.router.navigate(['/user/instruction']);
+        this.router.navigate(['/exam/instruction']);
       });
   }
-  googleLogin (token) {
-    this.http.post<RestApi>(this.apiUrl + 'user/googlelogin', token)
-      .subscribe(resp => {
-        if (resp.code === 0) {
-          this.token = resp.result;
-          if (this.token) {
-            const expirIn = new JwtHelperService().getTokenExpirationDate(this.token);
-            const now = new Date();
-            const time = (expirIn.getTime() - now.getTime()) / 1000;
-            this.setAuthTimer(time);
-            console.log(time);
-            this.getDecodedData(this.token);
-            this.userisLogin = true;
-            this.router.navigate(['/user/instruction']);
-            this.toster.pop('success', 'You Have Login Successfully');
-          }
-        } else if (resp.code === 20) {
-          this.toster.pop('error', resp.message);
-        }
-      });
-  }
-  facebookLogin(token) {
-    this.http.post<RestApi>(this.apiUrl + 'user/fblogin', token)
-      .subscribe(resp => {
-        if (resp.code === 0) {
-          this.token = resp.result;
-          if (this.token) {
-            const expirIn = new JwtHelperService().getTokenExpirationDate(this.token);
-            const now = new Date();
-            const time = (expirIn.getTime() - now.getTime()) / 1000;
-            this.setAuthTimer(time);
-            console.log(time);
-            this.getDecodedData(this.token);
-            this.userisLogin = true;
-            this.router.navigate(['/user/instruction']);
-            this.toster.pop('success', 'You Have Login Successfully');
-          }
-        } else if (resp.code === 20) {
-          this.toster.pop('error', resp.message);
-        }
-      });
-  }
+  
   userExamLogin(data) {
     return this.http.post<RestApi>(this.apiUrl + 'exam-login', data)
       .subscribe(resp => {
@@ -101,7 +60,7 @@ export class UserAuthService {
             this.setAuthTimer(time);
             console.log(time);
             this.getDecodedData(this.token);
-            this.userisLogin = true;
+            this.userisExamLogin = true;
             this.router.navigate(['/user/instruction']);
             this.toster.pop('success', 'You Have Login Successfully');
           }
@@ -135,6 +94,9 @@ export class UserAuthService {
   }
   getAuthStatusListner() {
     return this.userisLogin;
+  }
+  getExamAuthStatusListner() {
+    return this.userisExamLogin;
   }
   getToken() {
     return this.token;

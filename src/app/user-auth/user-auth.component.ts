@@ -36,23 +36,4 @@ export class UserAuthComponent implements OnInit {
       this.userAuthService.onUserLogin(userData);
     }
   }
-  onGoogleLogin () {
-    const socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-    this.socialAuthService.signIn(socialPlatformProvider).then(
-      (userData) => {
-        if (userData) {
-          this.userAuthService.googleLogin({access_token: userData.token});
-          console.log(userData);
-        }
-      });
-  }
-  onFacebookLogin() {
-    const socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    this.socialAuthService.signIn(socialPlatformProvider).then(
-      (userData) => {
-        if (userData) {
-          this.userAuthService.facebookLogin({access_token: userData.token});
-        }
-      });
-  }
 }

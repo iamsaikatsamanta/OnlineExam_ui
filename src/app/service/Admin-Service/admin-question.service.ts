@@ -90,7 +90,7 @@ export class AdminQuestionService {
       });
   }
   updateCodingQuestion(codeQuestion: CodingQuestionModel) {
-    this.http.post<RestApi>(this.apiUrl + 'admin/updatecodequestion/' + codeQuestion.id, codeQuestion)
+    this.http.post<RestApi>(this.apiUrl + 'admin/updatecodequestion/' + codeQuestion.id, codeQuestion).pipe()
       .subscribe(result => {
         if (result.code === 0) {
           this.toasterService.pop('success', 'Coding Question Updated Successfully');

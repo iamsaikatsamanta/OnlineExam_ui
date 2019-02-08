@@ -21,7 +21,7 @@ import { AddQuestionComponent } from './admin-dashbord/pages/add-question/add-qu
 import { ShowRegisteredCandidateComponent } from './admin-dashbord/pages/show-registered-candidate/show-registered-candidate.component';
 import { CodingQuestionComponent } from './admin-dashbord/pages/coding-question/coding-question.component';
 import { ViewQuestionComponent } from './admin-dashbord/pages/view-question/view-question.component';
-import { SyllybusComponent } from './syllybus/syllybus.component';
+import { SyllybusComponent } from './user-dashboard/syllybus/syllybus.component';
 import { QuestionsComponent } from './userside/questions/questions.component';
 import { InstructionsComponent } from './userside/instructions/instructions.component';
 import { CodingQuestionsComponent } from './userside/coding-questions/coding-questions.component';
@@ -48,6 +48,11 @@ import { ConfirmEqualValidatorDirective } from './registration/confirm-equal-val
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'angular-6-social-login';
 import {environment} from '../environments/environment';
 import { DashbordComponent } from './userside/dashbord/dashbord.component';
+import { ExamAuthComponent } from './userside/exam-auth/exam-auth.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { FillFormComponent } from './user-dashboard/fill-form/fill-form.component';
+import { ViewResultComponent } from './user-dashboard/view-result/view-result.component';
+import { ViewInstructionComponent } from './user-dashboard/view-instruction/view-instruction.component';
 
 function getAuthServiceConfigs() {
   const config = new AuthServiceConfig(
@@ -67,6 +72,7 @@ function getAuthServiceConfigs() {
 const approute: Routes = [
   { path: '', component: LandingComponent},
   { path: 'candidate-login', component: UserAuthComponent },
+  { path: 'exam-login', component: ExamAuthComponent},
   { path: 'admin-login', component: AdminAuthComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'reset-password/:token/:id', component: ResetPasswordComponent},
@@ -130,7 +136,12 @@ const approute: Routes = [
     ResetPasswordComponent,
     RegistrationComponent,
     ConfirmEqualValidatorDirective,
-    DashbordComponent
+    DashbordComponent,
+    ExamAuthComponent,
+    UserDashboardComponent,
+    FillFormComponent,
+    ViewResultComponent,
+    ViewInstructionComponent
   ],
   imports: [
     BrowserModule,

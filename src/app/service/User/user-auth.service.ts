@@ -3,7 +3,6 @@ import {UserModel} from '../../model/user-model';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Subject} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {RestApi} from '../../model/RestApi';
 import {ToasterService} from 'angular2-toaster';
@@ -20,6 +19,7 @@ export class UserAuthService {
     img_url: String
   };
   userisLogin = false;
+  userisExamLogin = false;
   private tokenTimer: any;
   constructor(private http: HttpClient, private router: Router, private toster: ToasterService) { }
   onUserRegister(userData) {
@@ -88,6 +88,30 @@ export class UserAuthService {
           this.toster.pop('error', resp.message);
         }
       });
+  }
+  userExamLogin(data) {
+    return this.http.post<RestApi>(this.apiUrl + 'exam-login', data)
+      .subscribe(resp => {
+        if (resp.code === 0) {
+          this.token = resp.result;
+          if (this.token) {
+            const expirIn = new JwtHelperService().getTokenExpirationDate(this.token);
+            const now = new Date();
+            const time = (expirIn.getTime() - now.getTime()) / 1000;
+            this.setAuthTimer(time);
+            console.log(time);
+            this.getDecodedData(this.token);
+            this.userisLogin = true;
+            this.router.navigate(['/user/instruction']);
+            this.toster.pop('success', 'You Have Login Successfully');
+          }
+        } else if (resp.code === 20) {
+          this.toster.pop('error', resp.message);
+        }
+      });
+  }
+  getUser (refid) {
+    return this.http.get<RestApi>(this.apiUrl + `user/get-user/${refid}`);
   }
   async getDecodedData(token: string) {
     const data = new JwtHelperService().decodeToken(token);

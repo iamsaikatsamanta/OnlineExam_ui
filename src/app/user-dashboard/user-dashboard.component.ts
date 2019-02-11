@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {UserAuthService} from '../service/User/user-auth.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -9,13 +10,14 @@ import { Router } from '@angular/router';
 export class UserDashboardComponent implements OnInit {
 
   userData: any = {
-    refId: 'bhjhjhj',
-    name: 'bbashbfhabshf asbfjjkas',
-    img_url : 'hajsjkasjkfhjk'
+    refId: '',
+    name: '',
+    img_url : ''
   };
-  constructor(private router: Router) { }
+  constructor(private router: Router,private userAuthService: UserAuthService) { }
 
   ngOnInit() {
+    this.userData = this.userAuthService.getUserData()
     this.router.navigate(['/user-dashboard/home']);
   }
 

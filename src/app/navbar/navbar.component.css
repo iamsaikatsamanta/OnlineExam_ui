@@ -14,6 +14,7 @@
   top: 0px;
   left: -75px;
   transition: 300ms all ease-out;
+  background: #2F363F;
 }
 
 .show-dropdown{
@@ -26,4 +27,10 @@
   margin-right: 50px;
   width: 10px;
   height: 10px;
+}
+.nav-link {
+  color: white;
+}
+fa-user{
+  color: white;
 }

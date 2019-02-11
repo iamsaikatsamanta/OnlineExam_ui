@@ -1,3 +1,100 @@
-<p>
-  fill-form works!
-</p>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Name</label>
+        <input type="text" class="form-group form-control" [(ngModel)]="user.name" disabled>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Email</label>
+        <input type="email" class="form-group form-control" [(ngModel)]="user.email" disabled>
+      </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <label>*Profile Picture</label>
+          <input type="file" class="form-group form-control" (change)="onImagePicked($event)">
+          <p *ngIf="user.img_url === '' || !user.img_url">JPG, JEPG And PNG Only And Size < 500KB</p>
+          <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+            <img [src]="user.img_url" >
+          </div>
+        </div>
+    </div>
+  <form [formGroup]="form" (submit)="onSubmit()">
+  <div class="row">
+      <div class="col-lg-12">
+        <label>*Address Line 1</label>
+        <input type="text" formControlName="add" class="form-group form-control">
+        <p class="error" *ngIf="form.get('add').invalid && form.get('add').touched">*Address Line is Required</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Country</label>
+        <select  class="form-group form-control" formControlName="country" (change)="onCountry($event.target.value)">
+          <option *ngFor="let country of countrys" [value]="country._id" class="form-group form-control">{{country.country}}</option>
+        </select>
+        <p class="error" *ngIf="form.get('country').invalid && form.get('country').touched">*Country is Required</p>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*State</label>
+        <select class="form-group form-control" formControlName="state" (change)="onState($event.target.value)">
+          <option *ngFor="let state of states" [value]="state._id" class="form-group form-control">{{state.state}}</option>
+        </select>
+        <p class="error" *ngIf="form.get('state').invalid && form.get('state').touched">*State is Required</p>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*City</label>
+        <select class="form-group form-control" formControlName="city">
+          <option *ngFor="let city of citys" [value]="city._id" class="form-group form-control">{{city.city}}</option>
+        </select>
+        <p class="error" *ngIf="form.get('city').invalid && form.get('city').touched">*City is Required</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*ZipCode</label>
+        <input type="text" class="form-group form-control" formControlName="zipcode">
+        <p class="error" *ngIf="form.get('zipcode').invalid && form.get('zipcode').touched">*ZipCode is Required</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Institute Or University Name</label>
+        <select  class="form-group form-control" formControlName="college">
+          <option *ngFor="let college of colleges" [value]="college._id" class="form-group form-control">{{college.college_name}}</option>
+        </select>
+        <p class="error" *ngIf="form.get('college').invalid && form.get('college').touched">*Institute Name is Required</p>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Course</label>
+        <select class="form-group form-control" formControlName="course" (change)="onCourse($event.target.value)">
+          <option *ngFor="let course of courses" [value]="course" class="form-group form-control">{{course}}</option>
+        </select>
+        <p class="error" *ngIf="form.get('course').invalid && form.get('course').touched">*Course is Required</p>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Year of Studies</label>
+        <select class="form-group form-control" formControlName="year">
+          <option *ngFor="let year of years" [value]="year" class="form-group form-control">{{year}}</option>
+        </select>
+        <p class="error" *ngIf="form.get('year').invalid && form.get('year').touched">*Year of Studies is Required</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Guardian Name</label>
+        <input type="text" class="form-control form-group" formControlName="parents">
+        <p class="error" *ngIf="form.get('parents').invalid && form.get('parents').touched">*Guardian Name is Required</p>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Mobile Number</label>
+        <input type="number" formControlName="phno" class="form-control form-group">
+        <p class="error" *ngIf="form.get('phno').invalid && form.get('phno').touched">*Mobile Number is Required</p>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <label>*Date of Birth</label>
+        <input formControlName="dob" class="form-group form-control" type="date" id="dateInput">
+        <p class="error" *ngIf="form.get('dob').invalid && form.get('dob').touched">*Date of Birth is Required</p>
+      </div>
+    </div>
+    <button class="btn btn-warning">SUBMIT</button>
+  </form>
+</div>

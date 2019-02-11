@@ -4,7 +4,8 @@
       <router-outlet></router-outlet>
     </div>
     <div class="col-lg-2 display-table-cell set" style="vertical-align: top" id="side-menu">
-      <img src="{{ userData.img_url }}" alt="" class="img">
+      <img src="{{ userData.img_url }}" alt="assets/userprofileicon.png" class="img" *ngIf="userData.img_url">
+      <img src="assets/userprofileicon.png" alt="" class="img" *ngIf="!userData.img_url">
       <p>Reference ID: {{ userData.refId }}</p>
       <p>Name: {{ userData.name }} </p>
     </div>

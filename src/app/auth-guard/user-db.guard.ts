@@ -12,7 +12,7 @@ export class UserDbGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      this.isUserAuth = this.userAuthService.getAuthStatusListner();
+      this.isUserAuth = this.userAuthService.getAuthStatus();
       if (!this.isUserAuth) {
         this.router.navigate(['/candidate-login']);
       }

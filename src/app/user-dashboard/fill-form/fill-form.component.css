@@ -1,0 +1,22 @@
+.container {
+  margin-top: 50px;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.error{
+  padding-top: 0;
+  margin-top: 0;
+  color: #E71C23;
+  font-size: 13px;
+}
+.image-preview{
+  height: 10rem;
+  width: 8rem;
+  margin: 1rem 0;
+}
+.image-preview img {
+  height: 100%;
+}

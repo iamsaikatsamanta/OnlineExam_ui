@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RgistrationService} from '../service/User/rgistration.service';
-import {AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angular-6-social-login';
 
 @Component({
   selector: 'app-registration',
@@ -17,7 +16,7 @@ export class RegistrationComponent implements OnInit {
     password: new FormControl(null, [Validators.required, Validators.pattern(this.regexpassword)]),
     confirmPassword: new FormControl(null, Validators.required)
   });
-  constructor(private registrationService: RgistrationService, private socialAuthService: AuthService) { }
+  constructor(private registrationService: RgistrationService) { }
 
   ngOnInit() {
   }
@@ -25,24 +24,5 @@ export class RegistrationComponent implements OnInit {
     if (this.registrationForm.valid) {
       this.registrationService.localRegistration(this.registrationForm.getRawValue());
     }
-  }
-  onGoogleRegistration() {
-    const socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-    this.socialAuthService.signIn(socialPlatformProvider).then(
-      (userData) => {
-        if (userData) {
-          this.registrationService.googleRegistration({access_token: userData.token});
-          console.log(userData);
-        }
-      });
-  }
-  onFacebookRegistration() {
-    const socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    this.socialAuthService.signIn(socialPlatformProvider).then(
-      (userData) => {
-       if (userData) {
-         this.registrationService.facebookRegistration({access_token: userData.token});
-       }
-    });
   }
 }

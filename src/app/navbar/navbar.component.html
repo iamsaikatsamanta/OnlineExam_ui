@@ -1,22 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light bg-secondary">
-  <a class="navbar-brand" routerLink="/">AKCSIT CODE</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-secondary">
+  <a class="navbar-brand" routerLink="/">S2 CODE</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
       <li class="nav-item dropdown">
-        <i class="fa fa-user st-coust" (click)="showDropdown()"></i>
+        <i class="fa fa-user st-coust" style="color: white" (click)="showDropdown()"></i>
         <div class="dropdown">
           <!-- <button class="userbtn  dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><img src="assets/img/user.jpg" class="userimg"><i class="fas fa-chevron-down"></i></button> -->
           <ul class="dropdown-menu" aria-labelledby="menu1" id="top-img-dropdown">
-            <li class="nav-item" *ngIf="!userIsAuth">
+            <li class="nav-item" *ngIf="!userIsAuth && !adminIsAuth">
               <a class="nav-link" routerLink="/candidate-login" (click)="close()">Candidate Login</a>
             </li>
-            <li class="nav-item" *ngIf="!userIsAuth">
+            <li class="nav-item" *ngIf="!userIsAuth && !adminIsAuth">
               <a class="nav-link" routerLink="/admin-login" (click)="close()">Admin Login</a>
             </li>
-            <li class="nav-item" *ngIf="userIsAuth">
+            <li class="nav-item" *ngIf="userIsAuth || adminIsAuth">
               <a class="nav-link" (click)="close(); onLogout()">Logout</a>
             </li>
           </ul>

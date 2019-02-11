@@ -88,15 +88,15 @@ const approute: Routes = [
       { path: 'submit-coding', canActivate: [UserGuard], component: SubmitCodingComponent},
       { path: 'feedback', canActivate: [UserGuard], component: FeedbackComponent}
     ]},
-    {path: 'user-dashboard', canActivate: [UserDbGuard],component: UserDashboardComponent, children: [
-      {path: 'home', canActivate: [UserDbGuard],component: UserDashboardHomeComponent },
-      {path: 'syllabus', canActivate: [UserDbGuard],component: SyllybusComponent},
-      {path: 'fill-form', canActivate: [UserDbGuard],component: FillFormComponent},
-      {path: 'fill-form/edit', canActivate: [UserDbGuard],component: FillFormComponent},
-      {path: 'view-instruction', canActivate: [UserDbGuard],component: ViewInstructionComponent},
-      {path: 'reset-password', canActivate: [UserDbGuard],component: UserResetPasswordComponent},
-      {path: 'view-result', canActivate: [UserDbGuard],component: ViewResultComponent},
-      {path: 'view-form', canActivate: [UserDbGuard],component: ViewApplicationFormComponent}
+    {path: 'user-dashboard', canActivate: [UserDbGuard], component: UserDashboardComponent, children: [
+      {path: 'home', canActivate: [UserDbGuard], component: UserDashboardHomeComponent },
+      {path: 'syllabus', canActivate: [UserDbGuard], component: SyllybusComponent},
+      {path: 'fill-form', canActivate: [UserDbGuard], component: FillFormComponent},
+      {path: 'fill-form/edit', canActivate: [UserDbGuard], component: FillFormComponent},
+      {path: 'view-instruction', canActivate: [UserDbGuard], component: ViewInstructionComponent},
+      {path: 'reset-password', canActivate: [UserDbGuard], component: UserResetPasswordComponent},
+      {path: 'view-result', canActivate: [UserDbGuard], component: ViewResultComponent},
+      {path: 'view-form', canActivate: [UserDbGuard], component: ViewApplicationFormComponent}
     ]}
 ];
 

@@ -27,4 +27,16 @@ export class UserInfoService {
   fillForm (data) {
     return this.http.post<RestApi>(this.apiUrl + 'user/fill-form', data);
   }
+  getUserInfo() {
+    return this.http.get<RestApi>(this.apiUrl + 'user/get-user-info');
+  }
+  applyForExam () {
+    return this.http.get<RestApi>(this.apiUrl + 'user/apply-for-exam');
+  }
+  getUserDetails () {
+    return this.http.get<RestApi>(this.apiUrl + 'user/get-user-details');
+  }
+  updateDetails(data) {
+    return this.http.post<RestApi>(this.apiUrl + 'user/update-user-info' , data);
+  }
 }

@@ -14,10 +14,10 @@ export class UserDashboardComponent implements OnInit {
     name: '',
     img_url : ''
   };
-  constructor(private router: Router,private userAuthService: UserAuthService) { }
+  constructor(private router: Router, private userAuthService: UserAuthService) { }
 
   ngOnInit() {
-    this.userData = this.userAuthService.getUserData()
+    this.userData = this.userAuthService.getUserData();
     this.router.navigate(['/user-dashboard/home']);
   }
 

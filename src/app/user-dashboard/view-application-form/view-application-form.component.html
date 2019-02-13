@@ -1,3 +1,21 @@
-<p>
-  view-application-form works!
-</p>
+<h2>Application Form</h2>
+<div class="container">
+  <div class="row">
+    <div class="image-preview float-right" *ngIf="user.img_url">
+      <img [src]="user.img_url" >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-12">
+      Name: {{user.name}}
+    </div>
+    <div class="col-lg-6 col-sm-12">
+      Name: {{user.email}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-12">
+      Address: {{userInfo.address}},{{userInfo.city.city}},{{userInfo.state.state}}-{{userInfo.zipcode}},{{userInfo.country.country}}
+    </div>
+  </div>
+</div>

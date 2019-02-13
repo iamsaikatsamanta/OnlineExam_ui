@@ -1,0 +1,11 @@
+.image-preview{
+  height: 10rem;
+  width: 8rem;
+  margin: 1rem 0;
+}
+.image-preview img {
+  height: 100%;
+}
+.container{
+  margin-top: 85px;
+}

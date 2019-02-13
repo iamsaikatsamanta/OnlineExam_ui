@@ -1,11 +1,14 @@
 <div class="container">
   <div class="logininbox">
-    <button (click)="fillForm()">FILL APPLICATION FORM</button>
-    <button (click)="editForm()">EDIT APPLICATION FORM</button>
-    <button (click)="viewForm()">VIEW APPLICATION FORM</button>
-    <button (click)="changePassword()">CHANGE PASSWORD</button>
-    <button (click)="viewSyllabus()">VIEW SYLLABUS</button>
-    <button (click)="viewInstruction()">VIEW INSTRUCTION</button>
-    <button (click)="viewResult()">VIEW RESULT</button>
+    <div *ngIf="user">
+      <button (click)="fillForm()" *ngIf="!user.formsubmited">FILL APPLICATION FORM</button>
+      <button (click)="editForm()" *ngIf="!user.appliedforexam && user.formsubmited">EDIT APPLICATION FORM</button>
+      <button (click)="viewForm()" *ngIf="user.formsubmited">VIEW APPLICATION FORM</button>
+      <button (click)="applyForExam()" *ngIf="user.formsubmited && !user.appliedforexam">APPLY FOR EXAM</button>
+      <button (click)="changePassword()">CHANGE PASSWORD</button>
+      <button (click)="viewSyllabus()">VIEW SYLLABUS</button>
+      <button (click)="viewInstruction()">VIEW INSTRUCTION</button>
+      <button (click)="viewResult()">VIEW RESULT</button>
+    </div>
   </div>
 </div>

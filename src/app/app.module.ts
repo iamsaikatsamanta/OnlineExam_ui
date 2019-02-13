@@ -57,6 +57,7 @@ import { UserResetPasswordComponent } from './user-dashboard/user-reset-password
 import { UserDashboardHomeComponent } from './user-dashboard/user-dashboard-home/user-dashboard-home.component';
 import { ViewApplicationFormComponent } from './user-dashboard/view-application-form/view-application-form.component';
 import { UserDbGuard } from './auth-guard/user-db.guard';
+import { TimezonePickerModule } from 'ng2-timezone-selector';
 
 const approute: Routes = [
   { path: '', component: LandingComponent},
@@ -92,7 +93,7 @@ const approute: Routes = [
       {path: 'home', canActivate: [UserDbGuard], component: UserDashboardHomeComponent },
       {path: 'syllabus', canActivate: [UserDbGuard], component: SyllybusComponent},
       {path: 'fill-form', canActivate: [UserDbGuard], component: FillFormComponent},
-      {path: 'fill-form/edit', canActivate: [UserDbGuard], component: FillFormComponent},
+      {path: 'fill-form/:edit', canActivate: [UserDbGuard], component: FillFormComponent},
       {path: 'view-instruction', canActivate: [UserDbGuard], component: ViewInstructionComponent},
       {path: 'reset-password', canActivate: [UserDbGuard], component: UserResetPasswordComponent},
       {path: 'view-result', canActivate: [UserDbGuard], component: ViewResultComponent},
@@ -157,7 +158,7 @@ const approute: Routes = [
     ParticlesModule,
     MatProgressSpinnerModule,
     ToasterModule.forRoot(),
-    SocialLoginModule
+    TimezonePickerModule
   ],
   providers: [
      {provide: HTTP_INTERCEPTORS, useClass: AdminAuthInterceptor, multi: true},

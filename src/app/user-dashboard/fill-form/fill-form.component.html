@@ -10,9 +10,9 @@
       </div>
         <div class="col-lg-4 col-md-6 col-sm-12">
           <label>*Profile Picture</label>
-          <input type="file" class="form-group form-control" (change)="onImagePicked($event)">
+          <input type="file" class="form-group form-control" (change)="onImagePicked($event)" [disabled]="mode ==='Edit'">
           <p *ngIf="user.img_url === '' || !user.img_url">JPG, JEPG And PNG Only And Size < 500KB</p>
-          <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+          <div class="image-preview" *ngIf="user.img_url">
             <img [src]="user.img_url" >
           </div>
         </div>
@@ -86,8 +86,8 @@
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label>*Mobile Number</label>
-        <input type="number" formControlName="phno" class="form-control form-group">
-        <p class="error" *ngIf="form.get('phno').invalid && form.get('phno').touched">*Mobile Number is Required</p>
+        <input type="number" formControlName="phoneno" class="form-control form-group">
+        <p class="error" *ngIf="form.get('phoneno').invalid && form.get('phoneno').touched">*Mobile Number is Required</p>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label>*Date of Birth</label>
@@ -95,6 +95,6 @@
         <p class="error" *ngIf="form.get('dob').invalid && form.get('dob').touched">*Date of Birth is Required</p>
       </div>
     </div>
-    <button class="btn btn-warning">SUBMIT</button>
+    <button class="btn btn-warning btn-lg float-right">SUBMIT</button>
   </form>
 </div>

@@ -15,10 +15,10 @@ export class SubmitCodingComponent implements OnInit {
   }
   onYes() {
     this.answerService.onSubmitCoding();
-    this.router.navigate(['/user/feedback']);
+    this.router.navigate(['/exam/feedback']);
   }
   onNo() {
-    this.router.navigate(['/user/coding-questions']);
+    this.router.navigate(['/exam/coding-questions']);
   }
 
 }

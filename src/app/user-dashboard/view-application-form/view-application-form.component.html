@@ -1,21 +1,50 @@
-<h2>Application Form</h2>
-<div class="container">
+<h2 class="head-h2">Application Form</h2>
+<div class="container" *ngIf="user && userInfo">
   <div class="row">
-    <div class="image-preview float-right" *ngIf="user.img_url">
-      <img [src]="user.img_url" >
+
+    <div class="image-preview col-lg-12" *ngIf="user.img_url">
+      <img [src]="user.img_url" class="float-right">
     </div>
   </div>
   <div class="row">
     <div class="col-lg-6 col-sm-12">
-      Name: {{user.name}}
+      <label>Name</label>: {{user.name}}
     </div>
     <div class="col-lg-6 col-sm-12">
-      Name: {{user.email}}
+      <label>Email:</label> {{user.email}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-sm-12">
+      <label>Address:</label> {{userInfo.address}},{{userInfo.city.city}},{{userInfo.state.state}}-{{userInfo.zipcode}},{{userInfo.country.country}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <label>Institute Or University Name:</label> {{userInfo.college.college_name}}
     </div>
   </div>
   <div class="row">
     <div class="col-lg-6 col-sm-12">
-      Address: {{userInfo.address}},{{userInfo.city.city}},{{userInfo.state.state}}-{{userInfo.zipcode}},{{userInfo.country.country}}
+      <label>Course:</label> {{userInfo.course}}
+    </div>
+    <div class="col-lg-6 col-sm-12">
+      <label>Year of Studies:</label> {{userInfo.year}}
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-12">
+      <label>Guardian Name:</label> {{userInfo.parents}}
+    </div>
+    <div class="col-lg-6 col-sm-12">
+      <label>Contact Number:</label> {{userInfo.phoneno}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-12">
+      <label>Date Of Birth:</label> {{userInfo.dob | date: 'fullDate'}}
+    </div>
+  </div>
+  <button (click)="onEdit()" class="btn btn-warning btn-lg float-right" *ngIf="!user.appliedforexam">EDIT</button>
+  <button (click)="onBack()" class="btn btn-primary btn-lg float-right">BACK</button>
 </div>

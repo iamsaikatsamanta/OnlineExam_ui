@@ -8,7 +8,7 @@ import {UserAuthService} from '../service/User/user-auth.service';
   styleUrls: ['./user.component.css']
 })
 
-export class UserComponent implements OnInit{
+export class UserComponent implements OnInit {
   userData: any = {
     refId: String,
     name: String,
@@ -18,6 +18,6 @@ export class UserComponent implements OnInit{
   ngOnInit() {
     const data = this.userAuthService.getUserData();
     this.userData = data;
-    this.route.navigate(['/user/instruction']);
+    this.route.navigate(['/exam/instruction']);
   }
 }

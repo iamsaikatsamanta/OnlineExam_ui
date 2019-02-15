@@ -3,10 +3,8 @@ import {Router} from '@angular/router';
 import {UserCodingQuestionModel} from '../../model/user-coding-question-model';
 import {UserQuestionService} from '../../service/User/user-question.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
 import {AnswerService} from '../../service/User/answer.service';
 import {map} from 'rxjs/operators';
-import {element} from 'protractor';
 
 @Component({
   selector: 'app-coding-questions',
@@ -63,7 +61,7 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
       this.min = Math.floor(time / 60);
       this.sec = time % 60;
       if (time <= 0) {
-        this.router.navigate(['/user/feedback']);
+        this.router.navigate(['/exam/feedback']);
       }
     }, 1000);
   }
@@ -71,6 +69,8 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
     this.showRun = false;
     this.showCompile = true;
     this.compileMessage = 'Compiling Code ...';
+    this.showError = false;
+    this.errorMessage = [];
     const code = { lang: this.codingForm.get('lang').value,
       code: this.codingForm.get('code').value
     };
@@ -125,7 +125,7 @@ export class CodingQuestionsComponent implements OnInit, OnDestroy {
     }
   }
   submit() {
-    this.router.navigate(['/user/submit-coding']);
+    this.router.navigate(['/exam/submit-coding']);
   }
   ngOnDestroy() {
   }

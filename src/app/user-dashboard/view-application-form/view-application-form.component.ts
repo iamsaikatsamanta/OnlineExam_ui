@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserInfoService} from '../../service/User/user-info.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-application-form',
@@ -10,7 +11,7 @@ export class ViewApplicationFormComponent implements OnInit {
 
   user;
   userInfo;
-  constructor(private userInfoService: UserInfoService) { }
+  constructor(private userInfoService: UserInfoService, private router: Router) { }
 
   ngOnInit() {
     this.userInfoService.getUserInfo().subscribe(resp => {
@@ -21,5 +22,10 @@ export class ViewApplicationFormComponent implements OnInit {
         this.userInfo = resp.result;
       });
   }
-
+  onEdit() {
+    this.router.navigate(['/user-dashboard/fill-form/edit']);
+  }
+  onBack() {
+    this.router.navigate(['//user-dashboard/home']);
+  }
 }

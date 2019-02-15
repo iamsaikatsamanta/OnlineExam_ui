@@ -15,9 +15,9 @@ export class SubmitQuestionComponent implements OnInit {
   }
   onYes() {
     this.answerService.onSubmitRegular();
-    this.router.navigate(['/user/coding-questions']);
+    this.router.navigate(['/exam/coding-questions']);
   }
   onNo() {
-    this.router.navigate(['/user/questions']);
+    this.router.navigate(['/exam/questions']);
   }
 }

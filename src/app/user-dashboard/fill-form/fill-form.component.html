@@ -29,6 +29,7 @@
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label>*Country</label>
         <select  class="form-group form-control" formControlName="country" (change)="onCountry($event.target.value)">
+          <option>Select Your Country</option>
           <option *ngFor="let country of countrys" [value]="country._id" class="form-group form-control">{{country.country}}</option>
         </select>
         <p class="error" *ngIf="form.get('country').invalid && form.get('country').touched">*Country is Required</p>
@@ -36,6 +37,7 @@
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label>*State</label>
         <select class="form-group form-control" formControlName="state" (change)="onState($event.target.value)">
+          <option>Select Your State</option>
           <option *ngFor="let state of states" [value]="state._id" class="form-group form-control">{{state.state}}</option>
         </select>
         <p class="error" *ngIf="form.get('state').invalid && form.get('state').touched">*State is Required</p>
@@ -43,6 +45,7 @@
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label>*City</label>
         <select class="form-group form-control" formControlName="city">
+          <option>Select Your City</option>
           <option *ngFor="let city of citys" [value]="city._id" class="form-group form-control">{{city.city}}</option>
         </select>
         <p class="error" *ngIf="form.get('city').invalid && form.get('city').touched">*City is Required</p>
@@ -59,6 +62,7 @@
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label>*Institute Or University Name</label>
         <select  class="form-group form-control" formControlName="college">
+          <option>Select Institute Or University Name</option>
           <option *ngFor="let college of colleges" [value]="college._id" class="form-group form-control">{{college.college_name}}</option>
         </select>
         <p class="error" *ngIf="form.get('college').invalid && form.get('college').touched">*Institute Name is Required</p>
@@ -66,6 +70,7 @@
       <div class="col-lg-4 col-md-6 col-sm-12">
         <label>*Course</label>
         <select class="form-group form-control" formControlName="course" (change)="onCourse($event.target.value)">
+          <option>Select Course</option>
           <option *ngFor="let course of courses" [value]="course" class="form-group form-control">{{course}}</option>
         </select>
         <p class="error" *ngIf="form.get('course').invalid && form.get('course').touched">*Course is Required</p>
@@ -95,6 +100,8 @@
         <p class="error" *ngIf="form.get('dob').invalid && form.get('dob').touched">*Date of Birth is Required</p>
       </div>
     </div>
-    <button class="btn btn-warning btn-lg float-right">SUBMIT</button>
+    <button class="btn btn-warning btn-lg float-right" type="submit">SUBMIT</button>
+    <button type="reset" class="btn btn-lg btn-danger float-right" (click)="onFormReset()">RESET</button>
+    <button class="btn btn-lg btn-primary float-left" (click)="onBack()">BACK</button>
   </form>
 </div>

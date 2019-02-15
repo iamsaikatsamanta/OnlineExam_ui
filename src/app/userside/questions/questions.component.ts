@@ -54,7 +54,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       this.min = Math.floor(time / 60);
       this.sec = time % 60;
       if (time <= 0) {
-        this.router.navigate(['/user/coding-questions']);
+        this.router.navigate(['/exam/coding-questions']);
       }
     }, 1000);
   }
@@ -80,7 +80,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
   submit() {
     console.log('on Submit');
-    this.router.navigate(['/user/submit-question']);
+    this.router.navigate(['/exam/submit-question']);
   }
   setActiveQuestion(index) {
     if (index === undefined) {

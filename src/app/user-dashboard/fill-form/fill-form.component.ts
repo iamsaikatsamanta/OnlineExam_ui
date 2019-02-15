@@ -164,5 +164,14 @@ export class FillFormComponent implements OnInit {
         });
     }
   }
+  onFormReset () {
+    this.citys = [];
+    this.states = [];
+    this.years = [];
+    this.form.reset();
+  }
+  onBack() {
+    this.router.navigate(['/user-dashboard/home']);
+  }
 
 }

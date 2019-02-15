@@ -1,11 +1,26 @@
+@import "https://fonts.googleapis.com/css?family=Inconsolata";
 .image-preview{
   height: 10rem;
   width: 8rem;
-  margin: 1rem 0;
+  /*margin: 1rem 0;*/
 }
 .image-preview img {
   height: 100%;
 }
 .container{
-  margin-top: 85px;
+  overflow: hidden;
+  margin-top: 50px;
+  font-size: 20px;
+}
+
+.row{
+  margin-top: 15px;
+}
+.head-h2{
+  text-align: center;
+  margin-top: 22px;
+  font-family: 'Courgette', cursive;
+}
+label {
+  font-family: Inconsolata;
 }

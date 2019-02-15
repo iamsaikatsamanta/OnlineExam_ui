@@ -19,7 +19,7 @@ export class AdminQuestionService {
   constructor(private http: HttpClient, private adminAuthService: AdminAuthService, private toasterService: ToasterService) {}
   private questionUpdated = new Subject<QuestionModel[]>();
   private coidingQuestionUpdated = new Subject<CodingQuestionModel[]>();
-  saveQuestion(question: QuestionModel) {
+  saveQuestion(question) {
     this.http.post<RestApi>(this.apiUrl + 'admin/savequestion', question)
     .subscribe(res => {
       if (res.code === 0) {
@@ -50,7 +50,8 @@ export class AdminQuestionService {
               id: ele._id,
               question: ele.question,
               option: ele.option,
-              correct: ele.correct
+              correct: ele.correct,
+              type: ele.type
             };
           });
         }

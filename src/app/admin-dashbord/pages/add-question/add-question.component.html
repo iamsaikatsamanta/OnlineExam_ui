@@ -1,6 +1,11 @@
 <h1>Add Question</h1>
 <div class="container">
-  <form [formGroup]="addQusestion">
+    <select class="form-group form-control" [(ngModel)]="type" (change)="selectType()">
+    <option>Select Question Type</option>
+    <option value="MC">Multiple Choice</option>
+    <option value="FUB">Fill Up The Blanks</option>
+    </select>
+  <form [formGroup]="addQusestion" *ngIf="type === 'MC'">
       <label for="ques">Enter The Question:</label>
       <input  matInput id="ques" type="text"  formControlName="question" class="form-group form-control">
     <div class="form-group row">
@@ -26,4 +31,12 @@
     <button class="btn badge-danger float-left" (click)="onReset()">Reset</button>
     <button class="btn btn-default float-left " id="save" type="submit" [disabled]="!addQusestion.valid" (click)="onSubmit()">Save Question</button>
   </form>
-</div>
+  <form [formGroup]= "addQusestion" *ngIf="type === 'FUB'">
+    <label for="ques">Enter The Question:</label>
+    <input  matInput id="ques" type="text"  formControlName="question" class="form-group form-control">
+    <label for="correct">Enter Correct Answer:</label>
+    <input id="correct" type="text"  formControlName="correct" class="form-group form-control">
+    <button class="btn badge-danger float-left" (click)="onReset()">Reset</button>
+    <button class="btn btn-default float-left " id="save" type="submit" [disabled]="!addQusestion.valid" (click)="onSubmit()">Save Question</button>
+  </form>
+  </div>

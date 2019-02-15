@@ -25,17 +25,25 @@
   </div>
   <div>
     <h3>Question {{ activeQuestion+1 }}</h3>
-    <div class="card">
+    <div class="card" *ngIf="questions[activeQuestion].type == 'MC'">
       <div class="card-header">
         <h4>{{ questions[activeQuestion].question }}</h4>
         <div class="row">
           <div class="col-lg-6 col-sm-12 option" *ngFor="let op of questions[activeQuestion].option; index as i"
                [ngClass]="{'bg-info': i === questions[activeQuestion].selected}"
                (click)="selectAns(i)">
-            <h4  >{{ op }}</h4>
+            <h4  >{{i+1}}.{{ op }}</h4>
           </div>
         </div>
       </div>
+    </div>
+    <div class="" *ngIf="questions[activeQuestion].type === 'FUB'">
+      <h6>{{ questions[activeQuestion].question }}</h6>
+      <div class="input-size">
+        <label for="fubAns">Your Answer:</label>
+        <input type="text" class="form-group form-control " [(ngModel)]="fubAns" id="fubAns">
+      </div>
+      
     </div>
     <div class="mybutton">
       <button class="btn btn-warning float-left" (click)="onNext()">NEXT</button>

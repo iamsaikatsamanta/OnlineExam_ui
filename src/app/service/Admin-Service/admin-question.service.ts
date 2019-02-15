@@ -82,7 +82,7 @@ export class AdminQuestionService {
   getCodingQuestion(codeingQuestionId: string) {
     return {...this.codingQuestion.find(qc => qc.id === codeingQuestionId)};
   }
-  updateQuestion(question: QuestionModel) {
+  updateQuestion(question) {
     this.http.post<RestApi>(this.apiUrl + 'admin/updatequestion/' + question.id, question)
       .subscribe(result => {
         if (result.code === 0) {

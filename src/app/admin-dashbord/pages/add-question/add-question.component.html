@@ -1,9 +1,10 @@
 <h1>Add Question</h1>
 <div class="container">
-    <select class="form-group form-control" [(ngModel)]="type" (change)="selectType()">
-    <option>Select Question Type</option>
-    <option value="MC">Multiple Choice</option>
-    <option value="FUB">Fill Up The Blanks</option>
+  <label for="type">Select Question Type:</label>
+    <select id="type" class="form-group form-control" [(ngModel)]="type" (change)="selectType()">
+      <option value="">Select Question Type</option>
+      <option value="MC">Multiple Choice</option>
+      <option value="FUB">Fill Up The Blanks</option>
     </select>
   <form [formGroup]="addQusestion" *ngIf="type === 'MC'">
       <label for="ques">Enter The Question:</label>

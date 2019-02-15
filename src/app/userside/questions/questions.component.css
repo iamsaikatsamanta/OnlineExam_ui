@@ -33,3 +33,7 @@ h4 {
 card{
   border-radius: 1rem;
 }
+.input-size {
+  margin-top: 15px;
+  width: 30%;
+}

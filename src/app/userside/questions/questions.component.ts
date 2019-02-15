@@ -14,14 +14,17 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./questions.component.css']
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
-  questions: UserQuestionModel [];
+  questions: any;
   private no_q_ans = 0;
   min;
   sec;
   activeQuestion = 0;
   isLoading = true;
+  fubAns = '';
   private questionSub: Subscription;
-  constructor(private userQuestionService: UserQuestionService, private router: Router, private answerService: AnswerService) { }
+  constructor(private userQuestionService: UserQuestionService, 
+    private router: Router, 
+    private answerService: AnswerService) { }
 
   async ngOnInit() {
     this.questionSub = await this.userQuestionService.getQuestion()
@@ -31,13 +34,16 @@ export class QuestionsComponent implements OnInit, OnDestroy {
               id: question.id,
               question: question.question,
               option: question.option,
+              type: question.type,
               selected: null,
               saved: false
             };
           });
         }))
         .subscribe(response => {
+          console.log()
           this.questions = response;
+          console.log(this.questions);
         }, err => {
           console.log(err);
         }, () => {
@@ -74,7 +80,12 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
   onSaveNext() {
     console.log('onSave');
+    if (this.questions[this.activeQuestion].type === 'MC') {
     this.answerService.saveAnswer(this.questions[this.activeQuestion].option[this.questions[this.activeQuestion].selected], this.questions[this.activeQuestion].id);
+    } else if(this.questions[this.activeQuestion].type === 'FUB') {
+      this.questions[this.activeQuestion].selected = this.fubAns;
+      this.answerService.saveAnswer(this.fubAns, this.questions[this.activeQuestion].id);
+    }
     this.questions[this.activeQuestion].saved = true;
     this.onNext();
   }

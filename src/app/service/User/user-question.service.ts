@@ -12,7 +12,7 @@ import {RestApi} from '../../model/RestApi';
 })
 export class UserQuestionService {
   apiUrl = environment.apiUrl;
-  timeQuestion = 60;
+  timeQuestion = 1200;
   timeCodingQuestion = 1200;
   codingQuestion:  UserCodingQuestionModel[];
   private updateCodingQuestionListner = new Subject<UserCodingQuestionModel[]>();

@@ -4,16 +4,10 @@
           <div class="content-first">
             <h2>Candidate Registration</h2>
             <form class="myfrom" [formGroup]="registrationForm" (submit)="onSubmit()">
-              <div class="row">
-                <div class="col-lg-12">
-                    <label for="email">*Email</label>
-                    <input id="email" class="form-control form-group" name="email" placeholder="Email" formControlName="email">
-                    <p class="error" *ngIf="registrationForm.get('email').getError('required') && registrationForm.get('email').touched">*Email is Required</p>
-                    <p class="error" *ngIf="registrationForm.get('email').getError('pattern') && registrationForm.get('email').touched">*Invalid Email </p>
-                  </div>
-              </div>
-              
-              
+              <label for="email">*Email</label>
+              <input id="email" class="form-control form-group" name="email" placeholder="Email" formControlName="email">
+              <p class="error" *ngIf="registrationForm.get('email').getError('required') && registrationForm.get('email').touched">*Email is Required</p>
+              <p class="error" *ngIf="registrationForm.get('email').getError('pattern') && registrationForm.get('email').touched">*Invalid Email </p>
               <label for="name">*Name</label>
               <input id="name" class="form-control form-group" placeholder="Name" formControlName="name">
               <p class="error" *ngIf="registrationForm.get('name').invalid && registrationForm.get('name').touched">*Name Is Required</p>
@@ -22,7 +16,7 @@
               <p class="error" *ngIf="registrationForm.get('password').getError('required') && registrationForm.get('password').touched">*Password Is Required</p>
               <div class="error" *ngIf="registrationForm.get('password').getError('pattern')">
                 <p>Password Is At least 8 Character</p>
-                <p class="margin-top-none">At least One UpperCase,LowerCase,Number & Special Characters</p>
+                <p>At least One UpperCase,LowerCase,Number & Special Characters</p>
               </div>
               <label>*Confirm Password</label>
               <input type="password" class="form-control form-group" appConfirmEqualValidator="password" placeholder="Confirm Password" formControlName="confirmPassword">

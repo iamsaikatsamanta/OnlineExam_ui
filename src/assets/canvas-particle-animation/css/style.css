@@ -18,7 +18,9 @@ body {
 #demo{
   position: relative; left: -50%;color: aliceblue;margin-top:18%;font-size: 40px;width: 90vw;
 }
-
+#demo1 {
+  position: relative; left: -53%;color: aliceblue;margin-top:2%;font-size: 40px;width: 90vw;
+}
 
 @media only screen 
   and (min-device-width: 320px) 
@@ -28,5 +30,8 @@ body {
 
     #demo{
       position: relative; left: -70%;color: aliceblue;margin-top:18%;font-size: 40px;width: 90vw;
+    }
+    #demo1{
+      position: relative; left: -70%;color: aliceblue;margin-top:2%;font-size: 40px;width: 90vw;
     }
 }

@@ -71,7 +71,7 @@ iframe{
 
 #butouter
 {
-    position: absolute; left: 45%;z-index: 232;margin-top: 20%;
+    position: absolute; left: 45%;z-index: 232;margin-top: 25%;
 }
 
 @media only screen 
@@ -81,7 +81,8 @@ iframe{
      
 #butouter
 {
-    position: absolute; left: 35%;z-index: 232;margin-top: 80%;
+    position: absolute; left: 35%;z-index: 232;margin-top: 90%;
 }
 
 }
+

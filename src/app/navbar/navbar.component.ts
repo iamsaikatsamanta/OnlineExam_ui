@@ -39,10 +39,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userAuthService.logout();
     }
   }
-  showDropdown() {
-    document.getElementById('top-img-dropdown').classList.toggle('show-dropdown');
-  }
-  close () {
-    document.getElementById('top-img-dropdown').classList.toggle('show-dropdown');
-  }
+  // showDropdown() {
+  //   document.getElementById('top-img-dropdown').classList.toggle('show-dropdown');
+  // }
+ 
 }

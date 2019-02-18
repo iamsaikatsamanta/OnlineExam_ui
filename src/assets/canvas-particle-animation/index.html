@@ -18,14 +18,32 @@
 
 <head></head>
 
-<body>
+<body onload="typeWriter()">
+  <!-- <h1 style="position: fixed;color: aliceblue;z-index: 23;text-align: center;"> Hi From AKCSIT</h1> -->
+  <div id="outer" style="">
+      <h1 id="demo" style="">
+          
+      </h1>
+    </div>
   <div id="particle-canvas">
   </div>
 </body>
 
 </html>
   <script src='https://rawgit.com/JulianLaval/canvas-particle-network/master/particle-network.min.js'></script>
+<script>
+var i = 0;
+var txt = "Don't Be a Programmer Be a Problem Solver"; /* The text */
+var speed = 100; /* The speed/duration of the effect in milliseconds */
 
+function typeWriter() {
+  if (i < txt.length) {
+    document.getElementById("demo").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+</script>
 
 
 

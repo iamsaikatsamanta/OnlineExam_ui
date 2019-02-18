@@ -23,6 +23,7 @@ export class RegistrationComponent implements OnInit {
   onSubmit () {
     if (this.registrationForm.valid) {
       this.registrationService.localRegistration(this.registrationForm.getRawValue());
+      this.registrationForm.reset();
     }
   }
 }

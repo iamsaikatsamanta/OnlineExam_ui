@@ -1,27 +1,22 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-secondary">
-  <a class="navbar-brand" routerLink="/">S2 CODE</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-      <li class="nav-item dropdown">
-        <i class="fa fa-user st-coust" style="color: white" (click)="showDropdown()"></i>
-        <div class="dropdown">
-          <!-- <button class="userbtn  dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><img src="assets/img/user.jpg" class="userimg"><i class="fas fa-chevron-down"></i></button> -->
-          <ul class="dropdown-menu" aria-labelledby="menu1" id="top-img-dropdown">
-            <li class="nav-item" *ngIf="!userIsAuth && !adminIsAuth">
-              <a class="nav-link" routerLink="/candidate-login" (click)="close()">Candidate Login</a>
-            </li>
-            <li class="nav-item" *ngIf="!userIsAuth && !adminIsAuth">
-              <a class="nav-link" routerLink="/admin-login" (click)="close()">Admin Login</a>
-            </li>
-            <li class="nav-item" *ngIf="userIsAuth || adminIsAuth">
-              <a class="nav-link" (click)="close(); onLogout()">Logout</a>
-            </li>
-          </ul>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Logo</a>
+  
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+     
+  
+      <!-- Dropdown -->
+      <li  class="nav-item dropdown" >
+        <a  class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          <i class="fa fa-user"></i>  
+        </a>
+        <div style="background-color: rgb(167, 160, 151)" class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/admin-login" *ngIf="!userIsAuth && !adminIsAuth">Admin Login</a>
+          <a class="dropdown-item" routerLink="/candidate-login" *ngIf="!userIsAuth && !adminIsAuth">Candidate Login</a>
+          <a class="dropdown-item" (click)="onLogout()" *ngIf="userIsAuth || adminIsAuth">Logout</a>
         </div>
       </li>
     </ul>
-  </div>
-</nav>
+  </nav>

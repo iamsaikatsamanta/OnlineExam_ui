@@ -25,9 +25,16 @@ export class UserAuthService {
   private tokenTimer: any;
   constructor(private http: HttpClient, private router: Router, private toster: ToasterService) { }
   onUserRegister(userData) {
-    this.http.post( this.apiUrl + 'user/register', userData)
+    this.http.post<RestApi>( this.apiUrl + 'user/register', userData)
       .subscribe(res => {
-        console.log(res);
+        if(res.code === 0){
+          this.toster.pop('success', 'Registration Successful', 'Login To Continue');
+          this.router.navigate(['/candidate-login']);
+        } else if(res.code===5){
+          this.toster.pop('error', 'User Already Exists');
+        }
+      }, err=>{
+        this.toster.pop('error', 'Something Wnt Wrong');
       });
   }
   async onUserLogin(data: UserModel) {

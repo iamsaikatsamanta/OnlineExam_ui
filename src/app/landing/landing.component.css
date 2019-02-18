@@ -55,4 +55,33 @@ iframe{
   overflow: hidden;
   border: none;
 }
+#but {
+    opacity: 0;
+    -webkit-animation: custfadein 5s infinite;
+    animation-delay: 5s;
+}
+@-webkit-keyframes custfadein{
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
 
+#butouter
+{
+    position: absolute; left: 45%;z-index: 232;margin-top: 20%;
+}
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+     
+#butouter
+{
+    position: absolute; left: 35%;z-index: 232;margin-top: 80%;
+}
+
+}
